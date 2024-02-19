@@ -49,7 +49,7 @@
      }
  
      /**
-      * Gets account number from the account class
+      * Gets account number from the account class and print the all accountNumbers
       */
      public void getAccountNumbers() {
          for (Account account : accounts) {
@@ -58,7 +58,7 @@
      }
  
      /**
-      * Validates the PIN with the following accountNumber's pin.
+      * Validates the PIN with the following accountNumber's pin and print the outcome.
       * 
       * @param accountNumber The following accountNumber to validate pin.
       * @param PIN           The pin to validate.
@@ -76,7 +76,7 @@
      }
  
      /**
-      * Gets the account balance of the following accountNumber's balance.
+      * Gets the account balance and prints the following accountNumber's balance.
       * 
       * @param accountNumber The following accountNumber to find the balance.
       */
