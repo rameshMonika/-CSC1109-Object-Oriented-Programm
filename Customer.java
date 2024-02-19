@@ -1,6 +1,7 @@
 import java.util.Date;
 
 public class Customer{
+    // var name nric
     private String NRIC;
     private String name;
     private Date dateOfBirth;
