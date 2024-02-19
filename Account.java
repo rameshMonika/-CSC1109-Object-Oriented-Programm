@@ -29,12 +29,12 @@ public class Account{
     public void setAccountNumber(int accountNumber){
         this.accountNumber = accountNumber;
     }
-    public double getBalance(){
-        return balance;
+    /*public double getBalance(){
+        return balance.get("SGD");
     }
     public void setBalance(double balance){
         this.balance = balance;
-    }
+    }*/
     public int getPIN(){
         return PIN;
     }
@@ -54,21 +54,25 @@ public class Account{
         this.transferLimit = transferLimit;
     } 
     public void deposit(double amount){
-        balance.get("SGD") += amount;
+        double temp = balance.get("SGD") + amount;
+        balance.put("SGD", temp);
     }
     public void withdraw(double amount){
+        double temp = balance.get("SGD");
+        
         if(amount > withdrawLimit){
             System.out.println("Withdraw limit exceeded");
         }
-        else if(amount > balance){
+        else if(amount > balance.get("SGD")){
             System.out.println("Insufficient funds");
         }
         else{
-            balance.get("SGD") -= amount;
+            temp -= amount;
+            balance.put("SGD", temp);
         }
     }
     public void interAccountTransfer(Account account, double amount){
-        balanceSGD = balance.get("SGD");
+        double balanceSGD = balance.get("SGD");
         if(amount > transferLimit){
             System.out.println("Transfer limit exceeded");
         }
@@ -81,7 +85,7 @@ public class Account{
         }
     }
     public void thirdPartyTransfer(Account account, double amount){
-        balanceSGD = balance.get("SGD");
+        double balanceSGD = balance.get("SGD");
         if(amount > transferLimit){
             System.out.println("Transfer limit exceeded");
         }
