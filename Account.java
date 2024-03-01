@@ -63,6 +63,7 @@ public class Account {
      * Gets the Account balance.
      * 
      * @param currency Get the balance based on the currency provided.
+     * @return The account's balance.
      */
     public double getBalance(String currency) {
         return balance.get(currency);
