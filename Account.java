@@ -1,4 +1,4 @@
-
+import java.util.*;
 /**
  * Author: Darren, Min Xuan, Monika, Teren, Jana, Amanda, Kirby
  * E-mail: -
@@ -7,10 +7,6 @@
  * Description: The Account class represents an account
  * that manages an accounts setting and balance
  */
-
-
-import java.util.*;
-
 public class Account {
     private int accountNumber;
     private HashMap<String, Double> balance = new HashMap<>();
