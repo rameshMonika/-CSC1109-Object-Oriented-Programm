@@ -1,6 +1,17 @@
+
+/**
+ * Author: Darren, Min Xuan, Monika, Teren, Jana, Amanda, Kirby
+ * E-mail: -
+ * Date: 20240219
+ *
+ * Description: The Account class represents an account
+ * that manages an accounts setting and balance
+ */
+
+
 import java.util.*;
 
-public class Account{
+public class Account {
     private int accountNumber;
     private HashMap<String, Double> balance = new HashMap<>();
     private Customer customer;
@@ -9,7 +20,8 @@ public class Account{
     private double transferLimit;
     private double debt;
     private String currency;
-    public Account(Customer customer, int accountNumber, int PIN){
+
+    public Account(Customer customer, int accountNumber, int PIN) {
         this.accountNumber = accountNumber;
         this.customer = customer;
         this.PIN = PIN;
@@ -23,84 +35,179 @@ public class Account{
         this.balance.put("JPY", 0.0);
         this.balance.put("MYR", 0.0);
     }
-    public int getAccountNumber(){
+
+    /**
+     * Gets the Account number.
+     * 
+     * @return The account's number.
+     */
+    public int getAccountNumber() {
         return accountNumber;
     }
-    public void setAccountNumber(int accountNumber){
+
+    /**
+     * Sets the Account number.
+     * 
+     * @param accountNumber The account number set to the account.
+     */
+    public void setAccountNumber(int accountNumber) {
         this.accountNumber = accountNumber;
     }
-    /*public double getBalance(){
-        return balance.get("SGD");
+
+     /**
+     * Gets the Account balance.
+     * 
+     * @param currency Get the balance based on the currency provided.
+     */
+    public double getBalance(String currency) {
+        return balance.get(currency);
     }
-    public void setBalance(double balance){
-        this.balance = balance;
-    }*/
-    public int getPIN(){
+
+    /**
+     * Sets the Account balance.
+     * 
+     * @param currency the currency to set the balance.
+     * @param balance the amount to set the balance.
+     */
+    public void setBalance(String currency, double balance) {
+        this.balance.put(currency, balance);
+    }
+
+    /**
+     * Gets the account's PIN.
+     * 
+     * @return the account's PIN.
+     */
+    public int getPIN() {
         return PIN;
     }
-    public void setPIN(int PIN){
+
+    /**
+     * Sets the Account's PIN.
+     * 
+     * @param PIN the value to set for Account's PIN.
+     */
+    public void setPIN(int PIN) {
         this.PIN = PIN;
-    } 
-    public double getWithdrawLimit(){
+    }
+
+    /**
+     * Gets the Account's withdrawal limit.
+     * 
+     * @return the account's withdrawal limit.
+     */
+    public double getWithdrawLimit() {
         return withdrawLimit;
     }
-    public void setWithdrawLimit(double withdrawLimit){
+
+    /**
+     * Sets the Account's withdrawl limit.
+     * 
+     * @param withdrawLimit the value to set for Account's withdrawal limits.
+     */
+    public void setWithdrawLimit(double withdrawLimit) {
         this.withdrawLimit = withdrawLimit;
     }
-    public double getTransferLimit(){
+
+    /**
+     * Gets the Account's transfer limit.
+     * 
+     * @return the account's transfer limit.
+     */
+    public double getTransferLimit() {
         return transferLimit;
     }
-    public void setTransferLimit(double transferLimit){
+
+    /**
+     * Sets the Account's transfer limit.
+     * 
+     * @param transferLimit the value to set the transfer limit of the Account.
+     */
+    public void setTransferLimit(double transferLimit) {
         this.transferLimit = transferLimit;
-    } 
-    public void deposit(double amount){
+    }
+    
+    /**
+     * Adds the amount into the balance.
+     * 
+     * @param amount the value to be added into the balance.
+     */
+    public void deposit(double amount) {
         double temp = balance.get("SGD") + amount;
         balance.put("SGD", temp);
     }
-    public void withdraw(double amount){
+
+    /**
+     * Subtract the amount from the balance.
+     * 
+     * @param amount the value to be deducted from the balance.
+     */
+    public void withdraw(double amount) {
         double temp = balance.get("SGD");
-        
-        if(amount > withdrawLimit){
+
+        if (amount > withdrawLimit) {
             System.out.println("Withdraw limit exceeded");
-        }
-        else if(amount > balance.get("SGD")){
+        } else if (amount > balance.get("SGD")) {
             System.out.println("Insufficient funds");
-        }
-        else{
+        } else {
             temp -= amount;
             balance.put("SGD", temp);
         }
     }
-    public void interAccountTransfer(Account account, double amount){
+
+    /**
+     * transfer of specified values between accounts owned by the same customer.
+     * 
+     * @param account the account to transfer the amount to.
+     * @param amount the value to be transfered into the given account.
+     */
+    public void interAccountTransfer(Account account, double amount) {
         double balanceSGD = balance.get("SGD");
-        if(amount > transferLimit){
+        if (amount > transferLimit) {
             System.out.println("Transfer limit exceeded");
-        }
-        else if(amount > balanceSGD){
+        } else if (amount > balanceSGD) {
             System.out.println("Insufficient funds");
-        }
-        else{
+        } else {
             balanceSGD -= amount;
             account.deposit(amount);
         }
     }
-    public void thirdPartyTransfer(Account account, double amount){
+
+    /**
+     * transfer of specified values between accounts owned by the different customer
+     * 
+     * @param account the account to transfer the amount to.
+     * @param amount the value to be transfered into the given account.
+     */
+    public void thirdPartyTransfer(Account account, double amount) {
         double balanceSGD = balance.get("SGD");
-        if(amount > transferLimit){
+        if (amount > transferLimit) {
             System.out.println("Transfer limit exceeded");
-        }
-        else if(amount > balanceSGD){
+        } else if (amount > balanceSGD) {
             System.out.println("Insufficient funds");
-        }
-        else{
+        } else {
             balanceSGD -= amount;
             account.deposit(amount);
         }
     }
-    public String getCurrency(){
+
+    /**
+     * Gets the currency code.
+     * 
+     * @return the currency.
+     */
+    public String getCurrency() {
         return currency;
     }
-    public void setCurrency(String currency){
+
+    /**
+     * Set the currency code.
+     * 
+     * @param currency the value to set to Currency.
+     */
+    public void setCurrency(String currency) {
         this.currency = currency;
     }
+
+
 }
