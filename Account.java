@@ -46,6 +46,15 @@ public class Account {
     }
 
     /**
+     * Gets the Customer's name.
+     * 
+     * @return The customer's name.
+     */
+    public String getCustomerIC(){
+        return customer.getNRIC();
+    }
+
+    /**
      * Sets the Account number.
      * 
      * @param accountNumber The account number set to the account.
@@ -161,15 +170,23 @@ public class Account {
      * @param account the account to transfer the amount to.
      * @param amount the value to be transfered into the given account.
      */
-    public void interAccountTransfer(Account account, double amount) {
-        double balanceSGD = balance.get("SGD");
-        if (amount > transferLimit) {
-            System.out.println("Transfer limit exceeded");
-        } else if (amount > balanceSGD) {
-            System.out.println("Insufficient funds");
-        } else {
-            balanceSGD -= amount;
-            account.deposit(amount);
+    public void interAccountTransfer(Account account, double amount){
+        if(account.getCustomerIC().equals(customer.getNRIC())){
+            double balanceSGD = balance.get("SGD");
+            if(amount > transferLimit){
+                System.out.println("Transfer limit exceeded");
+            }
+            else if(amount > balanceSGD){
+                System.out.println("Insufficient funds");
+            }
+            else{
+                balanceSGD -= amount;
+                this.balance.put("SGD", balanceSGD);
+                account.deposit(amount);
+            }
+        }
+        else{
+            System.out.println("Invalid account");
         }
     }
 
@@ -179,14 +196,17 @@ public class Account {
      * @param account the account to transfer the amount to.
      * @param amount the value to be transfered into the given account.
      */
-    public void thirdPartyTransfer(Account account, double amount) {
+    public void thirdPartyTransfer(Account account, double amount){
         double balanceSGD = balance.get("SGD");
-        if (amount > transferLimit) {
+        if(amount > transferLimit){
             System.out.println("Transfer limit exceeded");
-        } else if (amount > balanceSGD) {
+        }
+        else if(amount > balanceSGD){
             System.out.println("Insufficient funds");
-        } else {
+        }
+        else{
             balanceSGD -= amount;
+            this.balance.put("SGD", balanceSGD);
             account.deposit(amount);
         }
     }
