@@ -1,3 +1,4 @@
+import java.util.Date;
 /**
  * Authors: Darren, Min Xuan, Monika, Teren, Jana, Amanda, Kirby
  * E-mail: -
@@ -7,11 +8,7 @@
  * personal information with methods to access and
  * modify the information
  */
-
-import java.util.Date;
-
 public class Customer{
-    // var name nric
     private String NRIC;
     private String name;
     private Date dateOfBirth;

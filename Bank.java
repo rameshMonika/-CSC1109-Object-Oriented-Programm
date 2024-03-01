@@ -1,3 +1,4 @@
+ import java.util.ArrayList;
 /**
  * Author: Darren, Min Xuan, Monika, Teren, Jana, Amanda, Kirby
  * E-mail: -
@@ -7,11 +8,6 @@
  * that manages a ArrayList of accounts, PIN validation
  * and account balance.
  */
-
- import java.util.ArrayList;
-
- /**
-  */
  public class Bank {
      private ArrayList<Account> accounts;
      private String bankName;
@@ -80,10 +76,10 @@
       * 
       * @param accountNumber The following accountNumber to find the balance.
       */
-     public void getAccountBalance(int accountNumber) {
+     public void getAccountBalance(int accountNumber, String currency) {
          for (Account account : accounts) {
              if (account.getAccountNumber() == accountNumber) {
-                 System.out.println("Account balance for account " + accountNumber + " is " + account.getBalance());
+                 System.out.println("Account balance for account " + accountNumber + " is " + account.getBalance(currency));
              }
          }
      }
