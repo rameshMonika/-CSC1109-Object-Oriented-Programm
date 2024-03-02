@@ -1,190 +1,165 @@
 public class Loan {
-    private double loanAmount;
-    private float interestRate;
-    private int duration;
-    private int loanID;
-    private double monthlyPayment;
-    private String loanType;
-    private String guarantorName;
-    private Double guarantorID;
-    private Double guarantorIncome;
-    private int guarantorContactNo;
 
+  private int loanID;
+  private double principal;
+  private double balance;
+  private float interestRate;
+  private int duration;
+  private double monthlyPayment;
+  private String loanType;
+  private Guarantor guarantorDetails;
 
-    /**
-      * Gets the loan amount owned by customer.
-      * 
-      * @return The loan amount owned by customer.
-    */
+  /**
+   * Gets the loan amount owned by customer.
+   * 
+   * @return The loan amount owned by customer.
+   */
 
-    public double getLoanAmount() {
-        return loanAmount;
-    }
+  public double getprincipal() {
+    return principal;
+  }
 
-    /**
-     * Sets the loan amount owned.
-     *  
-     * @param loanAmount The loan amount owned.
-     */
+  /**
+   * Sets the loan amount owned.
+   * 
+   * @param principal The loan amount owned.
+   */
 
-    public void setLoanAmount(double loanAmount) {
-        this.loanAmount = loanAmount;
-    }
+  public void setprincipal(double principal) {
+    this.principal = principal;
+  }
 
-    /**
-      * Gets the interest rate of the loan.
-      * 
-      * @return The interest rate of the loan.
-    */
+  /**
+   * Gets the balance owned by customer.
+   * 
+   * @return The balance owned by customer.
+   */
 
-    public float getInterestRate() {
-        return interestRate;
-    }
+  public double getBalance() {
+    return balance;
+  }
 
-    /**
-     * Sets the interest rate of the loan.
-     *  
-     * @param interestRate The interest rate of the loan.
-     */
+  /**
+   * Sets the balance amount owned by customer.
+   * 
+   * @param balance The balance amount owned by customer.
+   */
 
-    public void setInterestRate(float interestRate) {
-        this.interestRate = interestRate;
-    }
+  public void setBalance(double balance) {
+    this.balance = balance;
+  }
 
-    /**
-      * Gets the interest rate of the loan.
-      * 
-      * @return The interest rate of the loan.
-    */
+  /**
+   * Gets the interest rate of the loan.
+   * 
+   * @return The interest rate of the loan.
+   */
 
-    public int getDuration() {
-        return duration;
-    }
+  public float getInterestRate() {
+    return interestRate;
+  }
 
-     /**
-     * Sets the duration given to return the amount owned
-     *  
-     * @param duration The duration given to return the amount owned.
-     */
+  /**
+   * Sets the interest rate of the loan.
+   * 
+   * @param interestRate The interest rate of the loan.
+   */
 
-    public void setDuration(int duration) {
-        this.duration = duration;
-    }
+  public void setInterestRate(float interestRate) {
+    this.interestRate = interestRate;
+  }
 
-    /**
-      * Gets the loan ID.
-      * 
-      * @return The loan ID.
-    */
+  /**
+   * Gets the interest rate of the loan.
+   * 
+   * @return The interest rate of the loan.
+   */
 
-    public int getLoanID() {
-        return loanID;
-    }
+  public int getDuration() {
+    return duration;
+  }
 
-    /**
-      * Gets the amount of money to be paid monthly for the loan.
-      * 
-      * @return The amount of money to be paid monthly .
-    */
+  /**
+   * Sets the duration given to return the amount owned
+   * 
+   * @param duration The duration given to return the amount owned.
+   */
 
-    public double getMonthlyPayment() {
-        return monthlyPayment;
-    }
+  public void setDuration(int duration) {
+    this.duration = duration;
+  }
 
-     /**
-     * Sets the amount of money to be paid monthlym for the loan
-     *  
-     * @param monthlyPayment The amount of money to be paid monthly for the loan.
-     */
+  /**
+   * Gets the loan ID.
+   * 
+   * @return The loan ID.
+   */
 
-    public void setMonthlyPayment(double monthlyPayment) {
-        this.monthlyPayment = monthlyPayment;
-    }
+  public int getLoanID() {
+    return loanID;
+  }
 
-    /**
-      * Gets the type of loan.
-      * 
-      * @return The type of loan.
-    */
+  /**
+   * Gets the amount of money to be paid monthly for the loan.
+   * 
+   * @return The amount of money to be paid monthly .
+   */
 
-    public String getLoanType() {
-        return loanType;
-    }
+  public double getMonthlyPayment() {
+    return monthlyPayment;
+  }
 
-      /**
-     * Sets the type of loan
-     *  
-     * @param loanType the type of loan.
-     */
+  /**
+   * Sets the amount of money to be paid monthlym for the loan
+   * 
+   * @param monthlyPayment The amount of money to be paid monthly for the loan.
+   */
 
-    public void setLoanType(String loanType) {
-        this.loanType = loanType;
-    }
+  public void setMonthlyPayment(double monthlyPayment) {
+    this.monthlyPayment = monthlyPayment;
+  }
 
-    /**
-      * Gets the guarantor name.
-      * 
-      * @return The guarantor name
-    */
+  /**
+   * Gets the type of loan.
+   * 
+   * @return The type of loan.
+   */
 
-    public String getGuarantorName() {
-        return guarantorName;
-    }
+  public String getLoanType() {
+    return loanType;
+  }
 
-   
+  /**
+   * Displays the loan amount.
+   * 
+   * Displays the loan amount.
+   */
 
-    /**
-      * Gets the guarantor id.
-      * 
-      * @return The guarantor id.
-    */
+  public void displayLoan() {
+    System.out.println("Your pending loan amount is:" + this.principal);
 
-    public Double getGuarantorID() {
-        return guarantorID;
-    }
+  }
 
-   
+  /**
+   * Displays the details of a guarantor.
+   *
+   * @param guarantor The guarantor object whose details are to be displayed.
+   */
 
-    /**
-      * Gets the guarantor income.
-      * 
-      * @return The  guarantor income.
-    */
+  public void showGuarantorDetails(Guarantor guarantorDetails) {
 
-    public Double getGuarantorIncome() {
-        return guarantorIncome;
-    }
+    System.out.println("Guarantor is " + guarantorDetails.getGuarantorName());
 
+  }
 
-    /**
-      * Gets the guarantor contact number.
-      * 
-      * @return The guarantor contact number.
-    */
+  /**
+   * Check if customer is eligible for loan.
+   * 
+   * @return if customer is eligible for loan.
+   */
 
-    public int getGuarantorContactNo() {
-        return guarantorContactNo;
-    }
+  public Boolean isEligibleForLoan() {
+    return true;
+  }
 
-      /**
-      * Displays the loan amount.
-      * 
-      *  Displays the loan amount.
-    */
-
-    public void displayLoan(){
-        String msg= "Your pending loan amount is:"+this.loanAmount;
-
-    }
-
-     /**
-      * Check if customer is eligible for loan.
-      * 
-      * @return if customer is eligible for loan.
-    */
-
-    public Boolean isEligibleForLoan(){
-        return true;
-    }
-    
 }
