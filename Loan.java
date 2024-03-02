@@ -13,8 +13,8 @@ public class Loan {
   private int loanID;
   private double principal;
   private double balance;
-  protected float interestRate;
-  protected int duration;
+  private float interestRate;
+  private int duration;
   private double monthlyPayment;
   private String loanType;
   private Guarantor guarantorDetails;
