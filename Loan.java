@@ -102,7 +102,7 @@ public class Loan {
     }
 
      /**
-     * Sets the amount of money to be paid monthlym for the loan
+     * Sets the amount of money to be paid monthly for the loan
      *  
      * @param monthlyPayment The amount of money to be paid monthly for the loan.
      */
@@ -202,9 +202,9 @@ public class Loan {
     }
 
     /**
-     * Sets the guarantor contract number
+     * Sets the guarantor contact number
      *  
-     * @param guarantorContactNo the guarantor contract number.
+     * @param guarantorContactNo the guarantor contact number.
      */
 
     public void setGuarantorContactNo(int guarantorContactNo) {
@@ -218,7 +218,7 @@ public class Loan {
     */
 
     public void displayLoan(){
-        String msg="Your pending loan amount is:"+this.loanAmount;
+        System.out.println("Your pending loan amount is:"+this.loanAmount);
 
     }
 
