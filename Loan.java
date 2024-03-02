@@ -81,16 +81,6 @@ public class Loan {
         return loanID;
     }
 
-     /**
-     * Sets the loan id
-     *  
-     * @param duration The loan id.
-     */
-
-    public void setLoanID(int loanID) {
-        this.loanID = loanID;
-    }
-
     /**
       * Gets the amount of money to be paid monthly for the loan.
       * 
@@ -141,15 +131,7 @@ public class Loan {
         return guarantorName;
     }
 
-       /**
-     * Sets the guarantor name
-     *  
-     * @param guarantorName the guarantor name.
-     */
-
-    public void setGuarantorName(String guarantorName) {
-        this.guarantorName = guarantorName;
-    }
+   
 
     /**
       * Gets the guarantor id.
@@ -161,15 +143,7 @@ public class Loan {
         return guarantorID;
     }
 
-      /**
-     * Sets the guarantor ID
-     *  
-     * @param guarantorID the guarantor ID.
-     */
-
-    public void setGuarantorID(Double guarantorID) {
-        this.guarantorID = guarantorID;
-    }
+   
 
     /**
       * Gets the guarantor income.
@@ -181,15 +155,6 @@ public class Loan {
         return guarantorIncome;
     }
 
-      /**
-     * Sets the guarantor income
-     *  
-     * @param guarantorIncome the guarantor income.
-     */
-
-    public void setGuarantorIncome(Double guarantorIncome) {
-        this.guarantorIncome = guarantorIncome;
-    }
 
     /**
       * Gets the guarantor contact number.
@@ -201,16 +166,6 @@ public class Loan {
         return guarantorContactNo;
     }
 
-    /**
-     * Sets the guarantor contract number
-     *  
-     * @param guarantorContactNo the guarantor contract number.
-     */
-
-    public void setGuarantorContactNo(int guarantorContactNo) {
-        this.guarantorContactNo = guarantorContactNo;
-    }
-
       /**
       * Displays the loan amount.
       * 
@@ -218,7 +173,7 @@ public class Loan {
     */
 
     public void displayLoan(){
-        String msg="Your pending loan amount is:"+this.loanAmount;
+        String msg= "Your pending loan amount is:"+this.loanAmount;
 
     }
 
