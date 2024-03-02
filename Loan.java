@@ -1,17 +1,33 @@
 import static java.lang.Math.pow;
 
-public class Loan {
+/**
+ * Represents a Loan entity.
+ * This class encapsulates the attributes and functionalities of a loan.
+ */
 
+public class Loan {
+  // Static variable to generate unique loan IDs
   private static int lID = 0;
 
+  // Instance variables
   private int loanID;
   private double principal;
   private double balance;
-  private float interestRate;
-  private int duration;
+  protected float interestRate;
+  protected int duration;
   private double monthlyPayment;
   private String loanType;
   private Guarantor guarantorDetails;
+
+   /**
+   * Constructs a new Loan object with the specified parameters.
+   *
+   * @param principal        The principal amount of the loan.
+   * @param interestRate     The interest rate of the loan.
+   * @param duration         The duration of the loan.
+   * @param loanType         The type of loan.
+   * @param guarantorDetails The details of the guarantor.
+   */
 
   public Loan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails){
     lID++;
