@@ -1,4 +1,8 @@
+import static java.lang.Math.pow;
+
 public class Loan {
+
+  private static int lID = 0;
 
   private int loanID;
   private double principal;
@@ -9,6 +13,17 @@ public class Loan {
   private String loanType;
   private Guarantor guarantorDetails;
 
+  public Loan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails){
+    lID++;
+    this.loanID = lID;
+    this.principal = principal;
+    this.interestRate = interestRate;
+    this.duration = duration;
+    this.loanType = loanType;
+    this.guarantorDetails = guarantorDetails;
+    this.balance = principal + principal * interestRate;
+    this.monthlyPayment = principal * (interestRate/12)/(1-pow(1+interestRate/12, -duration));
+  }
   /**
    * Gets the loan amount owned by customer.
    * 

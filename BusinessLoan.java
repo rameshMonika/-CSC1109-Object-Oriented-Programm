@@ -1,6 +1,6 @@
 public class BusinessLoan extends Loan{
     private String uniqueEN;
-    private Double annualProfit;
+    private double annualProfit;
 
     /**
     * Check if business is elgible for loan using annualProfit
