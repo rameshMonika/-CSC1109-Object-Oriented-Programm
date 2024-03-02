@@ -99,19 +99,11 @@ public class Loan {
     return loanID;
   }
 
-<<<<<<< HEAD
   /**
    * Gets the amount of money to be paid monthly for the loan.
    * 
    * @return The amount of money to be paid monthly .
    */
-=======
-     /**
-     * Sets the amount of money to be paid monthly for the loan
-     *  
-     * @param monthlyPayment The amount of money to be paid monthly for the loan.
-     */
->>>>>>> 3eec509650caf47fb18a407964c8f241508c612f
 
   public double getMonthlyPayment() {
     return monthlyPayment;
@@ -151,7 +143,7 @@ public class Loan {
   /**
    * Displays the details of a guarantor.
    *
-   * @param guarantor The guarantor object whose details are to be displayed.
+   * @param guarantorDetails The guarantor object whose details are to be displayed.
    */
 
   public void showGuarantorDetails(Guarantor guarantorDetails) {
@@ -170,62 +162,4 @@ public class Loan {
     return true;
   }
 
-<<<<<<< HEAD
-=======
-    public Double getGuarantorIncome() {
-        return guarantorIncome;
-    }
-
-      /**
-     * Sets the guarantor income
-     *  
-     * @param guarantorIncome the guarantor income.
-     */
-
-    public void setGuarantorIncome(Double guarantorIncome) {
-        this.guarantorIncome = guarantorIncome;
-    }
-
-    /**
-      * Gets the guarantor contact number.
-      * 
-      * @return The guarantor contact number.
-    */
-
-    public int getGuarantorContactNo() {
-        return guarantorContactNo;
-    }
-
-    /**
-     * Sets the guarantor contact number
-     *  
-     * @param guarantorContactNo the guarantor contact number.
-     */
-
-    public void setGuarantorContactNo(int guarantorContactNo) {
-        this.guarantorContactNo = guarantorContactNo;
-    }
-
-      /**
-      * Displays the loan amount.
-      * 
-      *  Displays the loan amount.
-    */
-
-    public void displayLoan(){
-        System.out.println("Your pending loan amount is:"+this.loanAmount);
-
-    }
-
-     /**
-      * Check if customer is eligible for loan.
-      * 
-      * @return if customer is eligible for loan.
-    */
-
-    public Boolean isEligibleForLoan(){
-        return true;
-    }
-    
->>>>>>> 3eec509650caf47fb18a407964c8f241508c612f
 }
