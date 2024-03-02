@@ -24,10 +24,16 @@ public class Exchange {
         }
     }
 
-    public static void main(String[] args) {
-        Exchange exchange = new Exchange();
-        exchange.getRate(Currency.MYR);
+    // (Optional) - to show all currencies 
+    void printAllCurrencies() {
+        System.out.println("Exchange Rates:");
+        for (Map.Entry<Currency, Double> entry : currencyMap.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
     }
+
+    // public static void main(String[] args) {
+    // Exchange exchange = new Exchange();
+    // exchange.getRate(Currency.MYR);
+    // }
 }
-
-
