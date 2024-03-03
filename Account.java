@@ -1,164 +1,252 @@
+import java.util.*;
 /**
- * Author: Darren, Min xuan, Monika, Teren, Jana, Amanda, Kirby
+ * Author: Darren, Min Xuan, Monika, Teren, Jana, Amanda, Kirby
  * E-mail: -
  * Date: 20240219
  *
- * Description: The Account class represents a basic financial account with deposit,
- * withdrawal, and balance operations, as well as transfer operations to other accounts.
+ * Description: The Account class represents an account
+ * that manages an accounts setting and balance
  */
-public class Account{
+
+/**
+ * The Account class represents an account that manages an accounts setting and balance
+ */
+public class Account {
     private int accountNumber;
-    private double balance;
+    private HashMap<String, Double> balance = new HashMap<>();
     private Customer customer;
     private int PIN;
     private double withdrawLimit;
     private double transferLimit;
     private double debt;
-    public Account(Customer customer, int accountNumber, int PIN){
+    private String currency;
+    //private Loan loan;
+    //private HashMap<int, Loan> loans = new HashMap<>();
+
+    /**
+     * Default constructor that initializes the Account object with a customer, account number and PIN.
+     * 
+     * @param customer The customer of the account.
+     * @param accountNumber The account number.
+     * @param PIN The PIN of the account.
+     */
+    public Account(Customer customer, int accountNumber, int PIN) {
         this.accountNumber = accountNumber;
-        this.balance = 0;
         this.customer = customer;
         this.PIN = PIN;
         this.withdrawLimit = 1000;
         this.transferLimit = 1000;
         this.debt = 0;
+        //this.loan = loan;
+        this.currency = "SGD";
+        this.balance.put("SGD", 0.0);
+        this.balance.put("USD", 0.0);
+        this.balance.put("EUR", 0.0);
+        this.balance.put("JPY", 0.0);
+        this.balance.put("MYR", 0.0);
     }
+
     /**
-    * Gets the account number of the account.
-    *
-    * @return The account.
-    */
-    public int getAccountNumber(){
+     * Gets the Account number.
+     * 
+     * @return The account's number.
+     */
+    public int getAccountNumber() {
         return accountNumber;
     }
+
     /**
-     * Sets the account number of the account.
+     * Gets the Customer's name.
      * 
-     * @param accountNumber The account number.
+     * @return The customer's name.
      */
-    public void setAccountNumber(int accountNumber){
+    public String getCustomerIC(){
+        return customer.getNRIC();
+    }
+
+    /**
+     * Sets the Account number.
+     * 
+     * @param accountNumber The account number set to the account.
+     */
+    public void setAccountNumber(int accountNumber) {
         this.accountNumber = accountNumber;
     }
-    /**
-    * Gets the current balance of the account.
-    *
-    * @return The current balance.
-    */
-    public double getBalance(){
-        return balance;
-    }
-    /**
-     * Sets the current balance of the account.
-     *  
-     * @param balance The current balance.
-     */
-    public void setBalance(double balance){
-        this.balance = balance;
-    }
-    /**
-     * Gets the PIN of the account.
+
+     /**
+     * Gets the Account balance.
      * 
-     * @return The PIN.
+     * @param currency Get the balance based on the currency provided.
+     * @return The account's balance.
      */
-    public int getPIN(){
+    public double getBalance(String currency) {
+        return balance.get(currency);
+    }
+
+    /**
+     * Sets the Account balance.
+     * 
+     * @param currency the currency to set the balance.
+     * @param balance the amount to set the balance.
+     */
+    public void setBalance(String currency, double balance) {
+        this.balance.put(currency, balance);
+    }
+    /**
+     * Adds the amount into the balance.
+     * 
+     * @param currency the currency to add the balance.
+     * @param balance the amount to be added into the balance.
+     */
+    public void addBalance(String currency, double balance) {
+        this.balance.put(currency, this.balance.get(currency) + balance);
+    }
+
+    /**
+     * Gets the account's PIN.
+     * 
+     * @return the account's PIN.
+     */
+    public int getPIN() {
         return PIN;
     }
+
     /**
-     * Sets the PIN of the account.
+     * Sets the Account's PIN.
      * 
-     * @param PIN The PIN.
+     * @param PIN the value to set for Account's PIN.
      */
-    public void setPIN(int PIN){
+    public void setPIN(int PIN) {
         this.PIN = PIN;
-    } 
+    }
+
     /**
-     * Gets the withdraw limit of the account.
+     * Gets the Account's withdrawal limit.
      * 
-     * @return The withdraw limit.
+     * @return the account's withdrawal limit.
      */
-    public double getWithdrawLimit(){
+    public double getWithdrawLimit() {
         return withdrawLimit;
     }
+
     /**
-     * Sets the withdraw limit of the account.
+     * Sets the Account's withdrawl limit.
      * 
-     * @param withdrawLimit The withdraw limit.
+     * @param withdrawLimit the value to set for Account's withdrawal limits.
      */
-    public void setWithdrawLimit(double withdrawLimit){
+    public void setWithdrawLimit(double withdrawLimit) {
         this.withdrawLimit = withdrawLimit;
     }
+
     /**
-     * Gets the transfer limit of the account.
+     * Gets the Account's transfer limit.
      * 
-     * @return The transfer limit.
+     * @return the account's transfer limit.
      */
-    public double getTransferLimit(){
+    public double getTransferLimit() {
         return transferLimit;
     }
+
     /**
-     * Sets the transfer limit of the account.
+     * Sets the Account's transfer limit.
      * 
-     * @param transferLimit The transfer limit.
+     * @param transferLimit the value to set the transfer limit of the Account.
      */
-    public void setTransferLimit(double transferLimit){
+    public void setTransferLimit(double transferLimit) {
         this.transferLimit = transferLimit;
-    } 
-    /**
-    * Deposits the specified amount into the account.
-    *
-    * @param amount The amount to deposit.
-    */
-    public void deposit(double amount){
-        balance += amount;
     }
+    
     /**
-     * Withdraws the specified amount from the account.
+     * Adds the amount into the balance.
      * 
-     * @param amount The amount to withdraw.
+     * @param amount the value to be added into the balance.
      */
-    public void withdraw(double amount){
-        if(amount > withdrawLimit){
+    public void deposit(double amount) {
+        double temp = balance.get("SGD") + amount;
+        balance.put("SGD", temp);
+    }
+
+    /**
+     * Subtract the amount from the balance.
+     * 
+     * @param amount the value to be deducted from the balance.
+     */
+    public void withdraw(double amount) {
+        double temp = balance.get("SGD");
+
+        if (amount > withdrawLimit) {
             System.out.println("Withdraw limit exceeded");
-        }
-        else if(amount > balance){
+        } else if (amount > balance.get("SGD")) {
             System.out.println("Insufficient funds");
-        }
-        else{
-            balance -= amount;
+        } else {
+            temp -= amount;
+            balance.put("SGD", temp);
         }
     }
+
     /**
-     * Transfers the specified amount from the account to another account.
+     * transfer of specified values between accounts owned by the same customer.
      * 
-     * @param account The account to transfer to.
+     * @param account the account to transfer the amount to.
+     * @param amount the value to be transfered into the given account.
      */
     public void interAccountTransfer(Account account, double amount){
-        if(amount > transferLimit){
-            System.out.println("Transfer limit exceeded");
-        }
-        else if(amount > balance){
-            System.out.println("Insufficient funds");
+        if(account.getCustomerIC().equals(customer.getNRIC())){
+            double balanceSGD = balance.get("SGD");
+            if(amount > transferLimit){
+                System.out.println("Transfer limit exceeded");
+            }
+            else if(amount > balanceSGD){
+                System.out.println("Insufficient funds");
+            }
+            else{
+                balanceSGD -= amount;
+                this.balance.put("SGD", balanceSGD);
+                account.deposit(amount);
+            }
         }
         else{
-            balance -= amount;
-            account.deposit(amount);
+            System.out.println("Invalid account");
         }
     }
+
     /**
-     * Transfers the specified amount from the account to a third party account.
+     * transfer of specified values between accounts owned by the different customer
      * 
-     * @param account The account to transfer to.
+     * @param account the account to transfer the amount to.
+     * @param amount the value to be transfered into the given account.
      */
     public void thirdPartyTransfer(Account account, double amount){
+        double balanceSGD = balance.get("SGD");
         if(amount > transferLimit){
             System.out.println("Transfer limit exceeded");
         }
-        else if(amount > balance){
+        else if(amount > balanceSGD){
             System.out.println("Insufficient funds");
         }
         else{
-            balance -= amount;
+            balanceSGD -= amount;
+            this.balance.put("SGD", balanceSGD);
             account.deposit(amount);
         }
     }
+
+    /**
+     * Gets the currency code.
+     * 
+     * @return the currency.
+     */
+    public String getCurrency() {
+        return currency;
+    }
+    /**
+     * Set the currency code.
+     * 
+     * @param currency the value to set to Currency.
+     */
+    public void setCurrency(String currency) {
+        this.currency = currency;
+    }
+
+   
 }
