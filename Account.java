@@ -7,23 +7,20 @@ import java.util.*;
  * Description: The Account class represents an account
  * that manages an accounts setting and balance
  */
+
 enum Currency {
-    SGD,
-    MYR,
-    JPY,
-    USD,
-    EUR
+    SGD, USD, EUR, JPY, MYR
 }
 
 public class Account {
     private int accountNumber;
-    private HashMap<Currency, Double> balance = new HashMap<>();
+    private EnumMap<Currency, Double> balance;
     private Customer customer;
     private int PIN;
     private double withdrawLimit;
     private double transferLimit;
     private double debt;
-    
+    private String currency;
 
     public Account(Customer customer, int accountNumber, int PIN) {
         this.accountNumber = accountNumber;
@@ -32,11 +29,11 @@ public class Account {
         this.withdrawLimit = 1000;
         this.transferLimit = 1000;
         this.debt = 0;
-        this.balance.put(Currency.SGD, 0.0);
-        this.balance.put(Currency.USD, 0.0);
-        this.balance.put(Currency.EUR, 0.0);
-        this.balance.put(Currency.JPY, 0.0);
-        this.balance.put(Currency.MYR, 0.0);
+        this.currency = "SGD";
+        this.balance = new EnumMap<>(Currency.class);
+        for (Currency currency : Currency.values()) {
+            this.balance.put(currency, 0.0);
+        }
     }
 
     /**
@@ -72,8 +69,21 @@ public class Account {
      * @param currency Get the balance based on the currency provided.
      * @return The account's balance.
      */
-    public double getBalance(Currency currency) {
-        return balance.get(Currency.SGD);
+    public double getBalance(String currency) {
+        switch (currency) {
+            case "SGD":
+                return balance.get(Currency.SGD);
+            case "USD":
+                return balance.get(Currency.USD);
+            case "EUR":
+                return balance.get(Currency.EUR);
+            case "JPY":
+                return balance.get(Currency.JPY);
+            case "MYR":
+                return balance.get(Currency.MYR);
+            default:
+                return 0.0;
+        }
     }
 
     /**
@@ -85,7 +95,6 @@ public class Account {
     public void setBalance(Currency currency, double balance) {
         this.balance.put(currency, balance);
     }
-
     /**
      * Gets the account's PIN.
      * 
@@ -160,7 +169,7 @@ public class Account {
 
         if (amount > withdrawLimit) {
             System.out.println("Withdraw limit exceeded");
-        } else if (amount > temp) {
+        } else if (amount > balance.get(Currency.SGD)) {
             System.out.println("Insufficient funds");
         } else {
             temp -= amount;
@@ -213,6 +222,24 @@ public class Account {
             this.balance.put(Currency.SGD, balanceSGD);
             account.deposit(amount);
         }
+    }
+
+    /**
+     * Gets the currency code.
+     * 
+     * @return the currency.
+     */
+    public String getCurrency() {
+        return currency;
+    }
+
+    /**
+     * Set the currency code.
+     * 
+     * @param currency the value to set to Currency.
+     */
+    public void setCurrency(String currency) {
+        this.currency = currency;
     }
 
 
