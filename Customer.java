@@ -11,7 +11,6 @@
 import java.util.Date;
 
 public class Customer{
-    // Attributes
     private String NRIC;
     private String name;
     private Date dateOfBirth;
