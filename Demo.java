@@ -12,26 +12,8 @@ public class Demo{
         bank.addAccount(account);
         bank.addAccount(account2);
         bank.addAccount(account3);
-        System.out.println("////Display account numbers test////");
-        bank.getAccountNumbers();
         account.deposit(1000);
-        System.out.println("////Inter and third party transfer test////");
-        account.interAccountTransfer(account2, 500);
-        bank.getAccountBalance(1);
-        bank.getAccountBalance(2);
-        account2.thirdPartyTransfer(account3, 100);
-        bank.getAccountBalance(3);
-        System.out.println("////Validate PIN test////");
-        bank.validatePIN(1, 1234);
-        bank.validatePIN(2, 1213);
-        System.out.println("////transfer and withdraw limit test////");
-        account.setTransferLimit(100);
-        account.setWithdrawLimit(100);
-        account.interAccountTransfer(account2, 200);
-        account.withdraw(200);
-        bank.getAccountBalance(1);
-        System.out.println("////Remove account test////");
-        bank.removeAccount(account);
-        bank.getAccountNumbers();
+        bank.getAccountBalance(1,"SGD");
+        bank.getAccountBalance(1,"USD");
     }
 }
