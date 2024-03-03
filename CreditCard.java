@@ -1,29 +1,38 @@
 /**
  * </p>
- * Description: The CreditCard class is
+ * Description: The CreditCard class represents a credit card
+ * with attributes such as card number, spending limit, amount spent
+ * as well as methods for payments and reward point calculations.
  */
 
+// Import libraries
 import java.util.Date;
 import java.util.Random;
 
 public class CreditCard {
     // Attributes
-    private long cardNo;
-    private Date expiryDate;
-    private long cvv;
-    private String cardType;
-    private double spendingLimit;
-    private double spentAmount;
-    private double paymentMade;
-    private double minPayment = 200.0;
-    private double rewardPoints;
-    private double availableBalance;
+    private long cardNo;                                    // Stores the card number
+    private Date expiryDate;                                // Stores the expiry date
+    private long cvv;                                       // Stores the cvv
+    private String cardType;                                // Stores the card type
+    private double spendingLimit;                           // Stores the card's spending limit
+    private double spentAmount;                             // Stores the amount spent on card
+    private double paymentMade;                             // Stores the payment amount towards the spent amount
+    private double minPayment = 200.0;                      // Stores the minimum payment to be made
+    private double rewardPoints;                            // Stores the reward points
 
-    //Classes
+    //Associations
     private Customer customer;
     private Account account;
 
-    // Constructor
+    /**
+     * Constructs a Credit Card instance that specifies the details of the credit card.
+     *
+     * @param customer The customer's details.
+     * @param account The account details associated with the customer.
+     * @param cardType The card type.
+     * @param expiryDate The card's expiry date.
+     */
     public CreditCard(Customer customer, Account account, String cardType, Date expiryDate){
         this.customer = customer;
         this.account = account;
@@ -32,46 +41,86 @@ public class CreditCard {
         this.cvv = generateCvv();
         this.cardType = cardType;
         this.spendingLimit = calcSpendingLimit();
-        //setSpentAmount(4000.0);
         this.rewardPoints = 0;
     }
 
+    /**
+     * Gets the card number.
+     *
+     * @return The card number.
+     */
     public long getCardNo(){
         return cardNo;
     }
 
+    /**
+     * Gets the card's expiry date.
+     *
+     * @return The card's expiry date.
+     */
     public Date getExpiryDate(){
         return expiryDate;
     }
 
+    /**
+     * Gets the card's cvv.
+     *
+     * @return The card's cvv.
+     */
     public long getCvv(){
         return cvv;
     }
 
+    /**
+     * Gets the card type.
+     *
+     * @return The card type.
+     */
     public String getCardType(){
         return cardType;
     }
 
+    /**
+     * Gets the card's spending limit.
+     *
+     * @return The card's spending limit.
+     */
     public double getSpendingLimit(){
         return spendingLimit;
     }
 
+    /**
+     * Gets the spent amount on the card.
+     *
+     * @return The spent amount.
+     */
     public double getSpentAmount(){
         return spentAmount;
     }
 
-    public void setSpentAmount(double spentAmount){
-        this.spentAmount = spentAmount;
-    }
-
+    /**
+     * Gets the amount to make payment.
+     *
+     * @return The payment made.
+     */
     public double getPaymentMade(){
         return paymentMade;
     }
 
+    /**
+     * Sets the payment amount.
+     *
+     * @param paymentMade The payment made.
+     */
     public void setPaymentMade(double paymentMade){
         this.paymentMade = paymentMade;
     }
 
+    /**
+     * Generates a 16-digit number for the credit card.
+     *
+     * @return The 16-digit card number.
+     */
     public long generateCardNo(){
         Random random = new Random();
         long cardNo = 0;
@@ -81,6 +130,11 @@ public class CreditCard {
         return cardNo;
     }
 
+    /**
+     * Generates a 3-digit Card Verification Value (CVV).
+     *
+     * @return The 3-digit cvv number.
+     */
     public long generateCvv(){
         Random random = new Random();
         long cvv = 0;
@@ -90,11 +144,22 @@ public class CreditCard {
         return cvv;
     }
 
+    /**
+     * Calculates the credit card's spending limit.
+     * Spending limit is 4x the user's income.
+     *
+     * @return The spending limit.
+     */
     public int calcSpendingLimit(){
         int income = customer.getIncome();
         return 4*income;
     }
 
+    /**
+     * Makes payment towards the spent amount balance.
+     *
+     * @param paymentMade The payment amount.
+     */
     public void makePayment(double paymentMade){
         double balance = account.getBalance();
         if (balance < paymentMade) {
@@ -108,10 +173,22 @@ public class CreditCard {
         spentAmount -= paymentMade;
     }
 
+    /**
+     * Calculates the reward points based on the spent amount.
+     * Reward points are 1.4 per $1 spent.
+     *
+     * @param spentAmount
+     * @return The reward points.
+     */
     public double calcRewardPoints(double spentAmount){
-        return spentAmount * 1.4;
+        rewardPoints = spentAmount * 1.4;
+        return rewardPoints;
     }
 
+    /**
+     * Displays an overview of the credit card information
+     * such as the card number, card type, spending limit, spent amount and reward points.
+     */
     public void DisplayInfo(){
         System.out.print("\n\nCredit Card Information\n");
         System.out.println("Card Number: " + this.cardNo);
