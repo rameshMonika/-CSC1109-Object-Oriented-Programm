@@ -75,11 +75,12 @@
       * Gets the account balance and prints the following accountNumber's balance.
       * 
       * @param accountNumber The following accountNumber to find the balance.
+      * @param currency      The currency of the balance to show
       */
-     public void getAccountBalance(int accountNumber, Currency currency) {
+     public void getAccountBalance(int accountNumber, String currency) {
          for (Account account : accounts) {
              if (account.getAccountNumber() == accountNumber) {
-                 System.out.println("Account balance for account " + accountNumber + " is " + account.getBalance(Currency.SGD));
+                 System.out.println("Account balance for account " + accountNumber + " is " + account.getBalance(currency));
              }
          }
      }
