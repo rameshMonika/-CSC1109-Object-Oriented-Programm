@@ -48,7 +48,7 @@ public class CreditCard {
      *
      * @return The card number.
      */
-    public long getCardNateo(){
+    public long getCardNo(){
         return cardNo;
     }
 
