@@ -1,8 +1,9 @@
 /**
  * Description: Represents a currency exchange system with predefined exchange rates.
-*/
+ */
 
 // Imported libraries
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -56,6 +57,21 @@ public class Exchange {
             System.out.println("Exchange rate for " + c + ": " + currencyMap.get(c));
         } else {
             System.out.println("Exchange rate not available for " + c);
+        }
+    }
+
+    /**
+     * Converts the specified amount from the given currency to USD.
+     *
+     * @param currency The currency from which to convert.
+     * @param amount   The amount to convert.
+     * @return The converted amount in USD, or null if the currency is not supported.
+     */
+    public Double convertCurrency(String currency, Double amount) {
+        if (currencyMap.containsKey(currency)) {
+            return amount * currencyMap.get(currency);
+        } else {
+            return null;
         }
     }
 }
