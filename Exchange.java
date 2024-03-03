@@ -58,7 +58,7 @@ public class Exchange {
      * @param currency The currency from which to convert.
      * @param amount   The amount to convert.
      * @return The converted amount in USD, or null if the currency is not supported
-     *         or the amount is not positive.
+     * or the amount is not positive.
      */
     public Double convertCurrency(String currency, Double amount) {
         if (amount <= 0 || !currencyMap.containsKey(currency)) {
