@@ -7,6 +7,10 @@ import java.util.*;
  * Description: The Account class represents an account
  * that manages an accounts setting and balance
  */
+
+/**
+ * The Account class represents an account that manages an accounts setting and balance
+ */
 public class Account {
     private int accountNumber;
     private HashMap<String, Double> balance = new HashMap<>();
@@ -17,6 +21,13 @@ public class Account {
     private double debt;
     private String currency;
 
+    /**
+     * Default constructor that initializes the Account object with a customer, account number and PIN.
+     * 
+     * @param customer The customer of the account.
+     * @param accountNumber The account number.
+     * @param PIN The PIN of the account.
+     */
     public Account(Customer customer, int accountNumber, int PIN) {
         this.accountNumber = accountNumber;
         this.customer = customer;
@@ -77,6 +88,15 @@ public class Account {
      */
     public void setBalance(String currency, double balance) {
         this.balance.put(currency, balance);
+    }
+    /**
+     * Adds the amount into the balance.
+     * 
+     * @param currency the currency to add the balance.
+     * @param balance the amount to be added into the balance.
+     */
+    public void addBalance(String currency, double balance) {
+        this.balance.put(currency, this.balance.get(currency) + balance);
     }
 
     /**

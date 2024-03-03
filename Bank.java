@@ -8,13 +8,24 @@
  * that manages a ArrayList of accounts, PIN validation
  * and account balance.
  */
+
+/**
+ * The Bank class represents a bank that manages a list of accounts, PIN validation, and account balance.
+ */
  public class Bank {
      private ArrayList<Account> accounts;
      private String bankName;
- 
+     private Exchange exchange;
+    
+    /**
+      * Default constructor that initializes the Bank object with a bank name and an empty list of accounts.
+      * 
+      * @param bankName The name of the bank.
+      */
      public Bank(String bankname) {
          this.bankName = bankName;
          this.accounts = new ArrayList<>();
+         this.exchange = new Exchange();
      }
  
      /**
@@ -81,6 +92,23 @@
          for (Account account : accounts) {
              if (account.getAccountNumber() == accountNumber) {
                  System.out.println("Account balance for account " + accountNumber + " is " + account.getBalance(currency));
+             }
+         }
+     }
+    /**
+      * Converts the given amount from the given currency to SGD.
+      * 
+      * @param accountNumber The account number to convert the currency.
+      * @param currency      The currency of the amount to be converted.
+      * @param amount        The amount to be converted.
+      */
+     public void convertCurrency(int accountNumber, String currency, double amount){
+         for (Account account : accounts) {
+             if (account.getAccountNumber() == accountNumber) {
+                 System.out.println("Converted amount is " + exchange.convertCurrency(currency, amount));
+                 account.setBalance("SGD", account.getBalance("SGD") - amount);
+                 account.addBalance(currency, exchange.convertCurrency(currency, amount));
+
              }
          }
      }
