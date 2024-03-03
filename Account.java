@@ -20,6 +20,7 @@ public class Account {
     private double transferLimit;
     private double debt;
     private String currency;
+    //private HashMap<int , Loan> loans = new HashMap<>();
 
     /**
      * Default constructor that initializes the Account object with a customer, account number and PIN.
@@ -236,7 +237,6 @@ public class Account {
     public String getCurrency() {
         return currency;
     }
-
     /**
      * Set the currency code.
      * 
@@ -245,6 +245,4 @@ public class Account {
     public void setCurrency(String currency) {
         this.currency = currency;
     }
-
-
 }
