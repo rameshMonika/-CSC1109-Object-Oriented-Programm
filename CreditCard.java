@@ -48,7 +48,7 @@ public class CreditCard {
      *
      * @return The card number.
      */
-    public long getCardNo(){
+    public long getCardNateo(){
         return cardNo;
     }
 
@@ -161,8 +161,8 @@ public class CreditCard {
      *
      * @return The spending limit.
      */
-    public int calcSpendingLimit(){
-        int income = customer.getIncome();
+    public double calcSpendingLimit(){
+        double income = customer.getIncome();
         return 4*income;
     }
 
@@ -200,7 +200,7 @@ public class CreditCard {
      * Displays an overview of the credit card information
      * such as the card number, card type, spending limit, spent amount and reward points.
      */
-    public void DisplayInfo(){
+    public void displayInfo(){
         System.out.print("\n\nCredit Card Information\n");
         System.out.println("Card Number: " + this.cardNo);
         System.out.println("Card Type: " + this.cardType);
