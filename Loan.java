@@ -18,6 +18,7 @@ public class Loan {
   private double monthlyPayment;
   private String loanType;
   private Guarantor guarantorDetails;
+  private Account account;
 
    /**
    * Constructs a new Loan object with the specified parameters.
@@ -29,7 +30,7 @@ public class Loan {
    * @param guarantorDetails The details of the guarantor.
    */
 
-  public Loan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails){
+  public Loan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,Account account){
     lID++;
     this.loanID = lID;
     this.principal = principal;
@@ -39,6 +40,7 @@ public class Loan {
     this.guarantorDetails = guarantorDetails;
     this.balance = principal + principal * interestRate;
     this.monthlyPayment = principal * (interestRate/12)/(1-pow(1+interestRate/12, -duration));
+    this.account=account;
   }
   /**
    * Gets the loan amount owned by customer.

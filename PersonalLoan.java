@@ -14,14 +14,16 @@ public class PersonalLoan extends Loan {
      * @param duration          The duration of the loan.
      * @param loanType          The type of loan.
      * @param guarantorDetails  The details of the guarantor.
+     * @param account           The details of the guarantor.
      * @param personalIncome    The current monthly personal income.
      * @param pastAnnualIncome The past annual income of the applicant.
      */
-    public PersonalLoan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails, double personalIncome, double annualIncome) {
-        super(principal, interestRate, duration, loanType, guarantorDetails);
+    public PersonalLoan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,Account account, double personalIncome, double annualIncome) {
+        super(principal, interestRate, duration, loanType, guarantorDetails,account);
         this.personalIncome = personalIncome;
         this.annualIncome = annualIncome;
     }
+
 
     /**
      * Checks if the person is eligible for the loan based on their current monthly income and past annual income.

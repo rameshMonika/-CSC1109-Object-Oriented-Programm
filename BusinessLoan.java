@@ -17,8 +17,8 @@ public class BusinessLoan extends Loan {
      * @param uniqueEN          The unique enterprise number associated with the business.
      * @param annualProfit      The annual profit of the business.
      */
-    public BusinessLoan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails, String uniqueEN, double annualProfit) {
-        super(principal, interestRate, duration, loanType, guarantorDetails);
+    public BusinessLoan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,Account account, String uniqueEN, double annualProfit) {
+        super(principal, interestRate, duration, loanType, guarantorDetails,account);
         this.uniqueEN = uniqueEN;
         this.annualProfit = annualProfit;
     }
