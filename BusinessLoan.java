@@ -30,6 +30,9 @@ public class BusinessLoan extends Loan {
      */
     public Boolean isEligibleForLoan() {
         // Eligibility logic
+        if(this.principal > 50000){
+            return true;
+        }
         return true;
     }
 }

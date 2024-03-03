@@ -11,7 +11,7 @@ public class Loan {
 
   // Instance variables
   private int loanID;
-  private double principal;
+  protected double principal;
   private double balance;
   private float interestRate;
   private int duration;
@@ -177,20 +177,12 @@ public class Loan {
    * @param guarantorDetails The guarantor object whose details are to be displayed.
    */
 
-  public void showGuarantorDetails(Guarantor guarantorDetails) {
+  public Guarantor showGuarantorDetails(Guarantor guarantorDetails) {
 
     System.out.println("Guarantor is " + guarantorDetails.getGuarantorName());
 
-  }
+    return guarantorDetails;
 
-  /**
-   * Check if customer is eligible for loan.
-   * 
-   * @return if customer is eligible for loan.
-   */
-
-  public Boolean isEligibleForLoan() {
-    return true;
   }
 
 }

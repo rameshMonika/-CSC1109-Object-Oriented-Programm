@@ -17,13 +17,15 @@ public class Customer{
     private Date dateOfBirth;
     private int contactNo;
     private String email;
+    private int age;
 
-    public Customer(String NRIC, String name, Date dateOfBirth, int contactNo, String email){
+    public Customer(String NRIC, String name, Date dateOfBirth, int contactNo, String email,int age){
         this.NRIC = NRIC;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.contactNo = contactNo;
         this.email = email;
+        this.age=age;
     }
 
     /**
@@ -105,5 +107,23 @@ public class Customer{
      */
     public void setEmail(String email){
         this.email = email;
+    }
+
+     /**
+     * Gets the customer's age
+     * 
+     * @return The customer's age
+     */
+    public int getAge(){
+        return this.age;
+    }
+
+    /**
+     * Sets the customer's age
+     * 
+     * @param age The customer's age
+     */
+    public void setAge(int age){
+        this.age = age;
     }
 }

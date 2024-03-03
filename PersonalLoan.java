@@ -4,7 +4,7 @@
  */
 public class PersonalLoan extends Loan {
     private double personalIncome;
-    private double pastAnnualIncome;
+    private double annualIncome;
 
     /**
      * Constructs a new PersonalLoan object with the specified parameters.
@@ -17,10 +17,10 @@ public class PersonalLoan extends Loan {
      * @param personalIncome    The current monthly personal income.
      * @param pastAnnualIncome The past annual income of the applicant.
      */
-    public PersonalLoan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails, double personalIncome, double pastAnnualIncome) {
+    public PersonalLoan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails, double personalIncome, double annualIncome) {
         super(principal, interestRate, duration, loanType, guarantorDetails);
         this.personalIncome = personalIncome;
-        this.pastAnnualIncome = pastAnnualIncome;
+        this.annualIncome = annualIncome;
     }
 
     /**
@@ -28,8 +28,13 @@ public class PersonalLoan extends Loan {
      *
      * @return true if the person is eligible for the loan, false otherwise.
      */
-    public Boolean isEligibleForLoan() {
-        // Eligibility logic
-        return true;
+    public Boolean isEligibleForLoan(Customer customer) {
+        // Eligibility logic 
+        if(this.annualIncome>20000 && customer.getAge()>21){
+            return true;
+        }
+
+        return false;
+        
     }
 }

@@ -30,6 +30,10 @@ public class StudyLoan extends Loan {
      */
     public Boolean isEligibleForLoan() {
         // Eligibility logic
-        return true;
+        if(this.principal > 11350){
+            return true;
+        }
+    
+        return false;
     }
 }
