@@ -1,24 +1,43 @@
+/**
+ * Description: Represents a currency exchange system with predefined exchange rates.
+*/
+
+// Imported libraries
 import java.util.HashMap;
 import java.util.Map;
 
-/** The Exchange class represents a currency exchange system with predefined exchange rates. */
+/**
+ * The Exchange class facilitates currency exchange with predefined exchange
+ * rates.
+ * It supports four different currencies: USD, JPY, THB, and MYR.
+ */
+
 public class Exchange {
 
     /**
      * Enum representing different currencies.
-    */
+     */
     public enum Currency {
         USD, JPY, THB, MYR
     }
 
     /**
      * A map to store exchange rates for different currencies.
-    */
+     */
     private Map<Currency, Double> currencyMap;
 
     /**
-     * Default constructor that initializes the Exchange object with predefined exchange rates.
-    */
+     * Default constructor that initializes the Exchange object with predefined
+     * exchange rates.
+     * <p>
+     * The default constructor initializes the exchange rates for four different
+     * currencies: USD, JPY, THB, and MYR.
+     * The exchange rates are set as follows:
+     * - USD: 0.68653311
+     * - JPY: 111.67136
+     * - THB: 26.69023
+     * - MYR: 3.5286746
+     */
     public Exchange() {
         currencyMap = new HashMap<>();
         currencyMap.put(Currency.USD, 0.68653311);
