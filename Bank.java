@@ -76,10 +76,10 @@
       * 
       * @param accountNumber The following accountNumber to find the balance.
       */
-     public void getAccountBalance(int accountNumber, String currency) {
+     public void getAccountBalance(int accountNumber, Currency currency) {
          for (Account account : accounts) {
              if (account.getAccountNumber() == accountNumber) {
-                 System.out.println("Account balance for account " + accountNumber + " is " + account.getBalance(currency));
+                 System.out.println("Account balance for account " + accountNumber + " is " + account.getBalance(Currency.SGD));
              }
          }
      }

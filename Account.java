@@ -7,15 +7,23 @@ import java.util.*;
  * Description: The Account class represents an account
  * that manages an accounts setting and balance
  */
+enum Currency {
+    SGD,
+    MYR,
+    JPY,
+    USD,
+    EUR
+}
+
 public class Account {
     private int accountNumber;
-    private HashMap<String, Double> balance = new HashMap<>();
+    private HashMap<Currency, Double> balance = new HashMap<>();
     private Customer customer;
     private int PIN;
     private double withdrawLimit;
     private double transferLimit;
     private double debt;
-    private String currency;
+    
 
     public Account(Customer customer, int accountNumber, int PIN) {
         this.accountNumber = accountNumber;
@@ -24,12 +32,11 @@ public class Account {
         this.withdrawLimit = 1000;
         this.transferLimit = 1000;
         this.debt = 0;
-        this.currency = "SGD";
-        this.balance.put("SGD", 0.0);
-        this.balance.put("USD", 0.0);
-        this.balance.put("EUR", 0.0);
-        this.balance.put("JPY", 0.0);
-        this.balance.put("MYR", 0.0);
+        this.balance.put(Currency.SGD, 0.0);
+        this.balance.put(Currency.USD, 0.0);
+        this.balance.put(Currency.EUR, 0.0);
+        this.balance.put(Currency.JPY, 0.0);
+        this.balance.put(Currency.MYR, 0.0);
     }
 
     /**
@@ -65,8 +72,8 @@ public class Account {
      * @param currency Get the balance based on the currency provided.
      * @return The account's balance.
      */
-    public double getBalance(String currency) {
-        return balance.get(currency);
+    public double getBalance(Currency currency) {
+        return balance.get(Currency.SGD);
     }
 
     /**
@@ -75,7 +82,7 @@ public class Account {
      * @param currency the currency to set the balance.
      * @param balance the amount to set the balance.
      */
-    public void setBalance(String currency, double balance) {
+    public void setBalance(Currency currency, double balance) {
         this.balance.put(currency, balance);
     }
 
@@ -139,8 +146,8 @@ public class Account {
      * @param amount the value to be added into the balance.
      */
     public void deposit(double amount) {
-        double temp = balance.get("SGD") + amount;
-        balance.put("SGD", temp);
+        double temp = balance.get(Currency.SGD) + amount;
+        balance.put(Currency.SGD, temp);
     }
 
     /**
@@ -149,15 +156,15 @@ public class Account {
      * @param amount the value to be deducted from the balance.
      */
     public void withdraw(double amount) {
-        double temp = balance.get("SGD");
+        double temp = balance.get(Currency.SGD);
 
         if (amount > withdrawLimit) {
             System.out.println("Withdraw limit exceeded");
-        } else if (amount > balance.get("SGD")) {
+        } else if (amount > temp) {
             System.out.println("Insufficient funds");
         } else {
             temp -= amount;
-            balance.put("SGD", temp);
+            balance.put(Currency.SGD, temp);
         }
     }
 
@@ -169,7 +176,7 @@ public class Account {
      */
     public void interAccountTransfer(Account account, double amount){
         if(account.getCustomerIC().equals(customer.getNRIC())){
-            double balanceSGD = balance.get("SGD");
+            double balanceSGD = balance.get(Currency.SGD);
             if(amount > transferLimit){
                 System.out.println("Transfer limit exceeded");
             }
@@ -178,7 +185,7 @@ public class Account {
             }
             else{
                 balanceSGD -= amount;
-                this.balance.put("SGD", balanceSGD);
+                this.balance.put(Currency.SGD, balanceSGD);
                 account.deposit(amount);
             }
         }
@@ -194,7 +201,7 @@ public class Account {
      * @param amount the value to be transfered into the given account.
      */
     public void thirdPartyTransfer(Account account, double amount){
-        double balanceSGD = balance.get("SGD");
+        double balanceSGD = balance.get(Currency.SGD);
         if(amount > transferLimit){
             System.out.println("Transfer limit exceeded");
         }
@@ -203,27 +210,9 @@ public class Account {
         }
         else{
             balanceSGD -= amount;
-            this.balance.put("SGD", balanceSGD);
+            this.balance.put(Currency.SGD, balanceSGD);
             account.deposit(amount);
         }
-    }
-
-    /**
-     * Gets the currency code.
-     * 
-     * @return the currency.
-     */
-    public String getCurrency() {
-        return currency;
-    }
-
-    /**
-     * Set the currency code.
-     * 
-     * @param currency the value to set to Currency.
-     */
-    public void setCurrency(String currency) {
-        this.currency = currency;
     }
 
 
