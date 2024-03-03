@@ -11,24 +11,26 @@
 import java.util.Date;
 
 public class Customer{
-    // var name nric
+    // Attributes
     private String NRIC;
     private String name;
     private Date dateOfBirth;
     private int contactNo;
     private String email;
+    private int income;
 
-    public Customer(String NRIC, String name, Date dateOfBirth, int contactNo, String email){
+    public Customer(String NRIC, String name, Date dateOfBirth, int contactNo, String email, int income){
         this.NRIC = NRIC;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.contactNo = contactNo;
         this.email = email;
+        this.income = income;
     }
 
     /**
      * Gets the customer's name
-     * 
+     *
      * @return The customer's name
      */
     public String getName(){
@@ -37,7 +39,7 @@ public class Customer{
 
     /**
      * Sets the customer's name
-     * 
+     *
      * @param name The customer's name
      */
     public void setName(String name){
@@ -46,7 +48,7 @@ public class Customer{
 
     /**
      * Gets the customer's NRIC
-     * 
+     *
      * @return The customer's NRIC
      */
     public String getNRIC(){
@@ -55,7 +57,7 @@ public class Customer{
 
     /**
      * Gets the customer's Date of Birth
-     * 
+     *
      * @return The customer's Date of Birth
      */
     public Date getDob(){
@@ -64,7 +66,7 @@ public class Customer{
 
     /**
      * Sets the customer's Date of Birth
-     * 
+     *
      * @param dateOfBirth The customer's Date of Birth
      */
     public void setDob(Date dateOfBirth){
@@ -73,7 +75,7 @@ public class Customer{
 
     /**
      * Gets the customer's Contact Number
-     * 
+     *
      * @return The customer's Contact Number
      */
     public int getContactNo(){
@@ -82,7 +84,7 @@ public class Customer{
 
     /**
      * Sets the customer's Contact Number
-     * 
+     *
      * @param contactNo The customer's Contact Number
      */
     public void setContactNo(int contactNo){
@@ -91,7 +93,7 @@ public class Customer{
 
     /**
      * Gets the customer's email
-     * 
+     *
      * @return The customer's email
      */
     public String getEmail(){
@@ -100,10 +102,27 @@ public class Customer{
 
     /**
      * Sets the customer's email
-     * 
+     *
      * @param email The customer's email
      */
     public void setEmail(String email){
         this.email = email;
+    }
+    /**
+     * Gets the customer's income
+     *
+     * @return The customer's income
+     */
+    public int getIncome(){
+        return income;
+    }
+
+    /**
+     * Sets the customer's income
+     *
+     * @param income The customer's income
+     */
+    public void setIncome(int income){
+        this.income = income;
     }
 }
