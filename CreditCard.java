@@ -6,13 +6,13 @@
  */
 
 // Import libraries
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Random;
 
 public class CreditCard {
     // Attributes
     private long cardNo;                                    // Stores the card number
-    private Date expiryDate;                                // Stores the expiry date
+    private LocalDate expiryDate;                           // Stores the expiry date
     private long cvv;                                       // Stores the cvv
     private String cardType;                                // Stores the card type
     private double spendingLimit;                           // Stores the card's spending limit
@@ -31,15 +31,14 @@ public class CreditCard {
      * @param customer The customer's details.
      * @param account The account details associated with the customer.
      * @param cardType The card type.
-     * @param expiryDate The card's expiry date.
      */
-    public CreditCard(Customer customer, Account account, String cardType, Date expiryDate){
+    public CreditCard(Customer customer, Account account, String cardType){
         this.customer = customer;
         this.account = account;
-        this.cardNo = generateCardNo();
-        this.expiryDate = expiryDate;
-        this.cvv = generateCvv();
         this.cardType = cardType;
+        this.cardNo = generateCardNo();
+        this.cvv = generateCvv();
+        this.expiryDate = generateExpiryDate();
         this.spendingLimit = calcSpendingLimit();
         this.rewardPoints = 0;
     }
@@ -58,7 +57,7 @@ public class CreditCard {
      *
      * @return The card's expiry date.
      */
-    public Date getExpiryDate(){
+    public LocalDate getExpiryDate(){
         return expiryDate;
     }
 
@@ -145,6 +144,18 @@ public class CreditCard {
     }
 
     /**
+     * Generates an expiry date which is 5 years
+     * from creation of credit card.
+     *
+     * @return The card's expiry date.
+     */
+    public LocalDate generateExpiryDate(){
+        LocalDate current = LocalDate.now();
+        LocalDate expiryDate = current.plusYears(5);
+        return expiryDate;
+    }
+
+    /**
      * Calculates the credit card's spending limit.
      * Spending limit is 4x the user's income.
      *
@@ -194,6 +205,7 @@ public class CreditCard {
         System.out.println("Card Number: " + this.cardNo);
         System.out.println("Card Type: " + this.cardType);
         System.out.println("Card Verification Value: " + this.cvv);
+        System.out.println("Card Expiry Date (YYYY/MM/DD): " + this.expiryDate);
         System.out.print("Spending Limit: $" + this.spendingLimit);
         System.out.print("\nSpent Amount: $" + this.spentAmount);
         System.out.print("\nReward Points: " + calcRewardPoints(this.spentAmount));
