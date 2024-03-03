@@ -8,7 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * The Exchange class facilitates currency exchange with predefined exchange rates.
+ * The Exchange class facilitates currency exchange with predefined exchange
+ * rates.
  * It supports four different currencies: USD, JPY, THB, and MYR.
  */
 public class Exchange {
@@ -51,17 +52,18 @@ public class Exchange {
     }
 
     /**
-     * Converts the specified amount from the given currency to USD.
+     * Converts the specified amount from the given currency to USD using predefined
+     * exchange rates.
      *
      * @param currency The currency from which to convert.
      * @param amount   The amount to convert.
-     * @return The converted amount in USD, or null if the currency is not supported.
+     * @return The converted amount in USD, or null if the currency is not supported
+     *         or the amount is not positive.
      */
     public Double convertCurrency(String currency, Double amount) {
-        if (currencyMap.containsKey(currency)) {
-            return amount * currencyMap.get(currency);
-        } else {
+        if (amount <= 0 || !currencyMap.containsKey(currency)) {
             return null;
         }
+        return amount * currencyMap.get(currency);
     }
 }
