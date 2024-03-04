@@ -11,6 +11,10 @@
 
 import java.util.Date;
 
+/**
+ * The Customer class represents the customer's personal information with methods
+ * to access and modify the information.
+ */
 public class Customer {
     // var name nric
     private String NRIC;
@@ -21,6 +25,17 @@ public class Customer {
     private int age;
     private double income;
 
+    /**
+     * Constructs a customer object with the specified parameters.
+     * 
+     * @param NRIC        The NRIC of the customer.
+     * @param name        The name of the customer.
+     * @param dateOfBirth The date of birth of the customer.
+     * @param contactNo   The contact number of the customer.
+     * @param email       The email of the customer.
+     * @param age         The age of the customer.
+     * @param income      The income of the customer.
+     */
     public Customer(String NRIC, String name, Date dateOfBirth, int contactNo, String email, int age, double income) {
         this.NRIC = NRIC;
         this.name = name;

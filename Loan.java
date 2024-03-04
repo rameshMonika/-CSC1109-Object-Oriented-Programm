@@ -11,6 +11,9 @@ public class Loan {
 
   // Instance variables
   private int loanID;
+  /**
+   * The principal amount of the loan.
+   */
   protected double principal;
   private double balance;
   private float interestRate;
@@ -28,6 +31,7 @@ public class Loan {
    * @param duration         The duration of the loan.
    * @param loanType         The type of loan.
    * @param guarantorDetails The details of the guarantor.
+   * @param account          The account object associated with the loan.
    */
 
   public Loan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,
@@ -180,6 +184,7 @@ public class Loan {
    *
    * @param guarantorDetails The guarantor object whose details are to be
    *                         displayed.
+   * @return The guarantor object whose details are to be displayed.
    */
 
   public Guarantor showGuarantorDetails(Guarantor guarantorDetails) {

@@ -14,6 +14,7 @@ public class StudyLoan extends Loan {
      * @param duration         The duration of the loan.
      * @param loanType         The type of loan.
      * @param guarantorDetails The details of the guarantor.
+     * @param account          The account object associated with the loan.
      * @param studentID        The ID of the student.
      * @param institution      The educational institution associated with the loan.
      */

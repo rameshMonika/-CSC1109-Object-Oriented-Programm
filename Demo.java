@@ -2,7 +2,16 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The Demo class contains the main method to test the functionality of the
+ * banking system.
+ */
 public class Demo {
+    /**
+     * The main method to test the functionality of the banking system.
+     * 
+     * @param args The command-line arguments.
+     */
     public static void main(String[] args) {
 
         // naming the bank

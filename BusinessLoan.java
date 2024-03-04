@@ -14,6 +14,7 @@ public class BusinessLoan extends Loan {
      * @param duration         The duration of the loan.
      * @param loanType         The type of loan.
      * @param guarantorDetails The details of the guarantor.
+     * @param account          The account object associated with the loan.
      * @param uniqueEN         The unique enterprise number associated with the
      *                         business.
      * @param annualProfit     The annual profit of the business.

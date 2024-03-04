@@ -17,9 +17,9 @@ public class Account {
     private int PIN;
     private double withdrawLimit;
     private double transferLimit;
-    // private double debt;
     private Loan loan;
     private CreditCard cc;
+    // private double debt;
     // private HashMap<int, Loan> loans = new HashMap<>();
 
     /**
@@ -30,7 +30,6 @@ public class Account {
      * @param accountNumber The account number.
      * @param PIN           The PIN of the account.
      */
-    
     public Account(Customer customer, int accountNumber, int PIN) {
         this.accountNumber = accountNumber;
         this.customer = customer;
@@ -46,6 +45,11 @@ public class Account {
         this.balance.put(Currency.USD, 0.0);
     }
 
+    /**
+     * Creates a getter for the balance map.
+     * 
+     * @return The balance.
+     */
     public HashMap<Currency, Double> getBalanceMap(){
         return balance;
     }
@@ -54,8 +58,6 @@ public class Account {
      * 
      * @return The account's number.
      *         Gets the account number of the account.
-     *
-     * @return The account.
      */
     public int getAccountNumber() {
         return accountNumber;
@@ -82,13 +84,12 @@ public class Account {
     /**
      * Gets the Account balance.
      * 
-     * @param currency2 Get the balance based on the currency provided.
+     * @param currency Get the balance based on the currency provided.
      * @return The account's balance.
      */
     public double getBalance(Currency currency) {
         return balance.get(currency);
     }
-
     /**
      * Sets the Account balance.
      * 
@@ -236,14 +237,14 @@ public class Account {
     /**
      * Sets the Loan.
      * 
-     * @param loan
+     * @param loan the loan details.
      */
     public void setLoan(Loan loan) {
         this.loan = loan;
     }
 
     /**
-     * Gets the loan.
+     * Gets the Loan.
      * 
      * @return the loan details.
      */
@@ -254,9 +255,7 @@ public class Account {
     /**
      * Sets the Credit Card.
      * 
-     * @param customer The customer's details.
-     * @param account  The account details associated with the customer.
-     * @param cardType The card type.
+     * @param cardType the type of credit card.
      */
     public void setCC(CreditCardType cardType) {
         cc = new CreditCard(accountNumber, customer, cardType);

@@ -25,8 +25,8 @@ public class Exchange {
      * currencies: USD, JPY, THB, and MYR.
      * The exchange rates are set as follows:
      * - USD: 0.68653311
+     * - EUR: 0.69
      * - JPY: 111.67136
-     * - THB: 26.69023
      * - MYR: 3.5286746
      */
     public Exchange() {
@@ -41,6 +41,7 @@ public class Exchange {
      * Retrieves and prints the exchange rate for a given currency.
      *
      * @param c The currency for which the exchange rate is requested.
+     * @return The exchange rate for the given currency, or 0 if the currency is not
      */
     public double getRate(Currency c) {
         if (currencyMap.containsKey(c)) {

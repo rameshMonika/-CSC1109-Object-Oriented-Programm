@@ -5,12 +5,17 @@
  */
 
 // Import libraries
-import java.time.LocalDate;
 //import java.util.Currency;
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Random;
 import java.util.Map;
 
+/**
+ * The CreditCard class represents a credit card with attributes such as card
+ * number, spending limit, amount spent as well as methods for payments and
+ * reward point calculations.
+ */
 public class CreditCard {
     // Attributes
     private String cardNo;                                    // Stores the card number
@@ -34,9 +39,12 @@ public class CreditCard {
     public HashMap<String, Transaction> pendingTransaction = new HashMap<>();
 
     /**
-     * Constructs a Credit Card instance that specifies the details of the credit card.
+     * Default constructor that initializes the CreditCard object with a customer,
+     * account number, and card type.
      *
-     * @param cardType The card type.
+     * @param accountNumber The account number.
+     * @param customer      The customer of the account.
+     * @param cardType      The card type.
      */
     public CreditCard(int accountNumber,Customer customer, CreditCardType cardType){
         this.customer = customer;
@@ -144,6 +152,8 @@ public class CreditCard {
     /**
      * Calculates the credit card's spending limit.
      * Spending limit is 4x the user's income.
+     * 
+     * @return The spending limit.
      */
     public double calcSpendingLimit(){
         double income = customer.getIncome();
@@ -226,7 +236,9 @@ public class CreditCard {
     /**
      * Checks if payment has been made.
      *
-     * @param statementId The payment amount.
+     * @param statement The payment amount.
+     * @param account The account.
+     * @return true if payment has been made, false otherwise.
      */
     //public boolean makePayment(String statementId){
     public boolean makePayment(MonthlyStatement statement, Account account){
