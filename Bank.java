@@ -111,17 +111,17 @@ public class Bank {
     public void convertCurrency(int accountNumber, Currency currency, double amount) {
         for (Account account : accounts) {
             if (account.getAccountNumber() == accountNumber) {
-                double temp = account.getBalance(currency);
+                double temp = account.getBalance(Currency.SGD);
                 if (temp < amount) {
                     System.out.println("Insufficient balance");
                     return;
                 }
 
-                //double convertedcurrency = exchange.convertCurrency(Currency.USD, amount);
-                double convertedcurrency = amount / exchange.getRate(currency);
-                System.out.println("Converted amount is " + Currency.SGD + String.format("%.2f", convertedcurrency));
-                account.setBalance(currency, temp - amount);
-                account.addBalance(Currency.SGD, convertedcurrency);
+                double convertedcurrency = exchange.convertCurrency(Currency.USD, amount);
+                //double convertedcurrency = amount / exchange.getRate(currency);
+                System.out.println("Converted amount is " + currency + String.format("%.2f", convertedcurrency));
+                account.setBalance(Currency.SGD, temp - amount);
+                account.addBalance(currency, convertedcurrency);
 
             }
         }
