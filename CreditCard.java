@@ -6,8 +6,10 @@
 
 // Import libraries
 import java.time.LocalDate;
+import java.util.Currency;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Map;
 
 public class CreditCard {
     // Attributes
@@ -20,10 +22,13 @@ public class CreditCard {
     private Double spendingLimit;                           // Stores the card's spending limit
     private Double totalAmount = 0.00;
     private Double rewardPoints = 0.00;                            // Stores the reward points
+    private int accountId;
 
     //Associations
     private Customer customer;
     private Account account;
+    private Account balance;
+    private Bank bank;
     public HashMap<String, MonthlyStatement> pendingMonthlyStatements;
     public HashMap<String, MonthlyStatement> pastMonthlyStatements;
     public HashMap<String, Transaction> pendingTransaction;
@@ -31,13 +36,11 @@ public class CreditCard {
     /**
      * Constructs a Credit Card instance that specifies the details of the credit card.
      *
-     * @param customer The customer's details.
-     * @param account The account details associated with the customer.
      * @param cardType The card type.
      */
-    public CreditCard(Customer customer, Account account, CreditCardType cardType){
-        this.customer = customer;
-        this.account = account;
+    public CreditCard(CreditCardType cardType){
+        //this.customer = customer;
+        this.accountId = account.getAccountNumber();
         this.cardType = cardType;
         this.cardNo = generateCardNo();
         this.cvv = generateCvv();
@@ -179,7 +182,6 @@ public class CreditCard {
                     }
                 }
         }
-
         return spendingLimit;
     }
 
@@ -230,8 +232,8 @@ public class CreditCard {
         MonthlyStatement statement = this.getPendingMonthlyStatement(statementId);
         Double pendingAmount = statement.getTotalAmount();
 
-        Account balance = Bank.getAccount(this.accountId).getBalanceMap();
-        Double balanceAmount = balance.get(Currency.SGD);
+        this.account.getBalance("SGD");
+        Double balanceAmount = balance.getBalance("SGD");
 
         if (balanceAmount > pendingAmount) {
             balance.computeIfPresent(Currency.SGD, (k, v) -> v - pendingAmount);
