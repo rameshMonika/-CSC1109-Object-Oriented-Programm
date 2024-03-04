@@ -1,0 +1,1 @@
+memberSearchIndex = [{"p":"<Unnamed>","c":"StudyLoan","l":"isEligibleForLoan()"},{"p":"<Unnamed>","c":"StudyLoan","l":"StudyLoan(double, float, int, String, Guarantor, Account, String, String)","u":"%3Cinit%3E(double,float,int,java.lang.String,Guarantor,Account,java.lang.String,java.lang.String)"}];updateSearchResults();
