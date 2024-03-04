@@ -1,5 +1,6 @@
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 /**
@@ -7,22 +8,24 @@ import java.util.UUID;
  */
 public class MonthlyStatement {
     private String statementId; // Unique identifier for the statement
-    private HashMap<String, Transaction> transactionMap; // Map to store transactions associated with the statement
+    private Map<String, Transaction> transactionMap; // Map to store transactions associated with the statement
     private Boolean paymentMade = false; // Indicates whether payment has been made for the statement
     private Double totalAmount = 0.00; // Total amount for the statement
     private Date statementDate; // Date of the statement
 
     /**
      * Constructs a monthly statement object.
-     * 
-     * @param totalAmount    Total amount for the statement.
+     *
      * @param transactionMap Map containing transactions associated with the
      *                       statement.
      */
-    public MonthlyStatement(Double totalAmount, HashMap<String, Transaction> transactionMap) {
+    public MonthlyStatement(Map<String, Transaction> transactionMap) {
         this.statementId = UUID.randomUUID().toString(); // Generate a unique statement ID
         this.statementDate = new Date(); // Set the statement date to the current date
         this.transactionMap = transactionMap; // Set the transaction map
+        for(Map.Entry<String, Transaction> transaction : transactionMap.entrySet()){
+            totalAmount += transaction.getValue().getAmount();
+        }
     }
 
     /**
@@ -40,6 +43,8 @@ public class MonthlyStatement {
      * @return The total amount for the statement.
      */
     public Double getTotalAmount() {
+
+       
         return totalAmount;
     }
 
@@ -74,7 +79,7 @@ public class MonthlyStatement {
      * 
      * @return A map containing all transactions associated with the statement.
      */
-    public HashMap<String, Transaction> getAllTransaction() {
+    public Map<String, Transaction> getAllTransaction() {
         return transactionMap;
     }
 

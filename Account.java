@@ -30,7 +30,7 @@ public class Account {
      * @param accountNumber The account number.
      * @param PIN           The PIN of the account.
      */
-
+    
     public Account(Customer customer, int accountNumber, int PIN) {
         this.accountNumber = accountNumber;
         this.customer = customer;
@@ -46,6 +46,9 @@ public class Account {
         this.balance.put(Currency.USD, 0.0);
     }
 
+    public HashMap<Currency, Double> getBalanceMap(){
+        return balance;
+    }
     /**
      * Gets the Account number.
      * 
@@ -255,8 +258,8 @@ public class Account {
      * @param account  The account details associated with the customer.
      * @param cardType The card type.
      */
-    public void setCC(Customer customer, Account account, CreditCardType cardType) {
-        cc = new CreditCard(customer, account, cardType);
+    public void setCC(CreditCardType cardType) {
+        cc = new CreditCard(accountNumber, customer, cardType);
     }
 
     /**

@@ -1,4 +1,6 @@
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Demo {
     public static void main(String[] args) {
@@ -66,12 +68,26 @@ public class Demo {
             System.out.println("Loan type: " + currentLoan.getLoanType() + " Amount due: " + currentLoan.getBalance());
 
         // creditcard
-        account.setCC(customer, account, CreditCardType.REGULAR);
-        account2.setCC(customer2, account2, CreditCardType.STUDENT);
+        account.setCC(CreditCardType.REGULAR);
+        account2.setCC(CreditCardType.STUDENT);
         CreditCard cc = account.getCC();
         System.out.println("account cc number " + cc.getCardNo() + " account cc type: " + cc.getCardType());
         cc = account2.getCC();
         System.out.println("account cc number " + cc.getCardNo() + " account cc type: " + cc.getCardType());
+        Transaction firstTransaction = new Transaction(10000.00);
+        Transaction secondTransaction = new Transaction(15000.00);
+        cc.makeTransaction(firstTransaction);
+        cc.makeTransaction(secondTransaction);
+        Map<String, Transaction> transactionHashmap = new HashMap<>();
+        transactionHashmap.put("1", firstTransaction);
+        transactionHashmap.put("2", secondTransaction);
+        MonthlyStatement monthlyStatement = new MonthlyStatement(transactionHashmap);
+        System.out.println("Monthly statement for " + account2.getAccountNumber() + "\nStatement ID:"
+                + monthlyStatement.getStatementId() + "\nTotal Amount:" + monthlyStatement.getTotalAmount());
+
+        System.out.println("Make payment? " + cc.makePayment(monthlyStatement, account2));
+        account2.addBalance(Currency.SGD, 200000);
+        System.out.println("Make payment? " + cc.makePayment(monthlyStatement, account2));
 
         // remove account
         System.out.println("////Remove account test////");

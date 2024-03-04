@@ -6,39 +6,41 @@
 
 // Import libraries
 import java.time.LocalDate;
+//import java.util.Currency;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.Map;
 
 public class CreditCard {
     // Attributes
-    private String cardNo; // Stores the card number
+    private String cardNo;                                    // Stores the card number
     private String cardPrepend = "2";
     private int cardLength = 16;
-    private LocalDate expiryDate; // Stores the expiry date
-    private String cvv; // Stores the cvv
-    private CreditCardType cardType; // Stores the card type
-    private Double spendingLimit; // Stores the card's spending limit
+    private LocalDate expiryDate;                           // Stores the expiry date
+    private String cvv;                                       // Stores the cvv
+    private CreditCardType cardType;                        // Stores the card type
+    private Double spendingLimit;                           // Stores the card's spending limit
     private Double totalAmount = 0.00;
-    private Double rewardPoints = 0.00; // Stores the reward points
+    private Double rewardPoints = 0.00;                            // Stores the reward points
+    private int accountId;
 
-    // Associations
+    //Associations
     private Customer customer;
     private Account account;
-    public HashMap<String, MonthlyStatement> pendingMonthlyStatements;
-    public HashMap<String, MonthlyStatement> pastMonthlyStatements;
-    public HashMap<String, Transaction> pendingTransaction;
+    private Account balance;
+    private Bank bank;
+    public HashMap<String, MonthlyStatement> pendingMonthlyStatements = new HashMap<>();
+    public HashMap<String, MonthlyStatement> pastMonthlyStatements = new HashMap<>();
+    public HashMap<String, Transaction> pendingTransaction = new HashMap<>();
 
     /**
-     * Constructs a Credit Card instance that specifies the details of the credit
-     * card.
+     * Constructs a Credit Card instance that specifies the details of the credit card.
      *
-     * @param customer The customer's details.
-     * @param account  The account details associated with the customer.
      * @param cardType The card type.
      */
-    public CreditCard(Customer customer, Account account, CreditCardType cardType) {
+    public CreditCard(int accountNumber,Customer customer, CreditCardType cardType){
         this.customer = customer;
-        this.account = account;
+        this.accountId = accountNumber;
         this.cardType = cardType;
         this.cardNo = generateCardNo();
         this.cvv = generateCvv();
@@ -51,7 +53,7 @@ public class CreditCard {
      *
      * @return The card number.
      */
-    public String getCardNo() {
+    public String getCardNo(){
         return cardNo;
     }
 
@@ -60,7 +62,7 @@ public class CreditCard {
      *
      * @return The card's expiry date.
      */
-    public LocalDate getExpiryDate() {
+    public LocalDate getExpiryDate(){
         return expiryDate;
     }
 
@@ -69,7 +71,7 @@ public class CreditCard {
      *
      * @return The card's cvv.
      */
-    public String getCvv() {
+    public String getCvv(){
         return cvv;
     }
 
@@ -78,7 +80,7 @@ public class CreditCard {
      *
      * @return The card type.
      */
-    public CreditCardType getCardType() {
+    public CreditCardType getCardType(){
         return cardType;
     }
 
@@ -87,7 +89,7 @@ public class CreditCard {
      *
      * @return The card's spending limit.
      */
-    public double getSpendingLimit() {
+    public double getSpendingLimit(){
         return spendingLimit;
     }
 
@@ -96,7 +98,7 @@ public class CreditCard {
      *
      * @return The 16-digit card number.
      */
-    public String generateCardNo() {
+    public String generateCardNo(){
         Random random = new Random();
         StringBuilder cardNumber = new StringBuilder();
         for (int i = 0; i < this.cardLength - this.cardPrepend.length(); i++) {
@@ -105,7 +107,7 @@ public class CreditCard {
         }
 
         cardNumber.insert(0, cardPrepend);
-        String cardNumberWithoutLastDigit = cardNumber.substring(0, cardNumber.length() - 1);
+        String cardNumberWithoutLastDigit = cardNumber.substring(0,cardNumber.length() - 1);
 
         int weight = 2;
         int sum = 0;
@@ -124,9 +126,8 @@ public class CreditCard {
      *
      * @return The 3-digit cvv number.
      */
-    public String generateCvv() {
-        return (Math.floor(Math.random() * 9) + "").concat(Math.floor(Math.random() * 9) + "")
-                .concat(Math.floor(Math.random() * 9) + "");
+    public String generateCvv(){
+        return (Math.floor(Math.random() * 9) + "").concat(Math.floor(Math.random() * 9) + "").concat(Math.floor(Math.random() * 9) + "");
     }
 
     /**
@@ -135,7 +136,7 @@ public class CreditCard {
      *
      * @return The card's expiry date.
      */
-    public LocalDate generateExpiryDate() {
+    public LocalDate generateExpiryDate(){
         LocalDate current = LocalDate.now();
         return current.plusYears(5);
     }
@@ -144,9 +145,9 @@ public class CreditCard {
      * Calculates the credit card's spending limit.
      * Spending limit is 4x the user's income.
      */
-    public double calcSpendingLimit() {
+    public double calcSpendingLimit(){
         double income = customer.getIncome();
-        switch (cardType) {
+        switch(cardType) {
             case STUDENT:
                 this.spendingLimit = 500.00;
                 break;
@@ -181,7 +182,6 @@ public class CreditCard {
                     }
                 }
         }
-
         return spendingLimit;
     }
 
@@ -227,20 +227,19 @@ public class CreditCard {
      * Checks if payment has been made.
      *
      * @param statementId The payment amount.
-     * @param account The account tied to the credit card.
      */
-    public boolean makePayment(String statementId, Account account) {
-        MonthlyStatement statement = this.getPendingMonthlyStatement(statementId);
+    //public boolean makePayment(String statementId){
+    public boolean makePayment(MonthlyStatement statement, Account account){
+        //MonthlyStatement statement = this.getPendingMonthlyStatement(statementId);
         Double pendingAmount = statement.getTotalAmount();
 
-        // Account balance = Bank.getAccount(accountNumber).getBalanceMap();
         Double balanceAmount = account.getBalance(Currency.SGD);
 
         if (balanceAmount > pendingAmount) {
-            account.computeIfPresent(Currency.SGD, (k, v) -> v - pendingAmount);
+            account.getBalanceMap().computeIfPresent(Currency.SGD, (k, v) -> v - pendingAmount);
             statement.paymentMade();
-            pendingMonthlyStatements.remove(statementId);
-            pastMonthlyStatements.put(statementId, statement);
+            pastMonthlyStatements.put(statement.getStatementId(), statement);
+            pendingTransaction.remove(statement.getStatementId());
             return true;
         }
 
@@ -252,7 +251,7 @@ public class CreditCard {
      *
      * @param transaction The transaction hashmap.
      */
-    public void makeTransaction(Transaction transaction) {
+    public void makeTransaction(Transaction transaction){
         totalAmount += transaction.getAmount();
         pendingTransaction.put(transaction.getTransactionId(), transaction);
         rewardPoints += (transaction.getAmount() * 1.4);
