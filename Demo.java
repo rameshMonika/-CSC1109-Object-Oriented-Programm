@@ -67,15 +67,18 @@ public class Demo {
         Guarantor g1 = new Guarantor("John Doe", 123456789.0, 50000.0, 123456789);
         // Create a PersonalLoan object
         PersonalLoan p1 = new PersonalLoan(10000.0, 3.4f, 12, "Personal", g1, account, 3000.0, 35000.0);
-
+        StudyLoan s1 = new StudyLoan(10000.0, 3.4f, 12, "Study", g1, account, "S1234567A", "NUS");
         bank.applyLoan(p1, 1);
-        Loan currentLoan = bank.getLoan(1);
-        ;
+        bank.applyLoan(s1, 1);
+        bank.getLoan(1);
+        
+       /*  Loan currentLoan = bank.getLoan(1);
+        
         if (currentLoan == null)
             System.out.println("there is no loan");
         else
             System.out.println("Loan type: " + currentLoan.getLoanType() + " Amount due: " + currentLoan.getBalance());
-
+ */
         // creditcard
         account.setCC(CreditCardType.REGULAR);
         account2.setCC(CreditCardType.STUDENT);

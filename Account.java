@@ -17,8 +17,9 @@ public class Account {
     private int PIN;
     private double withdrawLimit;
     private double transferLimit;
-    private Loan loan;
+    //private Loan loan;
     private CreditCard cc;
+    private ArrayList<Loan> loans;
     // private double debt;
     // private HashMap<int, Loan> loans = new HashMap<>();
 
@@ -37,7 +38,7 @@ public class Account {
         this.withdrawLimit = 1000;
         this.transferLimit = 1000;
         // this.debt = 0;
-        this.loan = null;
+        this.loans = new ArrayList<>();
         this.balance.put(Currency.SGD, 0.0);
         this.balance.put(Currency.EUR, 0.0);
         this.balance.put(Currency.JPY, 0.0);
@@ -240,7 +241,7 @@ public class Account {
      * @param loan the loan details.
      */
     public void setLoan(Loan loan) {
-        this.loan = loan;
+        loans.add(loan);
     }
 
     /**
@@ -248,8 +249,20 @@ public class Account {
      * 
      * @return the loan details.
      */
-    public Loan getLoan() {
-        return loan;
+    public Loan getLoan(int n) {
+        return loans.get(n);
+    }
+    /**
+     * Gets all the Loans.
+     * 
+     * @return the all loan details.
+     */
+    public Loan getAllLoans() {
+        for(int i=0; i<loans.size(); i++){
+            System.out.println(loans.get(i));
+            return loans.get(i);
+        }
+        return null;
     }
 
     /**
