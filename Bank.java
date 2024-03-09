@@ -14,38 +14,48 @@ import java.util.ArrayList;
  * validation, and account balance.
  */
 public class Bank {
-    private ArrayList<Account> accounts;
-    private String bankname;
-    private Exchange exchange;
+    private static ArrayList<Account> accounts = new ArrayList<>();
+    private static String bankname;
+    private static Exchange exchange = new Exchange();
 
-    /**
-     * Default constructor that initializes the Bank object with a bank name and an
-     * empty list of accounts.
-     * 
-     * @param bankname The name of the bank.
-     */
-    public Bank(String bankname) {
-        this.bankname = bankname;
-        this.accounts = new ArrayList<>();
-        this.exchange = new Exchange();
-    }
+    // /**
+    //  * Default constructor that initializes the Bank object with a bank name and an
+    //  * empty list of accounts.
+    //  * 
+    //  * @param bankname The name of the bank.
+    //  */
+    // public static Bank(String bankname) {
+    //     bankname = bankname;
+    //     accounts = new ArrayList<>();
+    //     exchange = new Exchange();
+    // }
 
     /**
      * Gets the name of the bank.
      * 
      * @return The name of the bank.
      */
-    public String getBankname() {
-        return this.bankname;
+    public static String getBankname() {
+        return bankname;
     }
+
+     /**
+     * Sets the name of the bank.
+     * 
+     * @params The name of the bank.
+     */
+    public static void setBankname(String bankName) {
+        bankname = bankName;
+    }
+
 
     /**
      * Adds an account to the bank.
      * 
      * @param account The account to add.
      */
-    public void addAccount(Account account) {
-        this.accounts.add(account);
+    public static void addAccount(Account account) {
+        accounts.add(account);
     }
 
     /**
@@ -53,17 +63,28 @@ public class Bank {
      * 
      * @param account The account to remove.
      */
-    public void removeAccount(Account account) {
-        this.accounts.remove(account);
+    public static void removeAccount(Account account) {
+        accounts.remove(account);
     }
 
     /**
-     * Gets account number from the account class and print the all accountNumbers
+     * returns a list of account number from the account class
      */
-    public void getAccountNumbers() {
-        for (Account account : accounts) {
-            System.out.println(account.getAccountNumber());
+    public static ArrayList<Account> getAccountNumbers() {
+        return accounts;
+    }
+
+    /**
+     * returns a account number from the account class
+     * 
+     * @params the account number tied to the account
+     */
+    public static Account getAccount(int accno) {
+        for (Account account : accounts){
+            if (accno == account.getAccountNumber())
+                return account;
         }
+        return null;
     }
 
     /**
@@ -73,16 +94,15 @@ public class Bank {
      * @param accountNumber The following accountNumber to validate pin.
      * @param PIN           The pin to validate.
      */
-    public void validatePIN(int accountNumber, int PIN) {
+    public static boolean validatePIN(int accountNumber, int PIN) {
         for (Account account : accounts) {
             if (account.getAccountNumber() == accountNumber) {
                 if (account.getPIN() == PIN) {
-                    System.out.println("PIN is correct");
-                } else {
-                    System.out.println("PIN is incorrect");
-                }
+                    return true;
+                } 
             }
         }
+        return false;
     }
 
     /**
@@ -91,72 +111,35 @@ public class Bank {
      * @param accountNumber The following accountNumber to find the balance.
      * @param currency      The currency of the balance to show
      */
-    public void getAccountBalance(int accountNumber, Currency currency) {
+    public static Double getAccountBalance(int accountNumber, Currency currency) {
         for (Account account : accounts) {
             if (account.getAccountNumber() == accountNumber) {
-                System.out.println("Account " + currency + " balance for account " + accountNumber + " is $"
-                        + String.format("%.2f", account.getBalance(currency)));
+                return account.getBalance(currency);
             }
         }
+        return 0.0;
     }
 
     /**
-     * Converts the given amount from the given currency to SGD.
+     * Converts the given amount from SGD to given currency.
      * 
      * @param accountNumber The account number to convert the currency.
      * @param currency      The currency of the amount to be converted.
      * @param amount        The amount to be converted.
      */
 
-    public void convertCurrency(int accountNumber, Currency currency, double amount) {
+    public static Double convertCurrency(int accountNumber, Currency currency, double amount) {
         for (Account account : accounts) {
             if (account.getAccountNumber() == accountNumber) {
                 double temp = account.getBalance(Currency.SGD);
-                if (temp < amount) {
-                    System.out.println("Insufficient balance");
-                    return;
-                }
-
-                double convertedcurrency = exchange.convertCurrency(Currency.USD, amount);
-                //double convertedcurrency = amount / exchange.getRate(currency);
-                System.out.println("Converted amount is " + currency + String.format("%.2f", convertedcurrency));
-                account.setBalance(Currency.SGD, temp - amount);
-                account.addBalance(currency, convertedcurrency);
-
+                if (temp < amount)
+                    return -1.0;
+                else
+                    return exchange.convertCurrency(Currency.USD, amount);    
             }
         }
+        return -1.0;
     }
 
-    /**
-     * Apply Loan
-     * 
-     * @param loan The loan details.
-     * @param accountNumber The account number that is linked to the loan.
-     */
-    public void applyLoan(Loan loan, int accountNumber) {
-        for (Account account : accounts) {
-            if (account.getAccountNumber() == accountNumber) {
-                account.setLoan(loan);
-            }
-        }
-    }
 
-    /**
-     * Gets the Loan
-     * 
-     * @param accountNumber The account number tied to the loan.
-     * @return The loan details. Returns null if there is no loan available.
-     */
-    public Loan getLoan(int accountNumber) {
-        for (Account account : accounts) {
-            if (account.getAccountNumber() == accountNumber) {
-                if (account.getLoan() != null) {
-                    Loan temp = account.getLoan();
-                    return temp;
-                }
-
-            }
-        }
-        return null;
-    }
 }
