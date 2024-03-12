@@ -22,6 +22,8 @@ public class Loan {
   private String loanType;
   private Guarantor guarantorDetails;
   private Account account;
+  private String loanStatus;
+  
 
   /**
    * Constructs a new Loan object with the specified parameters.
@@ -35,7 +37,7 @@ public class Loan {
    */
 
   public Loan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,
-      Account account) {
+      Account account,String loanStatus) {
     lID++;
     this.loanID = lID;
     this.principal = principal;
@@ -46,6 +48,7 @@ public class Loan {
     this.balance = principal + principal * interestRate;
     this.monthlyPayment = principal * (interestRate / 12) / (1 - pow(1 + interestRate / 12, -duration));
     this.account = account;
+    this.loanStatus="Pending";
   }
 
   /**
@@ -156,6 +159,14 @@ public class Loan {
 
   public void setMonthlyPayment(double monthlyPayment) {
     this.monthlyPayment = monthlyPayment;
+  }
+
+  public String getLoanStatus(){
+    return this.loanStatus;
+  }
+
+  public void setLoanStatus(String loanStatus){
+    this.loanStatus=loanStatus;
   }
 
   /**
