@@ -19,15 +19,16 @@ public class Bank {
     private static Exchange exchange = new Exchange();
 
     // /**
-    //  * Default constructor that initializes the Bank object with a bank name and an
-    //  * empty list of accounts.
-    //  * 
-    //  * @param bankname The name of the bank.
-    //  */
+    // * Default constructor that initializes the Bank object with a bank name and
+    // an
+    // * empty list of accounts.
+    // *
+    // * @param bankname The name of the bank.
+    // */
     // public static Bank(String bankname) {
-    //     bankname = bankname;
-    //     accounts = new ArrayList<>();
-    //     exchange = new Exchange();
+    // bankname = bankname;
+    // accounts = new ArrayList<>();
+    // exchange = new Exchange();
     // }
 
     /**
@@ -39,7 +40,7 @@ public class Bank {
         return bankname;
     }
 
-     /**
+    /**
      * Sets the name of the bank.
      * 
      * @params The name of the bank.
@@ -47,7 +48,6 @@ public class Bank {
     public static void setBankname(String bankName) {
         bankname = bankName;
     }
-
 
     /**
      * Adds an account to the bank.
@@ -80,7 +80,7 @@ public class Bank {
      * @params the account number tied to the account
      */
     public static Account getAccount(int accno) {
-        for (Account account : accounts){
+        for (Account account : accounts) {
             if (accno == account.getAccountNumber())
                 return account;
         }
@@ -99,7 +99,7 @@ public class Bank {
             if (account.getAccountNumber() == accountNumber) {
                 if (account.getPIN() == PIN) {
                     return true;
-                } 
+                }
             }
         }
         return false;
@@ -135,11 +135,22 @@ public class Bank {
                 if (temp < amount)
                     return -1.0;
                 else
-                    return exchange.convertCurrency(Currency.USD, amount);    
+                    return exchange.convertCurrency(Currency.USD, amount);
             }
         }
         return -1.0;
     }
 
+    public static ArrayList<Loan> getPendingLoans() {
+        ArrayList<Loan> pendingLoans = new ArrayList<>();
+        for (Account account : accounts) {
+            for (Loan loan : account.getLoans()) {
+                if (loan.getLoanStatus().equals("Pending")) {
+                    pendingLoans.add(loan);
+                }
+            }
+        }
+        return pendingLoans;
+    }
 
 }

@@ -15,11 +15,11 @@ public class LoanTest {
         account.setLoan(businessLoan);
 
         // Create a Bank
-        Bank bank = new Bank();
-        bank.setBankname("Example Bank");
+        
+        Bank.setBankname("Example Bank");
 
         // Add the Account to the Bank
-        bank.addAccount(account);
+        Bank.addAccount(account);
 
         // Test accessing information
         System.out.println("Customer Name: " + customer.getName());

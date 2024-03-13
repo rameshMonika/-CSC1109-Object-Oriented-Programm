@@ -28,7 +28,7 @@ public class Demo {
 
         // adding the accounts
         bank.addAccount(account);
-        bank.addAccount(account2);
+        Bank.addAccount(account2);
         bank.addAccount(account3);
 
         // getting the account numbers

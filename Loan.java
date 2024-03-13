@@ -179,16 +179,11 @@ public class Loan {
     return loanType;
   }
 
-  /**
-   * Displays the loan amount.
-   * 
-   * Displays the loan amount.
-   */
-
-  public void displayLoan() {
-    System.out.println("Your pending loan amount is:" + this.principal);
-
+  public Account getAccount() {
+    return account;
   }
+
+
 
   /**
    * Displays the details of a guarantor.
@@ -200,7 +195,6 @@ public class Loan {
 
   public Guarantor showGuarantorDetails(Guarantor guarantorDetails) {
 
-    System.out.println("Guarantor is " + guarantorDetails.getGuarantorName());
 
     return guarantorDetails;
 

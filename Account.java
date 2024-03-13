@@ -19,6 +19,7 @@ public class Account {
     private double transferLimit;
     private Loan loan;
     private CreditCard cc;
+    private ArrayList<Loan> loans = new ArrayList<>();
     // private double debt;
     // private HashMap<int, Loan> loans = new HashMap<>();
 
@@ -268,6 +269,15 @@ public class Account {
      */
     public CreditCard getCC() {
         return cc;
+    }
+
+    
+    public void addLoan(Loan loan) {
+        loans.add(loan);
+    }
+
+    public ArrayList<Loan> getLoans() {
+        return loans;
     }
 
 }
