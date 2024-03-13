@@ -50,15 +50,15 @@ public class Main {
         Admin admin = new Admin("Admin Name", "admin", "admin123");
 
         // Show pending loans to the admin
-        ArrayList<Loan> pendingLoans = Bank.getPendingLoans();
-        admin.showPendingLoans(pendingLoans);
+        ArrayList<Loan> pendingBusinessLoans = Bank.getPendingLoans();
+        admin.showPendingLoans(pendingBusinessLoans);
 
         // Review loan details
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter the loan ID to review loan details: ");
         int loanID = scanner.nextInt();
         Loan loanToReview = null;
-        for (Loan loan : pendingLoans) {
+        for (Loan loan : pendingBusinessLoans) {
             if (loan.getLoanID() == loanID) {
                 loanToReview = loan;
                 break;
