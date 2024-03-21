@@ -19,8 +19,8 @@ public class StudyLoan extends Loan {
      * @param institution      The educational institution associated with the loan.
      */
     public StudyLoan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,
-            Account account, String studentID, String institution) {
-        super(principal, interestRate, duration, loanType, guarantorDetails, account);
+            Account account, String studentID, String institution,String loanStatus) {
+        super(principal, interestRate, duration, loanType, guarantorDetails, account, loanStatus);
         this.studentID = studentID;
         this.institution = institution;
     }

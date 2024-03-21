@@ -1,0 +1,10 @@
+-loanspecification
+    classes
+    loan
+    personalloan
+    businessloan
+    studyloan
+
+-admin
+    admin
+

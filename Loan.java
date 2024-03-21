@@ -22,6 +22,8 @@ public class Loan {
   private String loanType;
   private Guarantor guarantorDetails;
   private Account account;
+  private String loanStatus;
+  
 
   /**
    * Constructs a new Loan object with the specified parameters.
@@ -35,7 +37,7 @@ public class Loan {
    */
 
   public Loan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,
-      Account account) {
+      Account account,String loanStatus) {
     lID++;
     this.loanID = lID;
     this.principal = principal;
@@ -46,6 +48,7 @@ public class Loan {
     this.balance = principal + principal * interestRate;
     this.monthlyPayment = principal * (interestRate / 12) / (1 - pow(1 + interestRate / 12, -duration));
     this.account = account;
+    this.loanStatus="Pending";
   }
 
   /**
@@ -135,7 +138,7 @@ public class Loan {
    */
 
   public int getLoanID() {
-    return loanID;
+    return this.loanID;
   }
 
   /**
@@ -158,6 +161,14 @@ public class Loan {
     this.monthlyPayment = monthlyPayment;
   }
 
+  public String getLoanStatus(){
+    return this.loanStatus;
+  }
+
+  public void setLoanStatus(String loanStatus){
+    this.loanStatus=loanStatus;
+  }
+
   /**
    * Gets the type of loan.
    * 
@@ -168,16 +179,11 @@ public class Loan {
     return loanType;
   }
 
-  /**
-   * Displays the loan amount.
-   * 
-   * Displays the loan amount.
-   */
-
-  public void displayLoan() {
-    System.out.println("Your pending loan amount is:" + this.principal);
-
+  public Account getAccount() {
+    return account;
   }
+
+
 
   /**
    * Displays the details of a guarantor.
@@ -189,7 +195,6 @@ public class Loan {
 
   public Guarantor showGuarantorDetails(Guarantor guarantorDetails) {
 
-    System.out.println("Guarantor is " + guarantorDetails.getGuarantorName());
 
     return guarantorDetails;
 

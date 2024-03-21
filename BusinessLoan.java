@@ -4,7 +4,11 @@
  */
 public class BusinessLoan extends Loan {
     private String uniqueEN;
-    private double annualProfit;
+    // private double annualProfit;
+    private String businessType;
+    private String businessDescription;
+    private int cashInFlow;
+    private int cashOutFlow;
 
     /**
      * Constructs a new BusinessLoan object with the specified parameters.
@@ -19,11 +23,42 @@ public class BusinessLoan extends Loan {
      *                         business.
      * @param annualProfit     The annual profit of the business.
      */
-    public BusinessLoan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,
-            Account account, String uniqueEN, double annualProfit) {
-        super(principal, interestRate, duration, loanType, guarantorDetails, account);
+    public BusinessLoan(String businessType,String businessDescription,double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,
+            Account account, String uniqueEN, double annualProfit,String loanStatus,int cashInFlow,int cashOutFlow) {
+        super(principal, interestRate, duration, loanType, guarantorDetails, account,loanStatus);
         this.uniqueEN = uniqueEN;
-        this.annualProfit = annualProfit;
+        this.cashInFlow=cashInFlow;
+        this.cashOutFlow=cashOutFlow;
+        this.businessType=businessType;
+        this.businessDescription=businessDescription;
+      
+        // this.annualProfit = annualProfit;
+    }
+
+    public int calcCashFlow(){
+      
+        int cashFlow= cashInFlow-cashOutFlow;
+
+        return cashFlow;
+
+    }
+
+    public String getBusinessType(){
+        return businessType;
+    }
+
+    public String getBusinessDescription(){
+        return businessDescription;
+
+    }
+
+    public int getCashInFlow(){
+        return cashInFlow;
+    }
+
+    public int getCashOutFlow(){
+        return cashOutFlow;
+
     }
 
     /**
@@ -33,7 +68,7 @@ public class BusinessLoan extends Loan {
      */
     public Boolean isEligibleForLoan() {
         // Eligibility logic
-        if (this.principal > 50000) {
+        if (this.principal > 50000 && this.principal< 100000) {
             return true;
         }
         return true;
