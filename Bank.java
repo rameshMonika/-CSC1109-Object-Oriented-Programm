@@ -49,30 +49,6 @@ public class Bank {
     }
 
 
-    /**
-     * Adds an account to the bank.
-     * 
-     * @param account The account to add.
-     */
-    public static void addAccount(Account account) {
-        accounts.add(account);
-    }
-
-    /**
-     * Remove an account from the bank.
-     * 
-     * @param account The account to remove.
-     */
-    public static void removeAccount(Account account) {
-        accounts.remove(account);
-    }
-
-    /**
-     * returns a list of account number from the account class
-     */
-    public static ArrayList<Account> getAccountNumbers() {
-        return accounts;
-    }
 
     /**
      * returns a account number from the account class

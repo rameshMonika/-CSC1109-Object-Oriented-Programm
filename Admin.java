@@ -28,4 +28,32 @@ public class Admin {
 
         return allLoans;
     }
+
+    
+    /**
+     * Adds an account to the bank.
+     * 
+     * @param account The account to add.
+     */
+    public void addAccount(Account account) {
+        accounts.add(account);
+    }
+
+    /**
+     * Remove an account from the bank.
+     * 
+     * @param account The account to remove.
+     */
+    public void removeAccount(Account account) {
+        accounts.remove(account);
+    }
+
+    /**
+     * returns a list of account number from the account class
+     */
+    public ArrayList<Account> getAccountNumbers() {
+        return accounts;
+    }
+
+    
 }
