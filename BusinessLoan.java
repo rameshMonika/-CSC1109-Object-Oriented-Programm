@@ -23,9 +23,9 @@ public class BusinessLoan extends Loan {
      *                         business.
      * @param annualProfit     The annual profit of the business.
      */
-    public BusinessLoan(String businessType,String businessDescription,double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,
+    public BusinessLoan(String businessType,String businessDescription,double principal, float interestRate, int duration, String loanType, String guarantorName, double guarantorID, double guarantorIncome, int guarantorContactNo,
             Account account, String uniqueEN, double annualProfit,String loanStatus,int cashInFlow,int cashOutFlow) {
-        super(principal, interestRate, duration, loanType, guarantorDetails, account,loanStatus);
+        super(principal, interestRate, duration, loanType,guarantorID,guarantorName,guarantorIncome, guarantorContactNo , account, loanStatus);
         this.uniqueEN = uniqueEN;
         this.cashInFlow=cashInFlow;
         this.cashOutFlow=cashOutFlow;

@@ -18,9 +18,9 @@ public class PersonalLoan extends Loan {
      * @param personalIncome   The current monthly personal income.
      * @param annualIncome     The past annual income of the applicant.
      */
-    public PersonalLoan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,
+    public PersonalLoan(double principal, float interestRate, int duration, String loanType,  String guarantorName, double guarantorID, double guarantorIncome,int guarantorContactNo,
             Account account, double personalIncome, double annualIncome,String loanStatus) {
-        super(principal, interestRate, duration, loanType, guarantorDetails, account, loanStatus);
+        super(principal, interestRate, duration, loanType,guarantorID,guarantorName,guarantorIncome, guarantorContactNo , account, loanStatus);
         this.personalIncome = personalIncome;
         this.annualIncome = annualIncome;
     }

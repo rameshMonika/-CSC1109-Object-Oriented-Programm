@@ -53,6 +53,13 @@ public class test {
 
         System.out.println("////Loan test////");
         System.out.println("Creating a loan for account 1");
+
+         PersonalLoan personalLoan = new PersonalLoan(5000, 5.5f, 36, "Personal Loan", "John's Dad", 123456789, 60000, 987654321, account, 3000, 72000, "Pending");
+        
+        // Printing out the guarantor details
+        System.out.println("Guarantor Details for Account 1's Personal Loan:");
+        System.out.println(personalLoan.showGuarantorDetails());
+        
         
     }
 }

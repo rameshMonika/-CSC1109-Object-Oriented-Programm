@@ -20,7 +20,6 @@ public class Loan {
   private int duration;
   private double monthlyPayment;
   private String loanType;
-  private Guarantor guarantorDetails;
   private Account account;
   private String loanStatus;
 
