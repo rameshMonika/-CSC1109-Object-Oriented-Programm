@@ -72,6 +72,10 @@ public class Account {
         return customer.getNRIC();
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
     /**
      * Sets the Account number.
      * 

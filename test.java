@@ -10,6 +10,7 @@ public class test {
         Account account3 = new Account(customer2, 3, 1234);
         Bank.addAccount(account);
         Bank.addAccount(account2);
+        Bank.addAccount(account3);
         System.out.println("////Display account numbers test////");
         System.out.println(Bank.getAccountNumbers());
         System.out.println("/////////////////////////////////////");

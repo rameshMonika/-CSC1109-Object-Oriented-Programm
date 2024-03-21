@@ -2,6 +2,23 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Admin {
+    private String adminID;
+    private String password;
+
+    public Admin(String adminID, String password) {
+        this.adminID = adminID;
+        this.password = password;
+    }
+
+    public String getAdminID() {
+        return adminID;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+
     /**
      * This method creates a hashmap that stores
      * all of the back account numbers.
