@@ -26,7 +26,7 @@ public class LoanTest {
 
 
         // Set the Business Loan for the Account
-        //account.setLoan(businessLoan);
+
         account.addLoan(businessLoan);
         account.addLoan(businessLoan2);
         account.addLoan(personalLoan);
@@ -43,18 +43,7 @@ public class LoanTest {
       
 
 
-        // Test accessing information
-        System.out.println("Customer Name: " + customer.getName());
-        System.out.println("Account Number: " + account.getAccountNumber());
-        System.out.println("Loan Principal: " + businessLoan.getprincipal());
-        System.out.println("Loan Type: " + businessLoan.getLoanType());
-        System.out.println("Business Type: " + businessLoan.getBusinessType());
-        System.out.println("Business Description: " + businessLoan.getBusinessDescription());
-        System.out.println("Cash In Flow: " + businessLoan.getCashInFlow());
-        System.out.println("Cash Out Flow: " + businessLoan.getCashOutFlow());
-        System.out.println("Loan Status: " + businessLoan.getLoanStatus());
-        // System.out.println("Is eligible for loan: " + businessLoan.isEligibleForLoan());
-        System.out.println("Cash Flow: " + businessLoan.calcCashFlow());
+  
 
         System.out.println("=======================================================================================");
          ArrayList<Loan> pendingLoans = Bank.getPendingLoans();
@@ -117,43 +106,28 @@ public class LoanTest {
             }
 
             if (loanToReview != null) {
-                System.out.println("Load ID: "+loanToReview.getLoanID());
-                System.out.println("Principal: "+loanToReview.getprincipal());
-                System.out.println("Duration: "+loanToReview.getDuration());
-                System.out.println("Loan Type: " + loanToReview.getLoanType());
-                System.out.println("Balance: "+loanToReview.getBalance());
-                System.out.println("Monthly Payment: "+ loanToReview.getMonthlyPayment());
-                System.out.println("Guarantor Name: "+loanToReview.getGuarantorName());
-                System.out.println("Guarantor ID: "+loanToReview.getGuarantorID());
-                System.out.println("Guarantor Income: "+ loanToReview.getGuarantorIncome());
-                System.out.println("Guarantor Contact no: "+loanToReview.getGuarantorContactNo());
+            
 
                
 
                 if (loanToReview instanceof PersonalLoan) {
                 
-                    // Customize output for   System.out.println("Loan Type: " + loanToReview.getLoanType());
                  PersonalLoan personalLoanInstance = (PersonalLoan) loanToReview;
+                 personalLoan.printLoanDetails();
                
-                System.out.println("Personal Income: " + personalLoanInstance.getPersonalIncome());
-                System.out.println("Annual Income: " + personalLoanInstance.getAnnualIncome());
                 }
                 
                  else if (loanToReview instanceof BusinessLoan) {
                     BusinessLoan businessLoanInstance = (BusinessLoan) loanToReview;
-                    // Customize output for BusinessLoan
-                    System.out.println("Unique EN: " + businessLoanInstance.getUniqueEn());
-                    System.out.println("Business Type: " + businessLoanInstance.getBusinessType());
-                      System.out.println("Business Description: " + businessLoanInstance.getBusinessDescription());
-                      System.out.println("Cash in: "+businessLoanInstance.getCashInFlow());
-                      System.out.println("Cash out: "+businessLoanInstance.getCashOutFlow());
+                    businessLoanInstance.printLoanDetails();
+                  
                 }
                 else if (loanToReview instanceof StudyLoan) {
                     StudyLoan studyLoanInstance = (StudyLoan) loanToReview;
                     // Customize output for StudyLoan
-                   
-                    System.out.println("Student ID: " + studyLoanInstance.getStudentID());
-                    System.out.println("Institution: " + studyLoanInstance.getInstitution());
+
+                    studyLoanInstance.printLoanDetails();                   
+                
                 }
                 System.out.print("Do you want to approve (A) or reject (R) this loan? :");
                 String decision = scanner.nextLine();

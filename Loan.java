@@ -34,19 +34,6 @@ public class Loan {
   private int guarantorContactNo;
  
 
-
-  /**
-   * Constructs a new Loan object with the specified parameters.
-   *
-   * @param principal        The principal amount of the loan.
-   * @param interestRate     The interest rate of the loan.
-   * @param duration         The duration of the loan.
-   * @param loanType         The type of loan.
-   * @param guarantorDetails The details of the guarantor.
-   * @param account          The account object associated with the loan.
-   */
-
-
  
     /**
      * Constructs a new Loan object with the specified parameters.
@@ -214,105 +201,116 @@ public class Loan {
   }
 
 
-  public String getLoanStatus(){
-    return this.loanStatus;
-  }
-
-
-  public void setLoanStatus(String loanStatus){
-    this.loanStatus=loanStatus;
-  }
-
-
-  /**
-   * Gets the type of loan.
-   *
-   * @return The type of loan.
-   */
-
-
-  public String getLoanType() {
-    return loanType;
-  }
-
-
-  public Account getAccount() {
-    return account;
-  }
-
-
-
-
-  /**
-     * Gets the name of the guarantor.
-     *
-     * @return The name of the guarantor.
-     */
-    public String getGuarantorName() {
-        return guarantorName;
-    }
-
-
-    /**
-     * Gets the ID of the guarantor.
-     *
-     * @return The ID of the guarantor.
-     */
-    public double getGuarantorID() {
-        return guarantorID;
-    }
-
-
-    /**
-     * Gets the income of the guarantor.
-     *
-     * @return The income of the guarantor.
-     */
-    public double getGuarantorIncome() {
-        return guarantorIncome;
-    }
-
-
-    /**
-     * Gets the contact number of the guarantor.
-     *
-     * @return The contact number of the guarantor.
-     */
-    public int getGuarantorContactNo() {
-        return guarantorContactNo;
-    }
-
-
-
-
-
-
- /**
- * Displays the details of the guarantor associated with the loan.
+/**
+ * Gets the current status of the loan.
  *
- * @return A string containing the details of the guarantor.
+ * @return The current status of the loan.
  */
-public String showGuarantorDetails() {
-    StringBuilder details = new StringBuilder();
-    details.append("Guarantor Name: ").append(guarantorName).append("\n");
-    details.append("Guarantor ID: ").append(guarantorID).append("\n");
-    details.append("Guarantor Income: ").append(guarantorIncome).append("\n");
-    details.append("Guarantor Contact Number: ").append(guarantorContactNo).append("\n");
-    return details.toString();
+public String getLoanStatus() {
+    return this.loanStatus;
 }
 
-public void approveLoan() {
-        
-        this.setLoanStatus("Approved");
-        System.out.println("Loan with ID " + this.getLoanID() + " has been approved.");
-    }
+/**
+ * Sets the status of the loan.
+ *
+ * @param loanStatus The status to be set for the loan.
+ */
+public void setLoanStatus(String loanStatus) {
+    this.loanStatus = loanStatus;
+}
 
-    // Method to reject the loan
-    public void rejectLoan() {
-        
-        this.setLoanStatus("Rejected");
-        System.out.println("Loan with ID " + this.getLoanID() + " has been rejected.");
-    }
+/**
+ * Gets the type of loan.
+ *
+ * @return The type of loan.
+ */
+public String getLoanType() {
+    return loanType;
+}
+
+/**
+ * Gets the account associated with the loan.
+ *
+ * @return The account associated with the loan.
+ */
+public Account getAccount() {
+    return account;
+}
+
+/**
+ * Gets the name of the guarantor.
+ *
+ * @return The name of the guarantor.
+ */
+public String getGuarantorName() {
+    return guarantorName;
+}
+
+/**
+ * Gets the ID of the guarantor.
+ *
+ * @return The ID of the guarantor.
+ */
+public double getGuarantorID() {
+    return guarantorID;
+}
+
+/**
+ * Gets the income of the guarantor.
+ *
+ * @return The income of the guarantor.
+ */
+public double getGuarantorIncome() {
+    return guarantorIncome;
+}
+
+/**
+ * Gets the contact number of the guarantor.
+ *
+ * @return The contact number of the guarantor.
+ */
+public int getGuarantorContactNo() {
+    return guarantorContactNo;
+}
+
+/**
+ * Approves the loan and sets its status to "Approved".
+ * Prints a confirmation message.
+ */
+public void approveLoan() {
+    this.setLoanStatus("Approved");
+    System.out.println("Loan with ID " + this.getLoanID() + " has been approved.");
+}
+
+/**
+ * Rejects the loan and sets its status to "Rejected".
+ * Prints a rejection message.
+ */
+public void rejectLoan() {
+    this.setLoanStatus("Rejected");
+    System.out.println("Loan with ID " + this.getLoanID() + " has been rejected.");
+}
+
+/**
+ * Displays the details of the loan, including ID, principal amount, duration, loan type,
+ * balance, monthly payment, guarantor name, guarantor ID, guarantor income, guarantor contact number,
+ * and eligibility for loan approval.
+ */
+public void printLoanDetails() {
+    System.out.println("Loan ID: " + this.getLoanID());
+    System.out.println("Principal: " + this.getprincipal());
+    System.out.println("Duration: " + this.getDuration());
+    System.out.println("Loan Type: " + this.getLoanType());
+    System.out.println("Balance: " + this.getBalance());
+    System.out.println("Monthly Payment: " + this.getMonthlyPayment());
+    System.out.println("Guarantor Name: " + this.getGuarantorName());
+    System.out.println("Guarantor ID: " + this.getGuarantorID());
+    System.out.println("Guarantor Income: " + this.getGuarantorIncome());
+    System.out.println("Guarantor Contact no: " + this.getGuarantorContactNo());
+    System.out.println("Is eligible for loan: " + this.isEligibleForLoan());
+}
+
+
 
 /**
      * Checks if the loan is eligible for approval.
@@ -320,10 +318,10 @@ public void approveLoan() {
      *
      * @return true if the loan is eligible for approval, false otherwise.
      */
-    // public boolean isEligibleForLoan() {
-    //     // Default eligibility logic
-    //     return true;
-    // }
+    public boolean isEligibleForLoan() {
+        // Default eligibility logic
+        return true;
+    }
 
 
 
