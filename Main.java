@@ -37,7 +37,7 @@ public class Main {
                 System.out.println("Cash In Flow: " + businessLoan.getCashInFlow());
                 System.out.println("Cash Out Flow: " + businessLoan.getCashOutFlow());
                 System.out.println("Loan Status: " + businessLoan.getLoanStatus());
-                System.out.println("Is eligible for loan: " + businessLoan.isEligibleForLoan());
+                // System.out.println("Is eligible for loan: " + businessLoan.isEligibleForLoan());
                 System.out.println("Cash Flow: " + businessLoan.calcCashFlow());
                 System.out.println();
 

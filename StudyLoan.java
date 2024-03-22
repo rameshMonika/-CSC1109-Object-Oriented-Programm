@@ -6,6 +6,7 @@ public class StudyLoan extends Loan {
     private String studentID;
     private String institution;
 
+
     /**
      * Constructs a new StudyLoan object with the specified parameters.
      *
@@ -18,12 +19,15 @@ public class StudyLoan extends Loan {
      * @param studentID        The ID of the student.
      * @param institution      The educational institution associated with the loan.
      */
-    public StudyLoan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,
+    public StudyLoan(double principal, float interestRate, int duration, String loanType,  String guarantorName, double guarantorID, double guarantorIncome,int guarantorContactNo,
             Account account, String studentID, String institution,String loanStatus) {
-        super(principal, interestRate, duration, loanType, guarantorDetails, account, loanStatus);
+        super(principal, interestRate, duration, loanType,guarantorName,guarantorID,guarantorIncome, guarantorContactNo , account, loanStatus);
         this.studentID = studentID;
         this.institution = institution;
     }
+
+   
+
 
     /**
      * Checks if the student is eligible for the loan based on having a student ID
@@ -31,12 +35,18 @@ public class StudyLoan extends Loan {
      *
      * @return true if the student is eligible for the loan, false otherwise.
      */
-    public Boolean isEligibleForLoan() {
-        // Eligibility logic
-        if (this.principal > 11350) {
-            return true;
-        }
 
-        return false;
-    }
+   
+    // public Boolean isEligibleForLoan() {
+    //     // Eligibility logic
+    //     if (this.principal > 11350) {
+    //         return true;
+    //     }
+
+
+    //     return false;
+    // }
 }
+
+
+

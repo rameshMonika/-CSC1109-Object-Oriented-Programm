@@ -6,6 +6,7 @@ public class PersonalLoan extends Loan {
     private double personalIncome;
     private double annualIncome;
 
+
     /**
      * Constructs a new PersonalLoan object with the specified parameters.
      *
@@ -18,27 +19,36 @@ public class PersonalLoan extends Loan {
      * @param personalIncome   The current monthly personal income.
      * @param annualIncome     The past annual income of the applicant.
      */
-    public PersonalLoan(double principal, float interestRate, int duration, String loanType, Guarantor guarantorDetails,
-            Account account, double personalIncome, double annualIncome,String loanStatus) {
-        super(principal, interestRate, duration, loanType, guarantorDetails, account, loanStatus);
+    public PersonalLoan(double principal, float interestRate, int duration, String loanType,  String guarantorName, double guarantorID, double guarantorIncome,int guarantorContactNo,
+            Account account, String loanStatus,double personalIncome, double annualIncome) {
+               
+        super(principal, interestRate, duration, loanType,guarantorName,guarantorID,guarantorIncome, guarantorContactNo , account, loanStatus);
         this.personalIncome = personalIncome;
         this.annualIncome = annualIncome;
     }
 
+
     /**
      * Checks if the person is eligible for the loan based on their current monthly
      * income and past annual income.
-     * 
+     *
      * @param customer The customer applying for the loan.
      * @return true if the person is eligible for the loan, false otherwise.
      */
-    public Boolean isEligibleForLoan(Customer customer) {
-        // Eligibility logic
-        if (this.annualIncome > 20000 && customer.getAge() > 21) {
-            return true;
-        }
 
-        return false;
+  
+    // public Boolean isEligibleForLoan(Customer customer) {
+    //     // Eligibility logic
+    //     if (this.annualIncome > 20000 && customer.getAge() > 21) {
+    //         return true;
+    //     }
 
-    }
+
+    //     return false;
+
+
+    // }
 }
+
+
+
