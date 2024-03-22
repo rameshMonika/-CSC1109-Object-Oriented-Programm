@@ -183,16 +183,17 @@ public class Account {
      * 
      * @param amount the value to be deducted from the balance.
      */
-    public void withdraw(double amount) {
+    public boolean withdraw(double amount) {
         double temp = balance.get(Currency.SGD);
 
         if (amount > withdrawLimit) {
-            System.out.println("Withdraw limit exceeded");
+            return false;
         } else if (amount > temp) {
-            System.out.println("Insufficient funds");
+            return false;
         } else {
             temp -= amount;
             balance.put(Currency.SGD, temp);
+            return true;
         }
     }
 
@@ -202,39 +203,40 @@ public class Account {
      * @param account the account to transfer the amount to.
      * @param amount  the value to be transfered into the given account.
      */
-    public void interAccountTransfer(Account account, double amount) {
+    public boolean interAccountTransfer(Account account, double amount) {
         if (account.getCustomerIC().equals(customer.getNRIC())) {
             double balanceSGD = balance.get(Currency.SGD);
             if (amount > transferLimit) {
-                System.out.println("Transfer limit exceeded");
+                return false;
             } else if (amount > balanceSGD) {
-                System.out.println("Insufficient funds");
+                return false;
             } else {
                 balanceSGD -= amount;
                 this.balance.put(Currency.SGD, balanceSGD);
                 account.deposit(amount);
+                return true;
             }
         } else {
-            System.out.println("Invalid account");
+            return false;
         }
     }
-
     /**
      * transfer of specified values between accounts owned by the different customer
      * 
      * @param account the account to transfer the amount to.
      * @param amount  the value to be transfered into the given account.
      */
-    public void thirdPartyTransfer(Account account, double amount) {
+    public boolean thirdPartyTransfer(Account account, double amount) {
         double balanceSGD = balance.get(Currency.SGD);
         if (amount > transferLimit) {
-            System.out.println("Transfer limit exceeded");
+            return false;
         } else if (amount > balanceSGD) {
-            System.out.println("Insufficient funds");
+            return false;
         } else {
             balanceSGD -= amount;
             this.balance.put(Currency.SGD, balanceSGD);
             account.deposit(amount);
+            return true;
         }
     }
 
