@@ -6,11 +6,14 @@
 
 // Import libraries
 import java.time.LocalDate;
-import java.util.Currency;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Map;
 
+/**
+ * The CreditCard class represents a credit card with attributes such as card
+ * number, spending limit, amount spent as well as methods for payments and
+ * reward point calculations.
+ */
 public class CreditCard {
     // Attributes
     private String cardNo;                                    // Stores the card number
@@ -22,25 +25,22 @@ public class CreditCard {
     private Double spendingLimit;                           // Stores the card's spending limit
     private Double totalAmount = 0.00;
     private Double rewardPoints = 0.00;                            // Stores the reward points
-    private int accountId;
 
     //Associations
     private Customer customer;
-    private Account account;
-    private Account balance;
-    private Bank bank;
-    public HashMap<String, MonthlyStatement> pendingMonthlyStatements;
-    public HashMap<String, MonthlyStatement> pastMonthlyStatements;
-    public HashMap<String, Transaction> pendingTransaction;
+    public HashMap<String, MonthlyStatement> pendingMonthlyStatements = new HashMap<>();
+    public HashMap<String, MonthlyStatement> pastMonthlyStatements = new HashMap<>();
+    public HashMap<String, Transaction> pendingTransaction = new HashMap<>();
 
     /**
-     * Constructs a Credit Card instance that specifies the details of the credit card.
+     * Default constructor that initializes the CreditCard object with a customer,
+     * account number, and card type.
      *
-     * @param cardType The card type.
+     * @param customer      The customer of the account.
+     * @param cardType      The card type.
      */
-    public CreditCard(CreditCardType cardType){
-        //this.customer = customer;
-        this.accountId = account.getAccountNumber();
+    public CreditCard(int accountNumber, Customer customer, CreditCardType cardType){
+        this.customer = customer;
         this.cardType = cardType;
         this.cardNo = generateCardNo();
         this.cvv = generateCvv();
@@ -99,7 +99,11 @@ public class CreditCard {
      * @return The 16-digit card number.
      */
     public String generateCardNo(){
+        int weight = 2;
+        int sum = 0;
+
         Random random = new Random();
+
         StringBuilder cardNumber = new StringBuilder();
         for (int i = 0; i < this.cardLength - this.cardPrepend.length(); i++) {
             int randomNumber = random.nextInt(9);
@@ -109,20 +113,17 @@ public class CreditCard {
         cardNumber.insert(0, cardPrepend);
         String cardNumberWithoutLastDigit = cardNumber.substring(0,cardNumber.length() - 1);
 
-        int weight = 2;
-        int sum = 0;
-
         for (int i = cardNumberWithoutLastDigit.length() - 1; i >= 0; i--) {
             int digit = weight * Integer.parseInt(cardNumberWithoutLastDigit.substring(i, i + 1));
             sum += digit / 10 + digit % 10;
             weight = (weight == 2) ? 1 : 2;
         }
-        int mod10Digit = (10 - (sum % 10)) % 10;
-        return cardNo;
+        
+        return cardNumber.toString();
     }
 
     /**
-     * Generates a 3-digit Card Verification Value (CVV).
+     * Generates a 3-digit Card Verification Value (cvv).
      *
      * @return The 3-digit cvv number.
      */
@@ -131,8 +132,7 @@ public class CreditCard {
     }
 
     /**
-     * Generates an expiry date which is 5 years
-     * from creation of credit card.
+     * Generates an expiry date (5 years from creating credit card).
      *
      * @return The card's expiry date.
      */
@@ -143,28 +143,29 @@ public class CreditCard {
 
     /**
      * Calculates the credit card's spending limit.
-     * Spending limit is 4x the user's income.
+     * 
+     * @return The spending limit.
      */
     public double calcSpendingLimit(){
         double income = customer.getIncome();
         switch(cardType) {
-            case Student:
+            case STUDENT:
                 this.spendingLimit = 500.00;
                 break;
 
-            case Regular:
+            case REGULAR:
                 if (customer.getAge() > 55) {
                     if (income <= 15000.00) {
                         this.spendingLimit = 2500.00;
                         break;
                     }
 
-                    if (income <= 30000.00) {
+                    if (income <= 30000.00 & income > 15000.00) {
                         this.spendingLimit = income * 2;
                         break;
                     }
 
-                    if (income <= 120000.00) {
+                    else {
                         this.spendingLimit = income * 4;
                         break;
                     }
@@ -176,7 +177,7 @@ public class CreditCard {
                         break;
                     }
 
-                    if (income < 120000.00) {
+                    else {
                         this.spendingLimit = income * 4;
                         break;
                     }
@@ -226,20 +227,20 @@ public class CreditCard {
     /**
      * Checks if payment has been made.
      *
-     * @param statementId The payment amount.
+     * @param statement The payment amount.
+     * @param account The account.
+     * @return true if payment has been made, false otherwise.
      */
-    public boolean makePayment(String statementId){
-        MonthlyStatement statement = this.getPendingMonthlyStatement(statementId);
+    public boolean makePayment(MonthlyStatement statement, Account account){
         Double pendingAmount = statement.getTotalAmount();
 
-        this.account.getBalance("SGD");
-        Double balanceAmount = balance.getBalance("SGD");
+        Double balanceAmount = account.getBalance(Currency.SGD);
 
         if (balanceAmount > pendingAmount) {
-            balance.computeIfPresent(Currency.SGD, (k, v) -> v - pendingAmount);
+            account.getBalanceMap().computeIfPresent(Currency.SGD, (k, v) -> v - pendingAmount);
             statement.paymentMade();
-            pendingMonthlyStatements.remove(statementId);
-            pastMonthlyStatements.put(statementId, statement);
+            pastMonthlyStatements.put(statement.getStatementId(), statement);
+            pendingTransaction.remove(statement.getStatementId());
             return true;
         }
 
@@ -256,4 +257,3 @@ public class CreditCard {
         pendingTransaction.put(transaction.getTransactionId(), transaction);
         rewardPoints += (transaction.getAmount() * 1.4);
     }
-}
