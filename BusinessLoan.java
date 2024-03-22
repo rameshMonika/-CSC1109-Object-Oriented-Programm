@@ -69,6 +69,17 @@ public class BusinessLoan extends Loan {
 
     }
 
+    public String getUniqueEn(){
+     
+       
+
+
+        return uniqueEN;
+
+
+    }
+
+
 
     /**
      * Checks if the business is eligible for the loan based on its annual profit.

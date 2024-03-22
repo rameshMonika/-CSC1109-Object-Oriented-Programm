@@ -40,6 +40,8 @@ public class Bank {
         return bankname;
     }
 
+    
+
     /**
      * Sets the name of the bank.
      * 
@@ -85,6 +87,10 @@ public class Bank {
                 return account;
         }
         return null;
+    }
+
+    public static ArrayList<Account> getAccounts() {
+        return accounts;
     }
 
     /**
@@ -141,6 +147,12 @@ public class Bank {
         return -1.0;
     }
 
+
+     /**
+     * Retrieves all pending loans from all accounts in the bank.
+     * 
+     * @return An ArrayList containing all pending loans.
+     */
     public static ArrayList<Loan> getPendingLoans() {
         ArrayList<Loan> pendingLoans = new ArrayList<>();
         for (Account account : accounts) {
@@ -151,6 +163,35 @@ public class Bank {
             }
         }
         return pendingLoans;
+    }
+
+     public static ArrayList<Loan> getPendingLoansByType(String loanType) {
+        ArrayList<Loan> pendingLoans = new ArrayList<>();
+        for (Account account : accounts) {
+            ArrayList<Loan> loans = account.getLoans();
+            for (Loan loan : loans) {
+                if (loan.getLoanType().equals(loanType) && loan.getLoanStatus().equals("Pending")) {
+                    pendingLoans.add(loan);
+                }
+            }
+        }
+        return pendingLoans;
+    }
+
+
+    public static String reviewLoanDetails(int loanID) {
+            // Search for the loan
+            for (Account account : accounts) {
+                for (Loan loan : account.getLoans()) {
+                    if (loan.getLoanID() == loanID) {
+                        // Loan found, return details
+                        return loan.toString(); // Assuming toString method is overridden in the Loan class
+                    }
+                }
+            }
+
+            return "Loan with ID " + loanID + " not found.";
+
     }
 
 }

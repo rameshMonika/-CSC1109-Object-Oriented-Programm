@@ -27,6 +27,14 @@ public class PersonalLoan extends Loan {
         this.annualIncome = annualIncome;
     }
 
+    public double getPersonalIncome() {
+        return personalIncome;
+    }
+
+     public double getAnnualIncome() {
+        return annualIncome;
+    }
+
 
     /**
      * Checks if the person is eligible for the loan based on their current monthly

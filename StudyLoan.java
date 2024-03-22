@@ -26,6 +26,15 @@ public class StudyLoan extends Loan {
         this.institution = institution;
     }
 
+
+    public String getStudentID() {
+        return studentID;
+    }
+
+    public String getInstitution() {
+        return institution;
+    }
+
    
 
 

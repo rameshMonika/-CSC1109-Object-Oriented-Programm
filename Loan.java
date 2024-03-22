@@ -301,6 +301,19 @@ public String showGuarantorDetails() {
     return details.toString();
 }
 
+public void approveLoan() {
+        
+        this.setLoanStatus("Approved");
+        System.out.println("Loan with ID " + this.getLoanID() + " has been approved.");
+    }
+
+    // Method to reject the loan
+    public void rejectLoan() {
+        
+        this.setLoanStatus("Rejected");
+        System.out.println("Loan with ID " + this.getLoanID() + " has been rejected.");
+    }
+
 /**
      * Checks if the loan is eligible for approval.
      * This method provides a default implementation and can be overridden by subclasses.
