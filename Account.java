@@ -13,6 +13,7 @@ import java.util.*;
 public class Account {
     private int accountNumber;
     private HashMap<Currency, Double> balance = new HashMap<>();
+    private ArrayList<Loan> loans = new ArrayList<>();
     private Customer customer;
     private int PIN;
     private double withdrawLimit;
@@ -72,13 +73,34 @@ public class Account {
         return customer.getNRIC();
     }
 
+    public Customer getCustomer() {
+        return customer;
+    }
+
     /**
      * Sets the Account number.
      * 
      * @param accountNumber The account number set to the account.
      */
-    public void setAccountNumber(int accountNumber) {
-        this.accountNumber = accountNumber;
+    public int setAccountNumber() {
+        Random random = new Random();
+        ArrayList<Account> accounts = Bank.getAccountNumbers();
+        int newAccountNumber;
+
+        do {
+            newAccountNumber = 100000 + random.nextInt(900000);
+        } while (isAccountNumberExists(accounts, newAccountNumber));
+
+        return this.accountNumber = newAccountNumber;
+    }
+
+    private boolean isAccountNumberExists(ArrayList<Account> accounts, int accountNumber) {
+        for (Account account : accounts) {
+            if (account.getAccountNumber() == accountNumber) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
@@ -90,6 +112,16 @@ public class Account {
     public double getBalance(Currency currency) {
         return balance.get(currency);
     }
+
+    /**
+     * Retrieves a map containing balances for different currencies.
+     *
+     * @return A map where the key is the currency and the value is the balance.
+     */
+    public Map<Currency, Double> getBalances() {
+    return balance;
+    }
+
     /**
      * Sets the Account balance.
      * 
@@ -179,16 +211,17 @@ public class Account {
      * 
      * @param amount the value to be deducted from the balance.
      */
-    public void withdraw(double amount) {
+    public boolean withdraw(double amount) {
         double temp = balance.get(Currency.SGD);
 
         if (amount > withdrawLimit) {
-            System.out.println("Withdraw limit exceeded");
+            return false;
         } else if (amount > temp) {
-            System.out.println("Insufficient funds");
+            return false;
         } else {
             temp -= amount;
             balance.put(Currency.SGD, temp);
+            return true;
         }
     }
 
@@ -198,39 +231,40 @@ public class Account {
      * @param account the account to transfer the amount to.
      * @param amount  the value to be transfered into the given account.
      */
-    public void interAccountTransfer(Account account, double amount) {
+    public boolean interAccountTransfer(Account account, double amount) {
         if (account.getCustomerIC().equals(customer.getNRIC())) {
             double balanceSGD = balance.get(Currency.SGD);
             if (amount > transferLimit) {
-                System.out.println("Transfer limit exceeded");
+                return false;
             } else if (amount > balanceSGD) {
-                System.out.println("Insufficient funds");
+                return false;
             } else {
                 balanceSGD -= amount;
                 this.balance.put(Currency.SGD, balanceSGD);
                 account.deposit(amount);
+                return true;
             }
         } else {
-            System.out.println("Invalid account");
+            return false;
         }
     }
-
     /**
      * transfer of specified values between accounts owned by the different customer
      * 
      * @param account the account to transfer the amount to.
      * @param amount  the value to be transfered into the given account.
      */
-    public void thirdPartyTransfer(Account account, double amount) {
+    public boolean thirdPartyTransfer(Account account, double amount) {
         double balanceSGD = balance.get(Currency.SGD);
         if (amount > transferLimit) {
-            System.out.println("Transfer limit exceeded");
+            return false;
         } else if (amount > balanceSGD) {
-            System.out.println("Insufficient funds");
+            return false;
         } else {
             balanceSGD -= amount;
             this.balance.put(Currency.SGD, balanceSGD);
             account.deposit(amount);
+            return true;
         }
     }
 
@@ -251,6 +285,15 @@ public class Account {
     public Loan getLoan() {
         return loan;
     }
+
+    public void addLoan(Loan loan) {
+        loans.add(loan);
+    }
+
+    public ArrayList<Loan> getLoans() {
+        return loans;
+    }
+
 
     /**
      * Sets the Credit Card.

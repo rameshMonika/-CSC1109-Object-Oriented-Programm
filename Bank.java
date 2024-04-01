@@ -1,5 +1,6 @@
 import java.util.ArrayList;
-
+import java.util.Date;
+import java.util.Scanner;
 /**
  * Author: Darren, Min Xuan, Monika, Teren, Jana, Amanda, Kirby
  * E-mail: -
@@ -15,7 +16,8 @@ import java.util.ArrayList;
  */
 public class Bank {
     private static ArrayList<Account> accounts = new ArrayList<>();
-    private static String bankname;
+    private static ArrayList<Admin> admins = new ArrayList<>();
+    private static String bankname = "ABC Bank";
     private static Exchange exchange = new Exchange();
 
     // /**
@@ -49,6 +51,30 @@ public class Bank {
     }
 
 
+    /**
+     * Adds an account to the bank.
+     * 
+     * @param account The account to add.
+     */
+    public static void addAccount(Account account) {
+        accounts.add(account);
+    }
+
+    /**
+     * Remove an account from the bank.
+     * 
+     * @param account The account to remove.
+     */
+    public static void removeAccount(Account account) {
+        accounts.remove(account);
+    }
+
+    /**
+     * returns a list of account number from the account class
+     */
+    public static ArrayList<Account> getAccountNumbers() {
+        return accounts;
+    }
 
     /**
      * returns a account number from the account class
@@ -62,6 +88,7 @@ public class Bank {
         }
         return null;
     }
+
 
     /**
      * Validates the PIN with the following accountNumber's pin and print the
@@ -104,18 +131,21 @@ public class Bank {
      * @param amount        The amount to be converted.
      */
 
-    public static Double convertCurrency(int accountNumber, Currency currency, double amount) {
+     public static Double convertCurrency(int accountNumber, String fromCurrency, String toCurrency, double amount) {
         for (Account account : accounts) {
             if (account.getAccountNumber() == accountNumber) {
-                double temp = account.getBalance(Currency.SGD);
-                if (temp < amount)
-                    return -1.0;
-                else
-                    return exchange.convertCurrency(Currency.USD, amount);    
+                double balanceInSGD = account.getBalance(Currency.SGD);
+                if (balanceInSGD < amount)
+                    return -1.0; // Insufficient balance
+                else {
+                    // Assuming exchange.convertCurrency method exists and returns the converted amount
+                    double convertedAmount = exchange.convertCurrency(fromCurrency, toCurrency, amount);
+                    account.setBalance(Currency.SGD, balanceInSGD - amount);
+                    account.setBalance(Currency.valueOf(toCurrency), account.getBalance(Currency.valueOf(toCurrency)) + convertedAmount);
+                    return convertedAmount;
+                }
             }
         }
-        return -1.0;
+        return -1.0; // Account not found
     }
-
-
 }
