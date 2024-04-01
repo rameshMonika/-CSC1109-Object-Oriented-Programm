@@ -1,1 +1,0 @@
-memberSearchIndex = [{"p":"<Unnamed>","c":"BusinessLoan","l":"BusinessLoan(double, float, int, String, Guarantor, Account, String, double)","u":"%3Cinit%3E(double,float,int,java.lang.String,Guarantor,Account,java.lang.String,double)"},{"p":"<Unnamed>","c":"BusinessLoan","l":"isEligibleForLoan()"}];updateSearchResults();
