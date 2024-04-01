@@ -1,3 +1,4 @@
+
 /**
  * Authors: Darren, Min Xuan, Monika, Teren, Jana, Amanda, Kirby
  * E-mail: -
@@ -10,20 +11,39 @@
 
 import java.util.Date;
 
-public class Customer{
+/**
+ * The Customer class represents the customer's personal information with methods
+ * to access and modify the information.
+ */
+public class Customer {
     // var name nric
     private String NRIC;
     private String name;
     private Date dateOfBirth;
     private int contactNo;
     private String email;
+    private int age;
+    private double income;
 
-    public Customer(String NRIC, String name, Date dateOfBirth, int contactNo, String email){
+    /**
+     * Constructs a customer object with the specified parameters.
+     * 
+     * @param NRIC        The NRIC of the customer.
+     * @param name        The name of the customer.
+     * @param dateOfBirth The date of birth of the customer.
+     * @param contactNo   The contact number of the customer.
+     * @param email       The email of the customer.
+     * @param age         The age of the customer.
+     * @param income      The income of the customer.
+     */
+    public Customer(String NRIC, String name, Date dateOfBirth, int contactNo, String email, int age, double income) {
         this.NRIC = NRIC;
         this.name = name;
         this.dateOfBirth = dateOfBirth;
         this.contactNo = contactNo;
         this.email = email;
+        this.age = age;
+        this.income = income;
     }
 
     /**
@@ -31,7 +51,7 @@ public class Customer{
      * 
      * @return The customer's name
      */
-    public String getName(){
+    public String getName() {
         return name;
     }
 
@@ -40,7 +60,7 @@ public class Customer{
      * 
      * @param name The customer's name
      */
-    public void setName(String name){
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -49,7 +69,7 @@ public class Customer{
      * 
      * @return The customer's NRIC
      */
-    public String getNRIC(){
+    public String getNRIC() {
         return NRIC;
     }
 
@@ -58,7 +78,7 @@ public class Customer{
      * 
      * @return The customer's Date of Birth
      */
-    public Date getDob(){
+    public Date getDob() {
         return dateOfBirth;
     }
 
@@ -67,7 +87,7 @@ public class Customer{
      * 
      * @param dateOfBirth The customer's Date of Birth
      */
-    public void setDob(Date dateOfBirth){
+    public void setDob(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -76,7 +96,7 @@ public class Customer{
      * 
      * @return The customer's Contact Number
      */
-    public int getContactNo(){
+    public int getContactNo() {
         return contactNo;
     }
 
@@ -85,7 +105,7 @@ public class Customer{
      * 
      * @param contactNo The customer's Contact Number
      */
-    public void setContactNo(int contactNo){
+    public void setContactNo(int contactNo) {
         this.contactNo = contactNo;
     }
 
@@ -94,7 +114,7 @@ public class Customer{
      * 
      * @return The customer's email
      */
-    public String getEmail(){
+    public String getEmail() {
         return email;
     }
 
@@ -103,7 +123,43 @@ public class Customer{
      * 
      * @param email The customer's email
      */
-    public void setEmail(String email){
+    public void setEmail(String email) {
         this.email = email;
+    }
+
+    /**
+     * Gets the customer's age
+     * 
+     * @return The customer's age
+     */
+    public int getAge() {
+        return this.age;
+    }
+
+    /**
+     * Sets the customer's age
+     * 
+     * @param age The customer's age
+     */
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    /**
+     * Gets the customer's income
+     *
+     * @return The customer's income
+     */
+    public double getIncome() {
+        return income;
+    }
+
+    /**
+     * Sets the customer's income
+     *
+     * @param income The customer's income
+     */
+    public void setIncome(double income) {
+        this.income = income;
     }
 }
