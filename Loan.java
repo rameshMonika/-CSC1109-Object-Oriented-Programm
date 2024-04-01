@@ -278,6 +278,9 @@ public int getGuarantorContactNo() {
  * Prints a confirmation message.
  */
 public void approveLoan() {
+    if(!this.getLoanStatus().equals("Pending")){
+      throw new IllegalStateException("Loan cannot be approved.");
+    }
     this.setLoanStatus("Approved");
     System.out.println("Loan with ID " + this.getLoanID() + " has been approved.");
 }
@@ -287,6 +290,9 @@ public void approveLoan() {
  * Prints a rejection message.
  */
 public void rejectLoan() {
+    if(!this.getLoanStatus().equals("Pending")){
+      throw new IllegalStateException("Loan cannot be rejected.");
+    }
     this.setLoanStatus("Rejected");
     System.out.println("Loan with ID " + this.getLoanID() + " has been rejected.");
 }
