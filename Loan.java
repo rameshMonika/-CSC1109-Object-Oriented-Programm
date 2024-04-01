@@ -52,6 +52,26 @@ public abstract class Loan {
     public Loan(double principal, float interestRate, int duration, String loanType,
                 String guarantorName, double guarantorID, double guarantorIncome, int guarantorContactNo,
                 Account account, String loanStatus) {
+        
+        String guarantorContactNoString = Integer.toString(guarantorContactNo); //convert to String
+        String phoneNumberPattern = "[89][0-9]{7}";
+
+        if (principal < 0 || interestRate < 0 || duration < 0){
+          throw new IllegalArgumentException("Principal, interest rate, and duration cannot be less than 0");
+        }
+        
+        if(guarantorName == null || guarantorName.isEmpty()){
+          throw new IllegalArgumentException("Guarantor name cannot be empty");
+        }
+
+        if(guarantorIncome < 0){
+          throw new IllegalArgumentException("Guarantor Income cannot be less than 0");
+        }
+
+        if(!guarantorContactNoString.matches(phoneNumberPattern)){
+          throw new IllegalArgumentException("Guarantor contact number must start with 8 or 9 and total of 8 digits");
+        }
+        
         lID++;
         this.loanID = lID;
         this.principal = principal;
@@ -89,6 +109,9 @@ public abstract class Loan {
 
 
   public void setprincipal(double principal) {
+    if(principal < 0){
+      throw new IllegalArgumentException("Principal cannot be less than 0");
+    }
     this.principal = principal;
   }
 
@@ -137,6 +160,9 @@ public abstract class Loan {
 
 
   public void setInterestRate(float interestRate) {
+    if (interestRate < 0){
+      throw new IllegalArgumentException("Interest rate cannot be less than 0");
+    }
     this.interestRate = interestRate;
   }
 
@@ -161,6 +187,9 @@ public abstract class Loan {
 
 
   public void setDuration(int duration) {
+    if (duration < 0){
+      throw new IllegalArgumentException("Duration cannot be less than 0");
+    }
     this.duration = duration;
   }
 
@@ -197,7 +226,11 @@ public abstract class Loan {
 
 
   public void setMonthlyPayment(double monthlyPayment) {
+    if (monthlyPayment < 0){
+      throw new IllegalArgumentException("Monthly payment cannot be less than 0");
+    }
     this.monthlyPayment = monthlyPayment;
+    
   }
 
 
