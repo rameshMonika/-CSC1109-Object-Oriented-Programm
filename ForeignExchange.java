@@ -18,7 +18,7 @@ public class ForeignExchange {
             String url = BASE_URL + "codes?access_key=" + accessKey;
             return Optional.ofNullable(makeRequest(url)); // Make HTTP request to get supported codes
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error getting supported currency codes: " + e.getMessage());
             return Optional.empty();
         }
     }
@@ -44,7 +44,7 @@ public class ForeignExchange {
     }
 
     // Method to parse the conversion rate from JSON response
-    private double parseConversionRate(String json) {
+    private double parseConversionRate(String json) throws NumberFormatException {
         int startIndex = json.indexOf("\"conversion_rate\":") + "\"conversion_rate\":".length();
         int endIndex = json.indexOf(",", startIndex);
         if (endIndex == -1) {
@@ -63,7 +63,10 @@ public class ForeignExchange {
             double calAmt = conversionRate * amount;
             return Math.round(calAmt * 100.0) / 100.0; // Return the converted amount
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error converting currency: " + e.getMessage());
+            return 0.0;
+        } catch (NumberFormatException e) {
+            System.err.println("Error parsing conversion rate: " + e.getMessage());
             return 0.0;
         }
     }
@@ -89,17 +92,9 @@ public class ForeignExchange {
                 }
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Error viewing currency: " + e.getMessage());
+        } catch (NumberFormatException e) {
+            System.err.println("Error parsing conversion rate: " + e.getMessage());
         }
-    }
-
-    // Main method for testing
-    public static void main(String[] args) {
-        ForeignExchange foreignExchange = new ForeignExchange();
-
-        foreignExchange.viewCurrency("SGD"); // View conversion rates for JPY
-        double amount = 100.0;
-        double calculateCurrency = foreignExchange.convertCurrency("USD", "SGD", amount); // Convert USD to SGD
-        System.out.println(amount + " USD = " + calculateCurrency + " SGD");
     }
 }
