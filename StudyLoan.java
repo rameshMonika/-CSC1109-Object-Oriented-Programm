@@ -61,9 +61,15 @@ public class StudyLoan extends Loan {
      *
      * @return true if the student is eligible for the loan, false otherwise.
      */
-  
+    @Override
     public boolean isEligibleForLoan() {
         // Eligibility logic
         return this.principal > 11350;
+    }
+
+    @Override
+    public boolean isEligibleForLoan(Customer customer) {
+      
+        return true; // Example implementation
     }
 }

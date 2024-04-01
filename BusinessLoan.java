@@ -107,8 +107,15 @@ public class BusinessLoan extends Loan {
      *
      * @return true if the business is eligible for the loan, false otherwise.
      */
+    @Override
     public boolean isEligibleForLoan() {
         // Eligibility logic
         return this.principal > 50000 && this.principal < 100000;
+    }
+
+    @Override
+    public boolean isEligibleForLoan(Customer customer) {
+        // Provide an implementation based on the specific eligibility criteria for PersonalLoan
+        return true; // Example implementation
     }
 }

@@ -7,7 +7,7 @@ import static java.lang.Math.pow;
  */
 
 
-public class Loan {
+public abstract class Loan {
   // Static variable to generate unique loan IDs
   private static int lID = 0;
 
@@ -312,16 +312,10 @@ public void printLoanDetails() {
 
 
 
-/**
-     * Checks if the loan is eligible for approval.
-     * This method provides a default implementation and can be overridden by subclasses.
-     *
-     * @return true if the loan is eligible for approval, false otherwise.
-     */
-    public boolean isEligibleForLoan() {
-        // Default eligibility logic
-        return true;
-    }
+
+    public abstract boolean isEligibleForLoan() ;
+
+    public abstract boolean isEligibleForLoan(Customer customer) ;
 
 
 

@@ -62,8 +62,14 @@ public class PersonalLoan extends Loan {
      * @param customer The customer applying for the loan.
      * @return true if the person is eligible for the loan, false otherwise.
      */
+    @Override
     public boolean isEligibleForLoan(Customer customer) {
         // Eligibility logic
         return this.annualIncome > 20000 && customer.getAge() > 21;
     }
+    @Override
+    public boolean isEligibleForLoan() {
+    // Provide an implementation based on the specific eligibility criteria for PersonalLoan
+    return true; // Example implementation
+}
 }
