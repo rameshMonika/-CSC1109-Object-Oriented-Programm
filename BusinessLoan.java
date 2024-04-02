@@ -8,7 +8,7 @@ public class BusinessLoan extends Loan {
     private String businessDescription;
     private int cashInFlow;
     private int cashOutFlow;
-
+    private double annualProfit;
     /**
      * Constructs a new BusinessLoan object with the specified parameters.
      *
@@ -36,6 +36,8 @@ public class BusinessLoan extends Loan {
         this.cashOutFlow = cashOutFlow;
         this.businessType = businessType;
         this.businessDescription = businessDescription;
+        this.annualProfit = annualProfit;
+        
     }
 
     /**
@@ -90,6 +92,10 @@ public class BusinessLoan extends Loan {
      */
     public String getUniqueEn() {
         return uniqueEN;
+    }
+
+    public Double getAnnualProfit() {
+        return annualProfit;
     }
 
     @Override

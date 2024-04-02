@@ -55,40 +55,40 @@ public class Account {
         this.balance.put(Currency.EUR, 0.0);
         this.balance.put(Currency.JPY, 0.0);
         this.balance.put(Currency.MYR, 0.0);
-        this.balance.put(Currency.USD, 0.0);
+        // this.balance.put(Currency.USD, 0.0);
 
-        JSONObject customerJson = new JSONObject();
-        JSONObject loanJson = new JSONObject();
-        JSONObject currencyJson = new JSONObject();
-        JSONObject creditcardJson = new JSONObject();
+        // JSONObject customerJson = new JSONObject();
+        // JSONObject loanJson = new JSONObject();
+        // JSONObject currencyJson = new JSONObject();
+        // JSONObject creditcardJson = new JSONObject();
 
-        JSONArray customerArray = new JSONArray();
-        JSONArray accountArray = new JSONArray();
-        JSONArray loanArray = new JSONArray();
-        JSONArray currencyArray = new JSONArray();
-        JSONArray creditcardArray = new JSONArray();
+        // JSONArray customerArray = new JSONArray();
+        // JSONArray accountArray = new JSONArray();
+        // JSONArray loanArray = new JSONArray();
+        // JSONArray currencyArray = new JSONArray();
+        // JSONArray creditcardArray = new JSONArray();
 
-        addCustomerJson(customerJson, customer);
-        customerArray.add(customerJson);
-        loanJson.put("", "");
-        loanArray.add(loanJson);
-        creditcardJson.put("", "");
-        creditcardArray.add(creditcardJson);
-        addCurrencyJson(currencyJson, balance.get(Currency.SGD), balance.get(Currency.EUR), balance.get(Currency.JPY), balance.get(Currency.MYR), balance.get(Currency.USD));
-        currencyArray.add(currencyJson);
-        addAccountJson(accountJson, customerArray, loanArray, currencyArray, creditcardArray, PIN, 1000, 1000);
-        //add loan, cc 
-        accountArray.add(accountJson);
-        mainJson.put(accountNumber, accountArray);
+        // addCustomerJson(customerJson, customer);
+        // customerArray.add(customerJson);
+        // loanJson.put("", "");
+        // loanArray.add(loanJson);
+        // creditcardJson.put("", "");
+        // creditcardArray.add(creditcardJson);
+        // addCurrencyJson(currencyJson, balance.get(Currency.SGD), balance.get(Currency.EUR), balance.get(Currency.JPY), balance.get(Currency.MYR), balance.get(Currency.USD));
+        // currencyArray.add(currencyJson);
+        // addAccountJson(accountJson, customerArray, loanArray, currencyArray, creditcardArray, PIN, 1000, 1000);
+        // //add loan, cc 
+        // accountArray.add(accountJson);
+        // mainJson.put(accountNumber, accountArray);
 
-        System.out.println(mainJson.toJSONString());
-        try {
-            FileWriter fw = new FileWriter(output);
-            fw.write(mainJson.toJSONString());
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // System.out.println(mainJson.toJSONString());
+        // try {
+        //     FileWriter fw = new FileWriter(output);
+        //     fw.write(mainJson.toJSONString());
+        //     fw.close();
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     public Account(Customer customer, int accountNumber, int PIN, Double SGD, Double EUR, Double JPY, Double MYR, Double USD) {
@@ -105,37 +105,37 @@ public class Account {
         this.balance.put(Currency.MYR, MYR);
         this.balance.put(Currency.USD, USD);
 
-        JSONObject customerJson = new JSONObject();
-        JSONObject loanJson = new JSONObject();
-        JSONObject currencyJson = new JSONObject();
-        JSONObject creditcardJson = new JSONObject();
+        // JSONObject customerJson = new JSONObject();
+        // JSONObject loanJson = new JSONObject();
+        // JSONObject currencyJson = new JSONObject();
+        // JSONObject creditcardJson = new JSONObject();
 
-        JSONArray customerArray = new JSONArray();
-        JSONArray accountArray = new JSONArray();
-        JSONArray loanArray = new JSONArray();
-        JSONArray currencyArray = new JSONArray();
-        JSONArray creditcardArray = new JSONArray();
+        // JSONArray customerArray = new JSONArray();
+        // JSONArray accountArray = new JSONArray();
+        // JSONArray loanArray = new JSONArray();
+        // JSONArray currencyArray = new JSONArray();
+        // JSONArray creditcardArray = new JSONArray();
         
-        addCustomerJson(customerJson, customer);
-        customerArray.add(customerJson);
-        loanJson.put("", "");
-        creditcardJson.put("", "");
-        loanArray.add(loanJson);
-        addCurrencyJson(currencyJson, SGD, EUR, JPY, MYR, USD);
-        currencyArray.add(currencyJson);
-        addAccountJson(accountJson, customerArray, loanArray, currencyArray, creditcardArray, PIN, 1000, 1000);
-        //add loan, cc 
-        accountArray.add(accountJson);
-        mainJson.put(accountNumber, accountArray);
+        // addCustomerJson(customerJson, customer);
+        // customerArray.add(customerJson);
+        // loanJson.put("", "");
+        // creditcardJson.put("", "");
+        // loanArray.add(loanJson);
+        // addCurrencyJson(currencyJson, SGD, EUR, JPY, MYR, USD);
+        // currencyArray.add(currencyJson);
+        // addAccountJson(accountJson, customerArray, loanArray, currencyArray, creditcardArray, PIN, 1000, 1000);
+        // //add loan, cc 
+        // accountArray.add(accountJson);
+        // mainJson.put(accountNumber, accountArray);
 
-        System.out.println(mainJson.toJSONString());
-        try {
-            FileWriter fw = new FileWriter(output);
-            fw.write(mainJson.toJSONString());
-            fw.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        // System.out.println(mainJson.toJSONString());
+        // try {
+        //     FileWriter fw = new FileWriter(output);
+        //     fw.write(mainJson.toJSONString());
+        //     fw.close();
+        // } catch (IOException e) {
+        //     e.printStackTrace();
+        // }
     }
 
     /**
@@ -385,6 +385,7 @@ public class Account {
 
     public void addLoan(Loan loan) {
         loans.add(loan);
+        saveAccount();
     }
 
     public ArrayList<Loan> getLoans() {
@@ -407,6 +408,11 @@ public class Account {
      */
     public CreditCard getCC() {
         return cc;
+    }
+
+    public void addCreditCard(CreditCard cc) {
+        this.cc = cc;
+        saveAccount();
     }
 
     public void addCustomerJson(JSONObject customerJson, Customer customer) {
@@ -437,6 +443,50 @@ public class Account {
         currencyJson.put(Currency.MYR, MYR);
         currencyJson.put(Currency.USD, USD);
     }
+
+    public void addBusinessLoanJson(JSONObject loanJson, BusinessLoan loan) {
+        loanJson.put("Business", loan.getBusinessType());
+        loanJson.put("Business Description", loan.getBusinessDescription());
+        loanJson.put("Principal", loan.getprincipal());
+        loanJson.put("Loan Type", loan.getLoanType());
+        loanJson.put("Guarantor Name", loan.getGuarantorName());
+        loanJson.put("Guarantor ID", loan.getGuarantorID());
+        loanJson.put("Guarantor Income", loan.getGuarantorIncome());
+        loanJson.put("Guarantor Contact Number", loan.getGuarantorContactNo());
+        loanJson.put("Unique EN", loan.getUniqueEn());
+        loanJson.put("Business Annual Income", loan.getAnnualProfit());
+        loanJson.put("Cash In Flow", loan.getCashInFlow());
+        loanJson.put("Cash Out Flow", loan.getCashOutFlow());
+        loanJson.put("Status", loan.getLoanStatus());
+        
+    }
+
+    public void addPersonalLoanJson(JSONObject loanJson, PersonalLoan loan) {
+        loanJson.put("Principal", loan.getprincipal());
+        loanJson.put("Loan Type", loan.getLoanType());
+        loanJson.put("Guarantor Name", loan.getGuarantorName());
+        loanJson.put("Guarantor ID", loan.getGuarantorID());
+        loanJson.put("Guarantor Income", loan.getGuarantorIncome());
+        loanJson.put("Guarantor Contact Number", loan.getGuarantorContactNo());
+        loanJson.put("Status", loan.getLoanStatus());
+        loanJson.put("Personal Income", loan.getPersonalIncome());
+        loanJson.put("Personal Annual Income", loan.getAnnualIncome());
+    }
+
+    public void addStudyLoanJson(JSONObject loanJson, StudyLoan loan) {
+        loanJson.put("Principal", loan.getprincipal());
+        loanJson.put("Loan Type", loan.getLoanType()); 
+        loanJson.put("Guarantor ID", loan.getGuarantorID());
+        loanJson.put("Guarantor Name", loan.getGuarantorName());
+        loanJson.put("Guarantor Income", loan.getGuarantorIncome());
+        loanJson.put("Guarantor Contact Number", loan.getGuarantorContactNo());
+        loanJson.put("Student ID", loan.getStudentID());
+        loanJson.put("Institution", loan.getInstitution());
+        loanJson.put("Status", loan.getLoanStatus());
+        // StudyLoan sLoan = new StudyLoan(5000.0, 0.1f, 24, "Study Loan", 
+        // guarantorName, 3, guarantorIncome, guarantorContactNo, account, "STU123456", "University ABC", "Pending");
+        
+    }
     
     public void saveAccount(){
         
@@ -444,7 +494,10 @@ public class Account {
         JSONObject loanJson = new JSONObject();
         JSONObject currencyJson = new JSONObject();
         JSONObject creditcardJson = new JSONObject();
-
+        JSONObject businessLoanJson = new JSONObject();
+        JSONObject personalLoanJson = new JSONObject();
+        JSONObject studyLoanJson = new JSONObject();
+        
         JSONArray customerArray = new JSONArray();
         JSONArray accountArray = new JSONArray();
         JSONArray loanArray = new JSONArray();
@@ -454,10 +507,36 @@ public class Account {
         addCustomerJson(customerJson, customer);
         customerArray.add(customerJson);
         //LOAN Details double check
-        loanJson.put("","");
-        loanArray.add(loanJson);
+        ArrayList<Loan> loans = getLoans();
+        for (Loan loan: loans){
+            if (loan.getLoanType().equals("Business Loan")){
+                BusinessLoan bLoan = (BusinessLoan)loan;
+                addBusinessLoanJson(businessLoanJson, bLoan);
+                loanArray.add(businessLoanJson);
+            }
+            if (loan.getLoanType().equals("Personal Loan")){
+                PersonalLoan pLoan = (PersonalLoan)loan;
+                addPersonalLoanJson(personalLoanJson, pLoan);
+                loanArray.add(personalLoanJson);
+            }
+            if (loan.getLoanType().equals("Study Loan")){
+                StudyLoan sLoan = (StudyLoan)loan;
+                addStudyLoanJson(studyLoanJson, sLoan);
+                loanArray.add(studyLoanJson);
+            }
+        }
+        //loanArray.add(loanJson);
         //CC Details double check
-        creditcardJson.put("", "");
+        CreditCard cc = getCC();
+        if (cc != null){
+            creditcardJson.put("Number", cc.getCardNo());
+            creditcardJson.put("Type", cc.getCardType().toString());
+            creditcardJson.put("CVV", cc.getCvv());
+            creditcardJson.put("Expiry Date", cc.getExpiryDate().toString());
+            creditcardJson.put("Spending Limit", cc.getSpendingLimit());
+        }
+        else
+            creditcardJson.put("","");
         creditcardArray.add(creditcardJson);
         addCurrencyJson(currencyJson, balance.get(Currency.SGD), balance.get(Currency.EUR), balance.get(Currency.JPY), balance.get(Currency.MYR), balance.get(Currency.USD));
         currencyArray.add(currencyJson);
