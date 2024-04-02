@@ -53,12 +53,6 @@ public class CreditCard {
             System.err.println("Error occurred during CreditCard initialization: " + e.getMessage());
         }
     }
-
-    enum CreditCardType {
-        STUDENT, 
-        REGULAR
-    }
-
     /**
      * Gets the card number.
      *

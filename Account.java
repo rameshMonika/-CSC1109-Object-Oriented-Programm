@@ -409,7 +409,7 @@ public class Account {
         return cc;
     }
 
-    public addCreditCard(CreditCard cc) {
+    public void addCreditCard(CreditCard cc) {
         this.cc = cc;
     }
 

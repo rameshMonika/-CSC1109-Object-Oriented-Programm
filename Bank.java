@@ -180,7 +180,7 @@ public class Bank {
                         System.out.println("Enter your PIN: ");
                         int pin = scanner.nextInt();
                         if (validatePIN(accno, pin)) {
-                            scanner.close();
+                             
                             System.out.println("Login successful");
                             printCustomerMenu(getAccount(accno));
                             counter = 0;
@@ -199,6 +199,7 @@ public class Bank {
                     break;
             }
         } while (input > 2);
+        scanner.close();
     }
 
     public static void printLoginFailPage() {
@@ -210,7 +211,7 @@ public class Bank {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Back to main menu? (Y/N)");
         String input = scanner.nextLine();
-        scanner.close();
+         
         if (input.equals("Y") || input.equals("y")) {
             printCustomerMenu(account);
         } else {
@@ -260,7 +261,7 @@ public class Bank {
         System.out.println("2 | Third Party Transfer");
         System.out.println("3 | Back to main menu");
         int input = scanner.nextInt();
-        scanner.close();
+         
         switch (input) {
             case 1:
                 printInterTransferPage(account);
@@ -296,7 +297,7 @@ public class Bank {
         Account receiving = getAccount(accno);
         if (receiving == null) {
             System.out.println("Account not found");
-            scanner.close();
+             
             printTransferPage(account);
         }
         for (Account acc : availableAccounts) {
@@ -304,7 +305,7 @@ public class Bank {
                 System.out.println("Enter amount to transfer: ");
                 double amount = scanner.nextDouble();
                 if (account.interAccountTransfer(getAccount(accno), amount)) {
-                    scanner.close();
+                     
                     System.out.println("Transfer successful");
                 } else {
                     printTransactionFailPage(account);
@@ -321,14 +322,14 @@ public class Bank {
         double amount2 = scanner.nextDouble();
         Account receivingAcc = getAccount(accno2);
         if (receivingAcc == null) {
-            scanner.close();
+             
             printTransactionFailPage(account);
         }
         if (receivingAcc.thirdPartyTransfer(account, amount2)) {
-            scanner.close();
+             
             System.out.println("Transfer successful");
         } else {
-            scanner.close();
+             
             printTransactionFailPage(account);
         }
     }
@@ -344,7 +345,7 @@ public class Bank {
         System.out.println("Enter amount to convert: ");
         double amount = scanner.nextDouble();
         if (account.getBalance(Currency.SGD) < amount) {
-            scanner.close();
+             
             System.out.println("There is insufficient funds");
             printCustomerMenu(account);
         } else {
@@ -358,31 +359,31 @@ public class Bank {
             double converted = 0;
             switch (input) {
                 case 1:
-                    scanner.close();
+                     
                     converted = Bank.convertCurrency(account.getAccountNumber(), Currency.USD, amount);
                     account.setBalance(Currency.USD, converted);
                     printMoreActions(account);
                     break;
                 case 2:
-                    scanner.close();
+                     
                     converted = Bank.convertCurrency(account.getAccountNumber(), Currency.EUR, amount);
                     account.setBalance(Currency.EUR, converted);
                     printMoreActions(account);
                     break;
                 case 3:
-                    scanner.close();
+                     
                     converted = Bank.convertCurrency(account.getAccountNumber(), Currency.JPY, amount);
                     account.setBalance(Currency.JPY, converted);
                     printMoreActions(account);
                     break;
                 case 4:
-                    scanner.close();
+                     
                     converted = Bank.convertCurrency(account.getAccountNumber(), Currency.MYR, amount);
                     account.setBalance(Currency.MYR, converted);
                     printMoreActions(account);
                     break;
                 case 5:
-                    scanner.close();
+                     
                     printCustomerMenu(account);
                     break;
             }
@@ -397,19 +398,19 @@ public class Bank {
         int input = scanner.nextInt();
         switch (input) {
             case 1:
-                scanner.close();
+                 
                 printAccountSettingsPage(account);
                 break;
             case 2:
-                scanner.close();
+                 
                 printTransactionSettingsPage(account);
                 break;
             case 3:
-                scanner.close();
+                 
                 printCustomerMenu(account);
                 break;
             default:
-                scanner.close();
+                 
                 System.out.println("Invalid input");
                 printSettingsPage(account);
         }
@@ -427,23 +428,23 @@ public class Bank {
         int input = scanner.nextInt();
         switch (input) {
             case 1:
-                scanner.close();
+                 
                 printChangePinPage(account);
                 break;
             case 2:
-                scanner.close();
+                 
                 printChangeEmailPage(account);
                 break;
             case 3:
-                scanner.close();
+                 
                 printChangeContact(account);
                 break;
             case 4:
-                scanner.close();
+                 
                 printCustomerMenu(account);
                 break;
             default:
-                scanner.close();
+                 
                 System.out.println("Invalid input");
                 printAccountSettingsPage(account);
         }
@@ -455,7 +456,7 @@ public class Bank {
         System.out.println("Enter new PIN: ");
         int pin = scanner.nextInt();
         account.setPIN(pin);
-        scanner.close();
+         
         printMoreActions(account);
     }
 
@@ -464,7 +465,7 @@ public class Bank {
         System.out.println("Enter new email: ");
         String email = scanner.nextLine();
         account.getCustomer().setEmail(email);
-        scanner.close();
+         
         printMoreActions(account);
     }
 
@@ -473,7 +474,7 @@ public class Bank {
         System.out.println("Enter new phone number: ");
         int phone = scanner.nextInt();
         account.getCustomer().setContactNo(phone);
-        scanner.close();
+         
         printMoreActions(account);
     }
 
@@ -486,15 +487,15 @@ public class Bank {
         int input = scanner.nextInt();
         switch (input) {
             case 1:
-                scanner.close();
+                 
                 printSetTransferLimitPage(account);
                 break;
             case 2:
-                scanner.close();
+                 
                 printSetWithdrawLimitPage(account);
                 break;
             case 3:
-                scanner.close();
+                 
                 printCustomerMenu(account);
                 break;
         }
@@ -504,7 +505,7 @@ public class Bank {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter new daily transfer limit: ");
         double limit = scanner.nextDouble();
-        scanner.close();
+         
         account.setTransferLimit(limit);
         printMoreActions(account);
     }
@@ -514,7 +515,7 @@ public class Bank {
         System.out.println("Enter new daily withdrawal limit: ");
         double limit = scanner.nextDouble();
         account.setWithdrawLimit(limit);
-        scanner.close();
+         
         printMoreActions(account);
     }
 
@@ -534,39 +535,39 @@ public class Bank {
         int input = scanner.nextInt();
         switch (input) {
             case 1:
-                scanner.close();
+                 
                 printBalancePage(account);
                 break;
             case 2:
-                scanner.close();
+                 
                 printTransferPage(account);
                 break;
             case 3:
-                scanner.close();
+                 
                 printConvertCurrencyPage(account);
                 break;
             case 4:
-                scanner.close();
+                 
                 printApplyLoanPage(account);
                 break;
             case 5:
-                scanner.close();
+                 
                 printLoanStatusPage(account);
                 break;
             case 7:
-                scanner.close();
+                 
                 printCreditCardPage(account);
                 break;
             case 8:
-                scanner.close();
+                 
                 printSettingsPage(account);
                 break;
             case 0:
-                scanner.close();
+                 
                 printLogoutPage();
                 break;
             default:
-                scanner.close();
+                 
                 System.out.println("Invalid input");
                 printCustomerMenu(account);
                 break;
@@ -584,19 +585,19 @@ public class Bank {
         int input = scanner.nextInt();
         switch (input) {
             case 1:
-                scanner.close();
+                 
                 checkForCreditCard(account);
                 break;
             case 2:
-                scanner.close();
+                 
                 printViewCreditCardPage(account);
                 break;
             case 3:
-                scanner.close();
+                 
                 printViewMonthlyStatementPage(account);
                 break;
             case 0:
-                scanner.close();
+                 
                 printCustomerMenu(account);
         }
     }
@@ -611,23 +612,23 @@ public class Bank {
         int input = scanner.nextInt();
         switch(input) {
             case 1:
-                scanner.close();
+                 
                 applyCreditCard(account, CreditCardType.REGULAR);
                 printApplicationSuccessPage(account);
                 break;
             case 2:
-                scanner.close();
+                 
                 applyCreditCard(account, CreditCardType.STUDENT);
                 printApplicationSuccessPage(account);
                 break;
             case 0:
-                scanner.close();
+                 
                 printCustomerMenu(account);
         }
     }
 
     public static void checkForCreditCard(Account account){
-        if(account.getCreditCard() != null){
+        if(account.getCC() != null){
             System.out.println("You already have a credit card");
             printMoreActions(account);
         }
@@ -643,25 +644,64 @@ public class Bank {
     }
     
     public static void printViewCreditCardPage(Account account){
-        Scanner scanner = new Scanner(System.in);
+        if (account.getCC() == null){
+            System.out.println("You do not have a credit card");
+            printMoreActions(account);
+        }
+        else{
+            printCreditCardDetails(account);
+        }
+    }
+
+    public static void printCreditCardDetails(Account account){
         System.out.println("View Credit Card Details");
-        System.out.println("Card No." + account.getCreditCard().getCardNo());
-        System.out.println("Card Type: " + account.getCreditCard().getCardType());
-        System.out.println("Spending Limit: " + account.getCreditCard().getSpendingLimit());
-        System.out.println("0 | Return to main menu");
+        System.out.println("Card No." + account.getCC().getCardNo());
+        System.out.println("Card Type: " + account.getCC().getCardType());
+        System.out.println("CVV: " + account.getCC().getCvv());
+        System.out.println("Spending Limit: " + account.getCC().getSpendingLimit());
+        printMoreActions(account);
     }
 
     public static void printViewMonthlyStatementPage(Account account){
         Scanner scanner = new Scanner(System.in);
         System.out.println("View Monthly Statement");
-        System.out.println("Select Credit Card to view monthly statement");
+        System.out.println("1 | pending monthly statement");
+        System.out.println("2 | past monthly statement");
         System.out.println("0 | Return to main menu");
+        int input = scanner.nextInt();
+        switch(input){
+            case 1:
+                 
+                printPendingMonthlyStatement(account);
+                break;
+            case 2:
+                 
+                printPastMonthlyStatement(account);
+                break;
+            case 0:
+                 
+                printCustomerMenu(account);
+        
+        }
+
+    }
+
+    public static void printPendingMonthlyStatement(Account account){
+        System.out.println("Pending Monthly Statement");
+        System.out.println(account.getCC().getAllPendingMonthlyStatements());
+        printMoreActions(account);
+    }
+
+    public static void printPastMonthlyStatement(Account account){
+        System.out.println("Past Monthly Statement");
+        System.out.println(account.getCC().getAllPastMonthlyStatements());
+        printMoreActions(account);
     }
 
     public static void printLoanStatusPage(Account account){
         System.out.println("Status of all loans");
         for(Loan loan : account.getLoans()){
-            System.out.println(loan.getLoanType() + " | " + loan.getStatus());
+            System.out.println(loan.getLoanType() + " | " + loan.getLoanStatus());
         }
         printMoreActions(account);
     }
@@ -676,21 +716,26 @@ public class Bank {
         int input = scanner.nextInt();
         switch (input) {
             case 1:
-                scanner.close();
+                 
                 printBusinessLoanPage(account);
                 break;
             case 2:
-                scanner.close();
+                 
                 printPersonalLoanPage(account);
                 break;
             case 3:
-                scanner.close();
+                 
                 printStudentLoanPage(account);
                 break;
             case 0:
-                scanner.close();
+                 
                 printCustomerMenu(account);
         }
+    }
+
+    public static void printLoanApplicationSuccessPage(Account account){
+        System.out.println("Loan application successfully sent for approval");
+        printMoreActions(account);
     }
 
     public static void printBusinessLoanPage(Account account){
@@ -723,15 +768,15 @@ public class Bank {
                 , guarantorIncome, guarantorContactNo, account, "EN123456", 
                 businessAnnualIncome, cashInFlow, cashOutFlow, "Pending");
                 account.addLoan(bLoan);
-                scanner.close();
+                printLoanApplicationSuccessPage(account);
                 break;
             //eligibility not done
             case 2:
-                scanner.close();
+                 
                 
                 break;
             case 0:
-            scanner.close();
+             
             printCustomerMenu(account);
         }
     }
@@ -759,15 +804,15 @@ public class Bank {
                 guarantorName, 3, guarantorIncome, guarantorContactNo, account, "Pending", 
                 personalIncome, personalAnnualIncome);
                 account.addLoan(pLoan);
-                scanner.close();
+                printLoanApplicationSuccessPage(account);
                 break;
             //eligibility not done
             case 2:
-                scanner.close();
+                 
                 
                 break;
             case 0:
-            scanner.close();
+             
             printCustomerMenu(account);
         }
     }
@@ -793,15 +838,15 @@ public class Bank {
                 StudyLoan sLoan = new StudyLoan(5000.0, 0.1f, 24, "Study Loan", 
                 guarantorName, 3, guarantorIncome, guarantorContactNo, account, "STU123456", "University ABC", "Pending");
                 account.addLoan(sLoan);
-                scanner.close();
+                printLoanApplicationSuccessPage(account);
                 break;
             //eligibility not done
             case 2:
-                scanner.close();
+                 
                 
                 break;
             case 0:
-            scanner.close();
+             
             printCustomerMenu(account);
         }
     }
