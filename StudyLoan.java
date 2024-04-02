@@ -5,6 +5,7 @@
 public class StudyLoan extends Loan {
     private String studentID;
     private String institution;
+    private static final float STUDY_LOAN_INTEREST_RATE = 0.02f;
 
     /**
      * Constructs a new StudyLoan object with the specified parameters.
@@ -22,10 +23,10 @@ public class StudyLoan extends Loan {
      * @param institution      The educational institution associated with the loan.
      * @param loanStatus       The status of the loan.
      */
-    public StudyLoan(double principal, float interestRate, int duration, String loanType,
+    public StudyLoan(double principal,  int duration, String loanType,
                      String guarantorName, double guarantorID, double guarantorIncome, int guarantorContactNo,
                      Account account, String studentID, String institution, String loanStatus) {
-        super(principal, interestRate, duration, loanType, guarantorName, guarantorID, guarantorIncome, guarantorContactNo, account, loanStatus);
+        super(principal, STUDY_LOAN_INTEREST_RATE, duration, loanType, guarantorName, guarantorID, guarantorIncome, guarantorContactNo, account, loanStatus);
         this.studentID = studentID;
         this.institution = institution;
     }

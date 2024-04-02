@@ -8,6 +8,7 @@ public class BusinessLoan extends Loan {
     private String businessDescription;
     private int cashInFlow;
     private int cashOutFlow;
+    private static final float BUSINESS_LOAN_INTEREST_RATE = 8.00f;
 
     /**
      * Constructs a new BusinessLoan object with the specified parameters.
@@ -29,8 +30,8 @@ public class BusinessLoan extends Loan {
      * @param cashOutFlow         The cash outflow of the business.
      * @param loanStatus          The status of the loan.
      */
-    public BusinessLoan(String businessType, String businessDescription, double principal, float interestRate, int duration, String loanType, String guarantorName, double guarantorID, double guarantorIncome, int guarantorContactNo, Account account, String uniqueEN, double annualProfit, int cashInFlow, int cashOutFlow, String loanStatus) {
-        super(principal, interestRate, duration, loanType, guarantorName, guarantorID, guarantorIncome, guarantorContactNo, account, loanStatus);
+    public BusinessLoan(String businessType, String businessDescription, double principal, int duration, String loanType, String guarantorName, double guarantorID, double guarantorIncome, int guarantorContactNo, Account account, String uniqueEN, double annualProfit, int cashInFlow, int cashOutFlow, String loanStatus) {
+        super(principal, BUSINESS_LOAN_INTEREST_RATE, duration, loanType, guarantorName, guarantorID, guarantorIncome, guarantorContactNo, account, loanStatus);
         this.uniqueEN = uniqueEN;
         this.cashInFlow = cashInFlow;
         this.cashOutFlow = cashOutFlow;

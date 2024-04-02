@@ -15,14 +15,14 @@ public class LoanTest {
             // Create an Account for the Customer
             Account account = new Account(customer, 123456, 1234);
 
-            BusinessLoan businessLoan = new BusinessLoan("Technology", "Software Development", 75000.0, 0.05f, 12, "Business Loan", "Jake",2,220000.00,93887001, account, "EN123456", 200000.0, 100000, 50000, "Pending");
+            BusinessLoan businessLoan = new BusinessLoan("Technology", "Software Development", 75000.0,  12, "Business Loan", "Jake",2,220000.00,93887001, account, "EN123456", 200000.0, 100000, 50000, "Pending");
 
-            BusinessLoan businessLoan2 = new BusinessLoan("Food", "Fast", 75000.0, 0.05f, 12, "Business Loan", "Jake",2,220000.00,93887001, account, "EN123456", 200000.0, 100000, 50000, "Pending");
+            BusinessLoan businessLoan2 = new BusinessLoan("Food", "Fast", 75000.0,  12, "Business Loan", "Jake",2,220000.00,93887001, account, "EN123456", 200000.0, 100000, 50000, "Pending");
 
-            PersonalLoan personalLoan = new PersonalLoan(5000.0, 0.1f, 24, "Personal Loan", "Jane", 3, 30000.0, 98765432, account, "Pending", 3000.0, 36000.0);
+            PersonalLoan personalLoan = new PersonalLoan(5000.0, 24, "Personal Loan", "Jane", 3, 30000.0, 98765432, account, "Pending", 3000.0, 36000.0);
 
             // Create a Study Loan
-            StudyLoan studyLoan = new StudyLoan(10000.0, 0.05f, 36, "Study Loan", "Jane", 3, 30000.0, 98765432, account, "STU123456", "University ABC", "Pending");
+            StudyLoan studyLoan = new StudyLoan(10000.0,  36, "Study Loan", "Jane", 3, 30000.0, 98765432, account, "STU123456", "University ABC", "Pending");
 
             // Set the Business Loan for the Account
 
