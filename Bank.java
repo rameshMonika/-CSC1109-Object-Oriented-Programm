@@ -981,6 +981,7 @@ public class Bank {
             for (Loan loan : account.getLoans()) {
                 if (loan.getLoanID() == loanID) {
                     loan.approveLoan();
+                    account.saveAccount();
                     printMoreActions2(admin);
                 }
             }
@@ -995,6 +996,7 @@ public class Bank {
             for (Loan loan : account.getLoans()) {
                 if (loan.getLoanID() == loanID) {
                     loan.rejectLoan();
+                    account.saveAccount();
                     printMoreActions2(admin);
                 }
             }
