@@ -4,12 +4,10 @@
  * as well as methods for payments and reward point calculations.
  */
 
-// Import libraries
-//import java.util.Currency;
+
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Random;
-import java.util.Map;
 
 /**
  * The CreditCard class represents a credit card with attributes such as card
@@ -17,7 +15,6 @@ import java.util.Map;
  * reward point calculations.
  */
 public class CreditCard {
-    // Attributes
     private String cardNo;                                    // Stores the card number
     private String cardPrepend = "2";
     private int cardLength = 16;
@@ -29,11 +26,7 @@ public class CreditCard {
     private Double rewardPoints = 0.00;                            // Stores the reward points
     private int accountId;
 
-    //Associations
     private Customer customer;
-    private Account account;
-    private Account balance;
-    private Bank bank;
     public HashMap<String, MonthlyStatement> pendingMonthlyStatements = new HashMap<>();
     public HashMap<String, MonthlyStatement> pastMonthlyStatements = new HashMap<>();
     public HashMap<String, Transaction> pendingTransaction = new HashMap<>();
@@ -46,14 +39,24 @@ public class CreditCard {
      * @param customer      The customer of the account.
      * @param cardType      The card type.
      */
-    public CreditCard(int accountNumber,Customer customer, CreditCardType cardType){
-        this.customer = customer;
-        this.accountId = accountNumber;
-        this.cardType = cardType;
-        this.cardNo = generateCardNo();
-        this.cvv = generateCvv();
-        this.expiryDate = generateExpiryDate();
-        this.spendingLimit = calcSpendingLimit();
+    public CreditCard(int accountNumber, Customer customer, CreditCardType cardType) {
+        try {
+            this.customer = customer;
+            this.accountId = accountNumber;
+            this.cardType = cardType;
+            this.cardNo = generateCardNo();
+            this.cvv = generateCvv();
+            this.expiryDate = generateExpiryDate();
+            this.spendingLimit = calcSpendingLimit();
+        } catch (Exception e) {
+            // Handle any exceptions that may occur during initialization
+            System.err.println("Error occurred during CreditCard initialization: " + e.getMessage());
+        }
+    }
+
+    enum CreditCardType {
+        STUDENT, 
+        REGULAR
     }
 
     /**
@@ -106,36 +109,49 @@ public class CreditCard {
      *
      * @return The 16-digit card number.
      */
-    public String generateCardNo(){
-        Random random = new Random();
-        StringBuilder cardNumber = new StringBuilder();
-        for (int i = 0; i < this.cardLength - this.cardPrepend.length(); i++) {
-            int randomNumber = random.nextInt(9);
-            cardNumber.append(randomNumber);
+    public String generateCardNo() {
+        try {
+            Random random = new Random();
+            StringBuilder cardNumber = new StringBuilder();
+            for (int i = 0; i < this.cardLength - this.cardPrepend.length(); i++) {
+                int randomNumber = random.nextInt(9);
+                cardNumber.append(randomNumber);
+            }
+
+            cardNumber.insert(0, cardPrepend);
+            String cardNumberWithoutLastDigit = cardNumber.substring(0,cardNumber.length() - 1);
+
+            int weight = 2;
+            int sum = 0;
+
+            for (int i = cardNumberWithoutLastDigit.length() - 1; i >= 0; i--) {
+                int digit = weight * Integer.parseInt(cardNumberWithoutLastDigit.substring(i, i + 1));
+                sum += digit / 10 + digit % 10;
+                weight = (weight == 2) ? 1 : 2;
+            }
+            int mod10Digit = (10 - (sum % 10)) % 10;
+            return cardNumber.toString();
+        } 
+        catch (Exception e) {
+            System.err.println("Error occurred during card number generation: " + e.getMessage());
         }
-
-        cardNumber.insert(0, cardPrepend);
-        String cardNumberWithoutLastDigit = cardNumber.substring(0,cardNumber.length() - 1);
-
-        int weight = 2;
-        int sum = 0;
-
-        for (int i = cardNumberWithoutLastDigit.length() - 1; i >= 0; i--) {
-            int digit = weight * Integer.parseInt(cardNumberWithoutLastDigit.substring(i, i + 1));
-            sum += digit / 10 + digit % 10;
-            weight = (weight == 2) ? 1 : 2;
-        }
-        int mod10Digit = (10 - (sum % 10)) % 10;
-        return cardNumber.toString();
+        return null; // Return null if an exception occurs
     }
+
 
     /**
      * Generates a 3-digit Card Verification Value (CVV).
      *
      * @return The 3-digit cvv number.
      */
-    public String generateCvv(){
-        return (Math.floor(Math.random() * 9) + "").concat(Math.floor(Math.random() * 9) + "").concat(Math.floor(Math.random() * 9) + "");
+    public String generateCvv() {
+        try {
+            return (Math.floor(Math.random() * 9) + "").concat(Math.floor(Math.random() * 9) + "").concat(Math.floor(Math.random() * 9) + "");
+        } 
+        catch (Exception e) {
+            System.err.println("Error occurred during CVV generation: " + e.getMessage());
+        }
+        return null; // Return null if an exception occurs
     }
 
     /**
@@ -144,9 +160,15 @@ public class CreditCard {
      *
      * @return The card's expiry date.
      */
-    public LocalDate generateExpiryDate(){
-        LocalDate current = LocalDate.now();
-        return current.plusYears(5);
+    public LocalDate generateExpiryDate() {
+        try {
+            LocalDate current = LocalDate.now();
+            return current.plusYears(5);
+        } catch (Exception e) {
+            // Handle any exceptions that may occur during expiry date generation
+            System.err.println("Error occurred during expiry date generation: " + e.getMessage());
+        }
+        return null; // Return null if an exception occurs
     }
 
     /**

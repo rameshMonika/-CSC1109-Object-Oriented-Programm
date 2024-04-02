@@ -1,5 +1,4 @@
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
@@ -20,11 +19,16 @@ public class MonthlyStatement {
      *                       statement.
      */
     public MonthlyStatement(Map<String, Transaction> transactionMap) {
-        this.statementId = UUID.randomUUID().toString(); // Generate a unique statement ID
-        this.statementDate = new Date(); // Set the statement date to the current date
-        this.transactionMap = transactionMap; // Set the transaction map
-        for(Map.Entry<String, Transaction> transaction : transactionMap.entrySet()){
-            totalAmount += transaction.getValue().getAmount();
+        try {
+            this.statementId = UUID.randomUUID().toString(); 
+            this.statementDate = new Date(); 
+            this.transactionMap = transactionMap; 
+            for(Map.Entry<String, Transaction> transaction : transactionMap.entrySet()){
+                totalAmount += transaction.getValue().getAmount();
+            }
+        } catch (Exception e) {
+            // Handle any exceptions that may occur during initialization
+            System.err.println("Error occurred during MonthlyStatement initialization: " + e.getMessage());
         }
     }
 

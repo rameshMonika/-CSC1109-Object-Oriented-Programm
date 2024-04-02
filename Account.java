@@ -409,6 +409,10 @@ public class Account {
         return cc;
     }
 
+    public addCreditCard(CreditCard cc) {
+        this.cc = cc;
+    }
+
     public void addCustomerJson(JSONObject customerJson, Customer customer) {
         customerJson.put("name", customer.getName());
         customerJson.put("NRIC", customer.getNRIC());

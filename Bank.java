@@ -154,6 +154,12 @@ public class Bank {
         return -1.0;
     }
 
+    public static void applyCreditCard(Account account, CreditCardType type) {
+        CreditCard newCard = new CreditCard(account.getAccountNumber(), account.getCustomer(), type);
+        account.addCreditCard(newCard);
+    }
+
+
     public static void printLoginPage() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to " + bankname);
@@ -522,7 +528,8 @@ public class Bank {
         System.out.println("4 | Apply for loan");
         System.out.println("5 | View loan status");
         System.out.println("6 | View transaction history");
-        System.out.println("7 | Account settings");
+        System.out.println("7 | Credit card services");
+        System.out.println("8 | Account settings");
         System.out.println("0 | Logout");
         int input = scanner.nextInt();
         switch (input) {
@@ -541,7 +548,16 @@ public class Bank {
             case 4:
                 scanner.close();
                 printApplyLoanPage(account);
+                break;
+            case 5:
+                scanner.close();
+                printLoanStatusPage(account);
+                break;
             case 7:
+                scanner.close();
+                printCreditCardPage(account);
+                break;
+            case 8:
                 scanner.close();
                 printSettingsPage(account);
                 break;
@@ -556,6 +572,98 @@ public class Bank {
                 break;
 
         }
+    }
+    
+    public static void printCreditCardPage(Account account){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Credit Card Services");
+        System.out.println("1 | Apply for Credit Card");
+        System.out.println("2 | View Credit Card Details");
+        System.out.println("3 | View Monthly Statement");
+        System.out.println("0 | Return to main menu");
+        int input = scanner.nextInt();
+        switch (input) {
+            case 1:
+                scanner.close();
+                checkForCreditCard(account);
+                break;
+            case 2:
+                scanner.close();
+                printViewCreditCardPage(account);
+                break;
+            case 3:
+                scanner.close();
+                printViewMonthlyStatementPage(account);
+                break;
+            case 0:
+                scanner.close();
+                printCustomerMenu(account);
+        }
+    }
+
+    public static void printApplyCreditCardPage(Account account){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Application of Credit Card");
+        System.out.println("Select Credit Card Type");
+        System.out.println("1 | Regular");
+        System.out.println("2 | Student");
+        System.out.println("0 | Return to main menu");
+        int input = scanner.nextInt();
+        switch(input) {
+            case 1:
+                scanner.close();
+                applyCreditCard(account, CreditCardType.REGULAR);
+                printApplicationSuccessPage(account);
+                break;
+            case 2:
+                scanner.close();
+                applyCreditCard(account, CreditCardType.STUDENT);
+                printApplicationSuccessPage(account);
+                break;
+            case 0:
+                scanner.close();
+                printCustomerMenu(account);
+        }
+    }
+
+    public static void checkForCreditCard(Account account){
+        if(account.getCreditCard() != null){
+            System.out.println("You already have a credit card");
+            printMoreActions(account);
+        }
+        else{
+            printApplyCreditCardPage(account);
+        }
+    }
+
+    public static void printApplicationSuccessPage(Account account){
+        System.out.println("Credit application successful");
+        System.out.println("Your credit card will be delivered to your address within 7 working days");
+        printMoreActions(account);
+    }
+    
+    public static void printViewCreditCardPage(Account account){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("View Credit Card Details");
+        System.out.println("Card No." + account.getCreditCard().getCardNo());
+        System.out.println("Card Type: " + account.getCreditCard().getCardType());
+        System.out.println("Spending Limit: " + account.getCreditCard().getSpendingLimit());
+        System.out.println("0 | Return to main menu");
+    }
+
+    public static void printViewMonthlyStatementPage(Account account){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("View Monthly Statement");
+        System.out.println("Select Credit Card to view monthly statement");
+        System.out.println("0 | Return to main menu");
+    }
+
+    public static void printLoanStatusPage(Account account){
+        System.out.println("Status of all loans");
+        for(Loan loan : account.getLoans()){
+            System.out.println(loan.getLoanType() + " | " + loan.getStatus());
+        }
+        printMoreActions(account);
     }
 
     public static void printApplyLoanPage(Account account){
