@@ -199,26 +199,7 @@ public class Bank {
 
             switch (input) {
                 case 1:
-                    int counter = 0;
-                    System.out.println("Enter your account number: ");
-                    int accno = scanner.nextInt();
-                    do {
-                        System.out.println("Enter your PIN: ");
-                        int pin = scanner.nextInt();
-                        if (validatePIN(accno, pin)) {
-
-                            System.out.println("Login successful");
-                            printCustomerMenu(getAccount(accno));
-                            counter = 0;
-                            break;
-                        } else {
-                            counter++;
-                        }
-                        if (counter == 3) {
-                            printLoginFailPage();
-                            break;
-                        }
-                    } while (counter > 0);
+                    printCustomerLoginPage();
                     break;
                 case 2:
                     printAdminLoginPage();
@@ -226,6 +207,30 @@ public class Bank {
             }
         } while (input > 2);
         scanner.close();
+    }
+
+    public static void printCustomerLoginPage(){
+        Scanner scanner = new Scanner(System.in);
+        int counter = 0;
+        System.out.println("Enter your account number: ");
+        int accno = scanner.nextInt();
+        do {
+            System.out.println("Enter your PIN: ");
+            int pin = scanner.nextInt();
+            if (validatePIN(accno, pin)) {
+
+                System.out.println("Login successful");
+                printCustomerMenu(getAccount(accno));
+                counter = 0;
+                break;
+                } else {
+                     counter++;
+                     }
+                    if (counter == 3) {
+                         printLoginFailPage();
+                        break;
+                    }
+             } while (counter > 0);
     }
 
     public static void printLoginFailPage() {
