@@ -955,6 +955,7 @@ public class Bank {
 
     public static void printAllAccounts(Admin admin) {
         System.out.println("All accounts");
+        System.out.println("Account Number");
         for (Account account : accounts) {
             System.out.println(account.getAccountNumber());
         }
@@ -963,9 +964,10 @@ public class Bank {
 
     public static void printAllLoans(Admin admin) {
         System.out.println("All loans");
+        System.out.println("Loan ID | Loan Type | Loan Status");
         for (Account account : accounts) {
             for (Loan loan : account.getLoans()) {
-                System.out.println(loan.getLoanID() + " | " + loan.getLoanType() + " | " + loan.getLoanStatus());
+                System.out.println(loan.getLoanID() + " \t| " + loan.getLoanType() + "| " + loan.getLoanStatus());
             }
         }
         printMoreActions2(admin);
@@ -979,7 +981,6 @@ public class Bank {
             for (Loan loan : account.getLoans()) {
                 if (loan.getLoanID() == loanID) {
                     loan.approveLoan();
-                    System.out.println("Loan with ID " + loan.getLoanID() + " has been approved.");
                     printMoreActions2(admin);
                 }
             }
@@ -994,7 +995,6 @@ public class Bank {
             for (Loan loan : account.getLoans()) {
                 if (loan.getLoanID() == loanID) {
                     loan.rejectLoan();
-                    System.out.println("Loan with ID " + loan.getLoanID() + " has been rejected.");
                     printMoreActions2(admin);
                 }
             }
