@@ -45,4 +45,12 @@ public class Admin {
 
         return allLoans;
     }
+
+    public void approveLoan(Loan loan) {
+        loan.setLoanStatus("Approved");
+    }
+
+    public void rejectLoan(Loan loan) {
+        loan.setLoanStatus("Rejected");
+    }
 }

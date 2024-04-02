@@ -99,6 +99,19 @@ public class Bank {
         return null;
     }
 
+
+    public static void addAdmin(Admin admin) {
+        admins.add(admin);
+    }
+
+    public static Admin getAdmin(String id){
+        for (Admin admin : admins){
+            if (id.equals(admin.getAdminID())){
+                return admin;
+            }
+        }
+        return null;
+    }
     /**
      * Validates the PIN with the following accountNumber's pin and print the
      * outcome.
@@ -110,6 +123,17 @@ public class Bank {
         for (Account account : accounts) {
             if (account.getAccountNumber() == accountNumber) {
                 if (account.getPIN() == PIN) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public static boolean validateAdmin(String adminID, String password) {
+        for (Admin admin : admins) {
+            if (admin.getAdminID().equals(adminID)){
+                if (admin.getPassword().equals(password)){
                     return true;
                 }
             }
@@ -195,7 +219,7 @@ public class Bank {
                     } while (counter > 0);
                     break;
                 case 2:
-                    System.out.println("Enter your username");
+                    printAdminLoginPage();
                     break;
             }
         } while (input > 2);
@@ -742,7 +766,6 @@ public class Bank {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Application of Business Loan");
         System.out.println("1 | Apply Loan");
-        System.out.println("2 | Check Eligibility");
         System.out.println("0 | Return to main menu");
         int input = scanner.nextInt();
         switch (input) {
@@ -763,16 +786,20 @@ public class Bank {
                 int cashInFlow = scanner.nextInt();
                 System.out.println("Please enter your business's cash outflow: ");
                 int cashOutFlow = scanner.nextInt();
-                
-                BusinessLoan bLoan = new BusinessLoan(business, businessDesc, 75000.0, 0.05f, 12, "Business Loan", guarantorName, 2
+                System.out.println("Enter principal amount: ");
+                int principal = scanner.nextInt();
+                BusinessLoan bLoan = new BusinessLoan(business, businessDesc, principal, 0.05f, 12, "Business Loan", guarantorName, 2
                 , guarantorIncome, guarantorContactNo, account, "EN123456", 
                 businessAnnualIncome, cashInFlow, cashOutFlow, "Pending");
-                account.addLoan(bLoan);
-                printLoanApplicationSuccessPage(account);
-                break;
-            //eligibility not done
-            case 2:
-                 
+                if (bLoan.isEligibleForLoan()){
+                    account.addLoan(bLoan);
+                    printLoanApplicationSuccessPage(account);
+                }
+                else{
+                    System.out.println("You are not eligible for a loan");
+                    System.out.println("Principal must be between 50000 and 100000");
+                    printMoreActions(account);
+                }
                 
                 break;
             case 0:
@@ -785,7 +812,6 @@ public class Bank {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Application of Perosnal Loan");
         System.out.println("1 | Apply Loan");
-        System.out.println("2 | Check Eligibility");
         System.out.println("0 | Return to main menu");
         int input = scanner.nextInt();
         switch (input) {
@@ -803,12 +829,15 @@ public class Bank {
                 PersonalLoan pLoan = new PersonalLoan(5000.0, 0.1f, 24, "Personal Loan", 
                 guarantorName, 3, guarantorIncome, guarantorContactNo, account, "Pending", 
                 personalIncome, personalAnnualIncome);
-                account.addLoan(pLoan);
-                printLoanApplicationSuccessPage(account);
-                break;
-            //eligibility not done
-            case 2:
-                 
+                if (pLoan.isEligibleForLoan(account.getCustomer())){
+                    account.addLoan(pLoan);
+                    printLoanApplicationSuccessPage(account);
+                }
+                else{
+                    System.out.println("You are not eligible for a loan");
+                    System.out.println("Age must be over 21 and annual income must be over 20000");
+                    printMoreActions(account);
+                }
                 
                 break;
             case 0:
@@ -837,13 +866,18 @@ public class Bank {
                 Double personalAnnualIncome = scanner.nextDouble();
                 StudyLoan sLoan = new StudyLoan(5000.0, 0.1f, 24, "Study Loan", 
                 guarantorName, 3, guarantorIncome, guarantorContactNo, account, "STU123456", "University ABC", "Pending");
+                if (sLoan.isEligibleForLoan()){
+                    account.addLoan(sLoan);
+                    printLoanApplicationSuccessPage(account);
+                }
+                else{
+                    System.out.println("You are not eligible for a loan");
+                    System.out.println("Principal must be over 11350");
+                    printMoreActions(account);
+                }
                 account.addLoan(sLoan);
                 printLoanApplicationSuccessPage(account);
-                break;
-            //eligibility not done
-            case 2:
-                 
-                
+
                 break;
             case 0:
              
@@ -851,6 +885,115 @@ public class Bank {
         }
     }
     
+    public static void printAdminLoginPage(){
+        System.out.println("Admin Login");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter admin ID: ");
+        String id = scanner.nextLine();
+        System.out.println("Enter password: ");
+        String password = scanner.nextLine();
+        Admin admin = getAdmin(id);
+        printAdminMenu(admin);
+        /* if (validateAdmin(id, password)){
+            printAdminMenu(getAdmin(id));
+        }
+        else{
+            System.out.println("Login failed");
+            printLoginPage();
+        } */
+    }
+    public static void printAdminMenu(Admin admin){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Welcome " + admin.getAdminID());
+        System.out.println("Select actions:");
+        System.out.println("1 | View all accounts");
+        System.out.println("2 | View all loans");
+        System.out.println("3 | Approve loan");
+        System.out.println("4 | Reject loan");
+        System.out.println("0 | Logout");
+        int input = scanner.nextInt();
+        switch(input){
+            case 1:
+                printAllAccounts(admin);
+                break;
+            case 2:
+                printAllLoans(admin);
+                break;
+            case 3: 
+                printApproveLoan(admin);
+                break;
+            case 4: 
+                printRejectLoan(admin);
+                break;
+            case 0: 
+                printLogoutPage();
+                break;
+            default:
+                System.out.println("Invalid input");
+                printAdminMenu(admin);
+        }
+    }
+
+    public static void printAllAccounts(Admin admin){
+        System.out.println("All accounts");
+        for (Account account : accounts){
+            System.out.println(account.getAccountNumber());
+        }
+        printMoreActions2(admin);
+    }
+
+    public static void printAllLoans(Admin admin){
+        System.out.println("All loans");
+        for (Account account : accounts){
+            for (Loan loan : account.getLoans()){
+                System.out.println(loan.getLoanID() + " | " + loan.getLoanType() + " | " + loan.getLoanStatus());
+            }
+        }
+        printMoreActions2(admin);
+    }
+
+    public static void printApproveLoan(Admin admin){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter loan ID to approve: ");
+        int loanID = scanner.nextInt();
+        for (Account account : accounts){
+            for (Loan loan : account.getLoans()){
+                if (loan.getLoanID() == loanID){
+                    loan.approveLoan();
+                    System.out.println("Loan with ID " + loan.getLoanID() + " has been approved.");
+                    printMoreActions2(admin);
+                }
+            }
+        }
+    }
+
+    public static void printRejectLoan(Admin admin){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter loan ID to reject: ");
+        int loanID = scanner.nextInt();
+        for (Account account : accounts){
+            for (Loan loan : account.getLoans()){
+                if (loan.getLoanID() == loanID){
+                    loan.rejectLoan();
+                    System.out.println("Loan with ID " + loan.getLoanID() + " has been rejected.");
+                    printMoreActions2(admin);
+                }
+            }
+        }
+    }
+
+    public static void printMoreActions2(Admin admin){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Back to main menu? (Y/N)");
+        String input = scanner.nextLine();
+        if (input.equals("Y") || input.equals("y")){
+            printAdminMenu(admin);
+        }
+        else{
+            printLogoutPage();
+        }
+    }
+
     public static void onStart() {
         JSONObject jsonObject;
         JSONParser parser = new JSONParser();
@@ -900,12 +1043,12 @@ public class Bank {
         onStart();
         Bank.printLoginPage();
         Customer bob = new Customer("S1234567A", "bob", new Date(2000, 11, 1), 12345678, "email@email.com", 30, 4000);
-        Admin admin = new Admin("admin", "123");
+        Admin admin1 = new Admin("admin", "password");
         Account bobAccount = new Account(bob, 1, 1234, 1000.0, 0.0, 0.0, 0.0, 0.0);
         Account bobAccount2 = new Account(bob, 2, 4321, 1000.0, 0.0, 0.0, 0.0, 0.0);
         Bank.addAccount(bobAccount);
         Bank.addAccount(bobAccount2);
-
+        Bank.addAdmin(admin1);
     }
 
 }
