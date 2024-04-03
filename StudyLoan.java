@@ -25,8 +25,8 @@ public class StudyLoan extends Loan {
      */
     public StudyLoan(double principal,  int duration, String loanType,
                      String guarantorName, double guarantorID, double guarantorIncome, int guarantorContactNo,
-                     Account account, String studentID, String institution, String loanStatus) {
-        super(principal, STUDY_LOAN_INTEREST_RATE, duration, loanType, guarantorName, guarantorID, guarantorIncome, guarantorContactNo, account, loanStatus);
+                     Account account, String studentID, String institution) {
+        super(principal, STUDY_LOAN_INTEREST_RATE, duration, loanType, guarantorName, guarantorID, guarantorIncome, guarantorContactNo, account);
         this.studentID = studentID;
         this.institution = institution;
     }

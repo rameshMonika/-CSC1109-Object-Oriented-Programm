@@ -51,7 +51,7 @@ public abstract class Loan {
      */
     public Loan(double principal, float interestRate, int duration, String loanType,
                 String guarantorName, double guarantorID, double guarantorIncome, int guarantorContactNo,
-                Account account, String loanStatus) {
+                Account account) {
         lID++;
         this.loanID = lID;
         this.principal = principal;

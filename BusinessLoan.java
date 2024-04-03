@@ -30,8 +30,8 @@ public class BusinessLoan extends Loan {
      * @param cashOutFlow         The cash outflow of the business.
      * @param loanStatus          The status of the loan.
      */
-    public BusinessLoan(String businessType, String businessDescription, double principal, int duration, String loanType, String guarantorName, double guarantorID, double guarantorIncome, int guarantorContactNo, Account account, String uniqueEN, double annualProfit, int cashInFlow, int cashOutFlow, String loanStatus) {
-        super(principal, BUSINESS_LOAN_INTEREST_RATE, duration, loanType, guarantorName, guarantorID, guarantorIncome, guarantorContactNo, account, loanStatus);
+    public BusinessLoan(String businessType, String businessDescription, double principal, int duration, String loanType, String guarantorName, double guarantorID, double guarantorIncome, int guarantorContactNo, Account account, String uniqueEN, double annualProfit, int cashInFlow, int cashOutFlow) {
+        super(principal, BUSINESS_LOAN_INTEREST_RATE, duration, loanType, guarantorName, guarantorID, guarantorIncome, guarantorContactNo, account);
         this.uniqueEN = uniqueEN;
         this.cashInFlow = cashInFlow;
         this.cashOutFlow = cashOutFlow;
