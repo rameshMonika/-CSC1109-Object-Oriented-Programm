@@ -65,7 +65,7 @@ public abstract class Loan {
         this.balance = principal + principal * interestRate;
         this.monthlyPayment = principal * (interestRate / 12) / (1 - Math.pow(1 + interestRate / 12, -duration));
         this.account = account;
-        this.loanStatus = "Pending";
+        this.loanStatus = loanStatus;
     }
 
 

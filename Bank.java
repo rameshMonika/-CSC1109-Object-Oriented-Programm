@@ -913,17 +913,16 @@ public class Bank {
         String id = scanner.nextLine();
         System.out.println("Enter password: ");
         String password = scanner.nextLine();
-        Admin admin = getAdmin(id);
-        printAdminMenu(admin);
-        /*
-         * if (validateAdmin(id, password)){
-         * printAdminMenu(getAdmin(id));
-         * }
-         * else{
-         * System.out.println("Login failed");
-         * printLoginPage();
-         * }
-         */
+       
+        
+         if (validateAdmin(id, password)){
+            printAdminMenu(getAdmin(id));
+         }
+         else{
+            System.out.println("Login failed");
+            printLoginPage();
+         }
+        
     }
 
     public static void printAdminMenu(Admin admin) {
