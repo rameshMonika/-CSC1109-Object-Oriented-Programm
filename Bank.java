@@ -135,8 +135,10 @@ import java.util.Scanner;
          }
      } */
 
-
-     public static void printStartPage() {
+    /*
+    * Prints the start page for the customer
+    */
+    public static void printStartPage() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to " + bankName);
         System.out.println("1 | Login");
@@ -159,7 +161,7 @@ import java.util.Scanner;
      /*
       * Prints the login page for the customer
       */
-     public static void printCustomerLoginPage(){
+    public static void printCustomerLoginPage(){
         Scanner scanner = new Scanner(System.in);
         int counter = 0;
         System.out.println("Enter your account number: ");
@@ -182,21 +184,24 @@ import java.util.Scanner;
                     }
              } while (counter > 0);
     }
-
+    /*
+     * Prints the login fail page for the customer
+     */
     public static void printLoginFailPage() {
         System.out.println("Login failed");
         printStartPage();
     }
-
      /*
       * prints the Customer menu page
       */
-     public static void printCustomerMenu(Account account) {
+    public static void printCustomerMenu(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome " + account.getCustomer().getName());
         System.out.println("Select actions:");
         System.out.println("1 | Check balance");
         System.out.println("2 | Transfer");
+        System.out.println("3 | View account details");
+        System.out.println("4 | Account settings");
         System.out.println("0 | Logout");
         int input = scanner.nextInt();
         switch (input) {
@@ -205,6 +210,12 @@ import java.util.Scanner;
                 break;
             case 2:
                 printTransferPage(account);
+                break;
+            case 3:
+                printAccountDetailsPage(account);
+                break;
+            case 4:
+                printAccountSettingsPage(account);
                 break;
             case 0:
                 printLogoutPage();
@@ -252,6 +263,9 @@ import java.util.Scanner;
         }
         printMoreActions(account);
     }
+    /*
+     * Prints the inter account transfer page for the customer
+     */
     public static void printInterTransferPage(Account account) {
         System.out.println("Accounts available for transfer: ");
         ArrayList<Account> availableAccounts = new ArrayList<>();
@@ -278,10 +292,6 @@ import java.util.Scanner;
             System.out.println("Cannot transfer to a third party account");
             printTransferPage(account);
         }
-        if (receiving == null) {
-            System.out.println("Account not found");
-            printTransferPage(account);
-        }
         for (Account acc : availableAccounts) {
             if (acc.getAccountNumber() == accno) {
                 System.out.println("Enter amount to transfer: ");
@@ -295,6 +305,9 @@ import java.util.Scanner;
             }
         }
     }
+    /*
+     * Prints the third party transfer page for the customer
+     */
     public static void printThirdPartyTransferPage(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter account number to transfer to: ");
@@ -305,7 +318,7 @@ import java.util.Scanner;
         if (receivingAcc == null) {
             printUserNotFoundPage(account);
         }
-        if (receivingAcc.transfer(account, amount2)) {
+        if (account.transfer(receivingAcc, amount2)) {
 
             System.out.println("Transfer successful");
         } else {
@@ -313,11 +326,13 @@ import java.util.Scanner;
             printTransactionFailPage(account);
         }
     }
+    /*
+     * Prints the user not found page for the customer
+     */
     public static void printUserNotFoundPage(Account account) {
         System.out.println("User not found");
         printMoreActions(account);
     }
-
     /*
      * Prints the transaction fail page for the customer
      */
@@ -326,7 +341,116 @@ import java.util.Scanner;
                 "Transaction failed, transfer limit may have been reached or insufficient funds, please try again.");
         printMoreActions(account);
     }
-
+    /*
+     * Prints the account details page for the customer
+     */
+    public static void printAccountDetailsPage(Account account){
+        System.out.println("Account Number: " + account.getAccountNumber());
+        System.out.println("Name: " + account.getCustomer().getName());
+        System.out.println("NRIC: " + account.getCustomer().getNRIC());
+        System.out.println("Email: " + account.getCustomer().getEmail());
+        System.out.println("Contact Number: " + account.getCustomer().getContactNo());
+        System.out.println("Account Balance: ");
+        System.out.println("SGD: " + account.getBalance(Currency.SGD));
+        System.out.println("USD: " + account.getBalance(Currency.USD));
+        System.out.println("EUR: " + account.getBalance(Currency.EUR));
+        System.out.println("JPY: " + account.getBalance(Currency.JPY));
+        System.out.println("MYR: " + account.getBalance(Currency.MYR));
+        printMoreActions(account);
+    }
+    /*
+     * Prints the account settings page for the customer
+     */
+    public static void printAccountSettingsPage(Account account){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Select actions:");
+        System.out.println("1 | Change PIN \t\t\t| $" + account.getPIN());
+        System.out.println("2 | Change Withdraw Limit \t| " + account.getWithdrawLimit());
+        System.out.println("3 | Change Transfer Limit \t| " + account.getTransferLimit());
+        System.out.println("4 | Change Email \t\t| " + account.getCustomer().getEmail());
+        System.out.println("5 | Change Contact Number \t| " + account.getCustomer().getContactNo());
+        System.out.println("0 | Back to main menu");
+        int input = scanner.nextInt();
+        switch (input){
+            case 1:
+                printChangePINPage(account);
+                break;
+            case 2:
+                printChangeWithdrawLimitPage(account);
+                break;
+            case 3:
+                printChangeTransferLimitPage(account);
+                break;
+            case 4:
+                printChangeEmailPage(account);
+                break;
+            case 5:
+                printChangeContactNumberPage(account);
+                break;
+            case 0:
+                printCustomerMenu(account);
+                break;
+            default:
+                System.out.println("Invalid input");
+                printAccountSettingsPage(account);
+                break;
+        }
+    }
+    /*
+     * Prints the change PIN page for the customer
+     */
+    public static void printChangePINPage(Account account){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter new PIN: ");
+        int newPIN = scanner.nextInt();
+        account.setPIN(newPIN);
+        System.out.println("PIN changed successfully");
+        printMoreActions(account);
+    }
+    /*
+     * Prints the change Withdraw Limit page for the customer
+     */
+    public static void printChangeWithdrawLimitPage(Account account){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter new Withdraw Limit: ");
+        double newWithdrawLimit = scanner.nextDouble();
+        account.setWithdrawLimit(newWithdrawLimit);
+        System.out.println("Withdraw Limit changed successfully");
+        printMoreActions(account);
+    }
+    /*
+     * Prints the change Transfer Limit page for the customer
+     */
+    public static void printChangeTransferLimitPage(Account account){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter new Transfer Limit: ");
+        double newTransferLimit = scanner.nextDouble();
+        account.setTransferLimit(newTransferLimit);
+        System.out.println("Transfer Limit changed successfully");
+        printMoreActions(account);
+    }
+    /*
+     * Prints the change Email page for the customer
+     */
+    public static void printChangeEmailPage(Account account){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter new Email: ");
+        String newEmail = scanner.nextLine();
+        account.getCustomer().setEmail(newEmail);
+        System.out.println("Email changed successfully");
+        printMoreActions(account);
+    }
+    /*
+     * Prints the change Contact Number page for the customer
+     */
+    public static void printChangeContactNumberPage(Account account){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter new Contact Number: ");
+        int newContactNumber = scanner.nextInt();
+        account.getCustomer().setContactNo(newContactNumber);
+        System.out.println("Contact Number changed successfully");
+        printMoreActions(account);
+    }
     /*
      * Checks if customer still wants to do more actions
      */
@@ -335,10 +459,17 @@ import java.util.Scanner;
         System.out.println("Back to main menu? (Y/N)");
         String input = scanner.nextLine();
 
-        if (input.equals("Y") || input.equals("y")) {
-            printCustomerMenu(account);
-        } else {
-            printLogoutPage();
+        switch(input){
+            case "Y":
+                printCustomerMenu(account);
+                break;
+            case "N":
+                printLogoutPage();
+                break;
+            default:
+                System.out.println("Invalid input");
+                printMoreActions(account);
+                break;
         }
     }
     /*
