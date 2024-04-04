@@ -4,9 +4,9 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDate;
-
 import java.util.Date;
 import java.util.Scanner;
+
 /**
  * Author: Darren, Min Xuan, Monika, Teren, Jana, Amanda, Kirby
  * E-mail: -
@@ -18,21 +18,25 @@ import java.util.Scanner;
  */
 
 /**
- * The Bank class represents a bank that manages a list of accounts, PIN validation, and account balance.
+ * The Bank class represents a bank that manages a list of accounts, PIN
+ * validation, and account balance.
  */
- public class Bank {
-     private static ArrayList<Account> accounts;
-     private static String bankName;
-     //private static Exchange exchange;
-   
-     /**
-      * Gets the name of the bank.
-      * 
-      * @return The name of the bank.
-      */
-     public static String getBankname() {
-         return bankName;
-     }
+public class Bank {
+    private static ArrayList<Account> accounts;
+    private static String bankName;
+    private static g02_BRA branch = new g02_BRA("1", false, "Singapore", "DBS", "Ang Mo Kio", 65504302, 5);
+    private static Security security = new Security();
+    // private static Exchange exchange;
+
+    /**
+     * Gets the name of the bank.
+     * 
+     * @return The name of the bank.
+     */
+    public static String getBankname() {
+        return bankName;
+    }
+
     /**
      * Sets the name of the bank.
      * 
@@ -42,33 +46,34 @@ import java.util.Scanner;
         bankName = name;
     }
 
-     /**
-      * Adds an account to the bank.
-      * 
-      * @param account The account to add.
-      */
-     public static void addAccount(Account account) {
-         accounts.add(account);
-     }
- 
-     /**
-      * Remove an account from the bank.
-      * 
-      * @param account The account to remove.
-      */
-     public static void removeAccount(Account account) {
-         accounts.remove(account);
-     }
- 
-     /**
-      * Gets account number from the account class and print the all accountNumbers
-      */
-     public static void getAccountNumbers() {
-         for (Account account : accounts) {
-             System.out.println(account.getAccountNumber());
-         }
-     }
-      /**
+    /**
+     * Adds an account to the bank.
+     * 
+     * @param account The account to add.
+     */
+    public static void addAccount(Account account) {
+        accounts.add(account);
+    }
+
+    /**
+     * Remove an account from the bank.
+     * 
+     * @param account The account to remove.
+     */
+    public static void removeAccount(Account account) {
+        accounts.remove(account);
+    }
+
+    /**
+     * Gets account number from the account class and print the all accountNumbers
+     */
+    public static void getAccountNumbers() {
+        for (Account account : accounts) {
+            System.out.println(account.getAccountNumber());
+        }
+    }
+
+    /**
      * returns a account number from the account class
      * 
      * @params the account number tied to the account
@@ -80,71 +85,77 @@ import java.util.Scanner;
         }
         return null;
     }
- 
-     /**
-      * Validates the PIN with the following accountNumber's pin and print the outcome.
-      * 
-      * @param accountNumber The following accountNumber to validate pin.
-      * @param PIN           The pin to validate.
-      * @return True if the PIN is correct, false otherwise.
-      */
-      public static boolean validatePIN(int accountNumber, int PIN) {
+
+    /**
+     * Validates the PIN with the following accountNumber's pin and print the
+     * outcome.
+     * 
+     * @param accountNumber The following accountNumber to validate pin.
+     * @param PIN           The pin to validate.
+     * @return True if the PIN is correct, false otherwise.
+     */
+    public static boolean validatePIN(int accountNumber, String PIN) {
         for (Account account : accounts) {
             if (account.getAccountNumber() == accountNumber) {
-                if (account.getPIN() == PIN) {
+                if (account.getPIN().equals(PIN)) {
                     return true;
                 }
             }
         }
         return false;
     }
- 
-     /**
-      * Gets the account balance and prints the following accountNumber's balance.
-      * 
-      * @param accountNumber The following accountNumber to find the balance.
-      * @param currency      The currency of the balance to show
-      */
-      public static Double getAccountBalance(int accountNumber, Currency currency) {
+
+    /**
+     * Gets the account balance and prints the following accountNumber's balance.
+     * 
+     * @param accountNumber The following accountNumber to find the balance.
+     * @param currency      The currency of the balance to show
+     */
+    public static Double getAccountBalance(int accountNumber) {
         for (Account account : accounts) {
             if (account.getAccountNumber() == accountNumber) {
-                return account.getBalance(currency);
+                return account.getBalance();
             }
         }
         return 0.0;
     }
-    /**
-      * Converts the given amount from the given currency to SGD.
-      * 
-      * @param accountNumber The account number to convert the currency.
-      * @param currency      The currency of the amount to be converted.
-      * @param amount        The amount to be converted.
-      */
-     /* public void convertCurrency(int accountNumber, String currency, double amount){
-         for (Account account : accounts) {
-             if (account.getAccountNumber() == accountNumber) {
-                if (account.getBalance("SGD") < amount) {
-                    System.out.println("Insufficient balance");
-                    return;
-                }
-                 System.out.println("Converted amount is " + exchange.convertCurrency(currency, amount));
-                 account.setBalance("SGD", account.getBalance("SGD") - amount);
-                 account.addBalance(currency, exchange.convertCurrency(currency, amount));
 
-             }
-         }
-     } */
+    /**
+     * Converts the given amount from the given currency to SGD.
+     * 
+     * @param accountNumber The account number to convert the currency.
+     * @param currency      The currency of the amount to be converted.
+     * @param amount        The amount to be converted.
+     */
+    /*
+     * public void convertCurrency(int accountNumber, String currency, double
+     * amount){
+     * for (Account account : accounts) {
+     * if (account.getAccountNumber() == accountNumber) {
+     * if (account.getBalance("SGD") < amount) {
+     * System.out.println("Insufficient balance");
+     * return;
+     * }
+     * System.out.println("Converted amount is " +
+     * exchange.convertCurrency(currency, amount));
+     * account.setBalance("SGD", account.getBalance("SGD") - amount);
+     * account.addBalance(currency, exchange.convertCurrency(currency, amount));
+     * 
+     * }
+     * }
+     * }
+     */
 
     /*
-    * Prints the start page for the customer
-    */
+     * Prints the start page for the customer
+     */
     public static void printStartPage() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome to " + bankName);
         System.out.println("1 | Login");
         System.out.println("0 | Exit");
         int input = scanner.nextInt();
-        try{
+        try {
             switch (input) {
                 case 1:
                     printCustomerLoginPage();
@@ -163,29 +174,29 @@ import java.util.Scanner;
             printStartPage();
         }
     }
+
     public static boolean accountExists(int accountId) {
         // Assuming accounts is a List or Array of Account objects
         for (Account account : accounts) {
-            if (account.getAccountNumber()== (accountId)) {
+            if (account.getAccountNumber() == (accountId)) {
                 return true;
             }
         }
         return false;
     }
-     /*
-      * Prints the login page for the customer
-      */
-    public static void printCustomerLoginPage(){
+
+    /*
+     * Prints the login page for the customer
+     */
+    public static void printCustomerLoginPage() {
         Scanner scanner = new Scanner(System.in);
         int counter = 0;
         System.out.println("Enter your account number: ");
         int accno = scanner.nextInt();
-        if (accountExists(accno)){
-            System.out.println("Enter your PIN: ");
-            int pin = scanner.nextInt();
+        if (accountExists(accno)) {
             for (Account account : accounts) {
                 if (account.getAccountNumber() == accno) {
-                    if (validatePIN(accno, pin)) {
+                    if (security.login(account.getPIN())) {
                         printCustomerMenu(account);
                     } else {
                         counter++;
@@ -201,9 +212,10 @@ import java.util.Scanner;
         } else {
             System.out.println("Account not found");
             printCustomerLoginPage();
-        
+
         }
     }
+
     /*
      * Prints the login fail page for the customer
      */
@@ -211,9 +223,10 @@ import java.util.Scanner;
         System.out.println("Login failed");
         printStartPage();
     }
-     /*
-      * prints the Customer menu page
-      */
+
+    /*
+     * prints the Customer menu page
+     */
     public static void printCustomerMenu(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome " + account.getCustomer().getName());
@@ -221,7 +234,9 @@ import java.util.Scanner;
         System.out.println("1 | Check balance");
         System.out.println("2 | Transfer");
         System.out.println("3 | View account details");
-        System.out.println("4 | Account settings");
+        System.out.println("4 | Branch");
+        System.out.println("5 | Insurance");
+        System.out.println("6 | Account settings");
         System.out.println("0 | Logout");
         int input = scanner.nextInt();
         switch (input) {
@@ -235,6 +250,12 @@ import java.util.Scanner;
                 printAccountDetailsPage(account);
                 break;
             case 4:
+                printBranchDetailsPage(account);
+                break;
+            case 5:
+                printInsuranceDetailsPage(account);
+                break;
+            case 6:
                 printAccountSettingsPage(account);
                 break;
             case 0:
@@ -246,18 +267,15 @@ import java.util.Scanner;
                 break;
         }
     }
+
     /*
      * Prints the balance page for the customer
      */
     public static void printBalancePage(Account account) {
-        System.out.println("Current Account Balance");
-        System.out.println("SGD: " + account.getBalance(Currency.SGD));
-        System.out.println("USD: " + account.getBalance(Currency.USD));
-        System.out.println("EUR: " + account.getBalance(Currency.EUR));
-        System.out.println("JPY: " + account.getBalance(Currency.JPY));
-        System.out.println("MYR: " + account.getBalance(Currency.MYR));
+        System.out.println("Current Account Balance: $" + account.getBalance());
         printMoreActions(account);
     }
+
     /*
      * Prints the transfer page for the customer
      */
@@ -283,6 +301,7 @@ import java.util.Scanner;
         }
         printMoreActions(account);
     }
+
     /*
      * Prints the inter account transfer page for the customer
      */
@@ -308,7 +327,7 @@ import java.util.Scanner;
             printTransferPage(account);
         }
         Account receiving = getAccount(accno);
-        if(receiving.getCustomerIC() != account.getCustomerIC()){
+        if (receiving.getCustomerIC() != account.getCustomerIC()) {
             System.out.println("Cannot transfer to a third party account");
             printTransferPage(account);
         }
@@ -325,6 +344,7 @@ import java.util.Scanner;
             }
         }
     }
+
     /*
      * Prints the third party transfer page for the customer
      */
@@ -346,6 +366,7 @@ import java.util.Scanner;
             printTransactionFailPage(account);
         }
     }
+
     /*
      * Prints the user not found page for the customer
      */
@@ -353,6 +374,7 @@ import java.util.Scanner;
         System.out.println("User not found");
         printMoreActions(account);
     }
+
     /*
      * Prints the transaction fail page for the customer
      */
@@ -361,30 +383,28 @@ import java.util.Scanner;
                 "Transaction failed, transfer limit may have been reached or insufficient funds, please try again.");
         printMoreActions(account);
     }
+
     /*
      * Prints the account details page for the customer
      */
-    public static void printAccountDetailsPage(Account account){
+    public static void printAccountDetailsPage(Account account) {
         printAccountDetails(account);
         printMoreActions(account);
     }
-    public static void printAccountDetails(Account account){
+
+    public static void printAccountDetails(Account account) {
         System.out.println("Account Number: " + account.getAccountNumber());
         System.out.println("Name: " + account.getCustomer().getName());
         System.out.println("NRIC: " + account.getCustomer().getNRIC());
         System.out.println("Email: " + account.getCustomer().getEmail());
         System.out.println("Contact Number: " + account.getCustomer().getContactNo());
-        System.out.println("Account Balance: ");
-        System.out.println("SGD: " + account.getBalance(Currency.SGD));
-        System.out.println("USD: " + account.getBalance(Currency.USD));
-        System.out.println("EUR: " + account.getBalance(Currency.EUR));
-        System.out.println("JPY: " + account.getBalance(Currency.JPY));
-        System.out.println("MYR: " + account.getBalance(Currency.MYR));
+        System.out.println("Account Balance: $" + account.getBalance());
     }
+
     /*
      * Prints the account settings page for the customer
      */
-    public static void printAccountSettingsPage(Account account){
+    public static void printAccountSettingsPage(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Select actions:");
         System.out.println("1 | Change PIN \t\t\t| " + account.getPIN());
@@ -395,7 +415,7 @@ import java.util.Scanner;
         System.out.println("6 | Close Account");
         System.out.println("0 | Back to main menu");
         int input = scanner.nextInt();
-        switch (input){
+        switch (input) {
             case 1:
                 printChangePINPage(account);
                 break;
@@ -422,21 +442,23 @@ import java.util.Scanner;
                 break;
         }
     }
+
     /*
      * Prints the change PIN page for the customer
      */
-    public static void printChangePINPage(Account account){
+    public static void printChangePINPage(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter new PIN: ");
-        int newPIN = scanner.nextInt();
-        account.setPIN(newPIN);
+        String newPIN = scanner.nextLine();
+        account.setPIN(security.encrypt(newPIN));
         System.out.println("PIN changed successfully");
         printMoreActions(account);
     }
+
     /*
      * Prints the change Withdraw Limit page for the customer
      */
-    public static void printChangeWithdrawLimitPage(Account account){
+    public static void printChangeWithdrawLimitPage(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter new Withdraw Limit: ");
         double newWithdrawLimit = scanner.nextDouble();
@@ -444,10 +466,11 @@ import java.util.Scanner;
         System.out.println("Withdraw Limit changed successfully");
         printMoreActions(account);
     }
+
     /*
      * Prints the change Transfer Limit page for the customer
      */
-    public static void printChangeTransferLimitPage(Account account){
+    public static void printChangeTransferLimitPage(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter new Transfer Limit: ");
         double newTransferLimit = scanner.nextDouble();
@@ -455,10 +478,11 @@ import java.util.Scanner;
         System.out.println("Transfer Limit changed successfully");
         printMoreActions(account);
     }
+
     /*
      * Prints the change Email page for the customer
      */
-    public static void printChangeEmailPage(Account account){
+    public static void printChangeEmailPage(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter new Email: ");
         String newEmail = scanner.nextLine();
@@ -466,10 +490,11 @@ import java.util.Scanner;
         System.out.println("Email changed successfully");
         printMoreActions(account);
     }
+
     /*
      * Prints the change Contact Number page for the customer
      */
-    public static void printChangeContactNumberPage(Account account){
+    public static void printChangeContactNumberPage(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter new Contact Number: ");
         int newContactNumber = scanner.nextInt();
@@ -477,14 +502,15 @@ import java.util.Scanner;
         System.out.println("Contact Number changed successfully");
         printMoreActions(account);
     }
+
     /*
      * Prints the close account page for the customer
      */
-    public static void printCloseAccountPage(Account account){
+    public static void printCloseAccountPage(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Are you sure you want to close your account? (Y/N)");
         String input = scanner.nextLine();
-        switch(input){
+        switch (input) {
             case "Y":
                 closeAccountVerification(account);
                 break;
@@ -497,7 +523,8 @@ import java.util.Scanner;
                 break;
         }
     }
-    public static boolean checkNRIC(String nric){
+
+    public static boolean checkNRIC(String nric) {
         for (Account account : accounts) {
             if (account.getCustomer().getNRIC().substring(5).equals(nric)) {
                 return true;
@@ -505,11 +532,12 @@ import java.util.Scanner;
         }
         return false;
     }
-    public static void closeAccountVerification(Account account){
+
+    public static void closeAccountVerification(Account account) {
         System.out.println("Please enter your last four digits of your NRIC to verify your identity: ");
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
-        if (checkNRIC(input)){
+        if (checkNRIC(input)) {
             accounts.remove(account);
             System.out.println("Account closed successfully");
             printStartPage();
@@ -518,6 +546,7 @@ import java.util.Scanner;
             printCloseAccountPage(account);
         }
     }
+
     /*
      * Checks if customer still wants to do more actions
      */
@@ -526,7 +555,7 @@ import java.util.Scanner;
         System.out.println("Back to main menu? (Y/N)");
         String input = scanner.nextLine();
 
-        switch(input){
+        switch (input) {
             case "Y":
                 printCustomerMenu(account);
                 break;
@@ -539,6 +568,7 @@ import java.util.Scanner;
                 break;
         }
     }
+
     /*
      * Prints the logout page for the customer
      */
@@ -548,17 +578,82 @@ import java.util.Scanner;
         printStartPage();
     }
 
+    public static void printBranchDetailsPage(Account account) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Branch:");
+        System.out.println("1 | Display Branch Details");
+        System.out.println("2 | Display Current Queue");
+        System.out.println("3 | Generate Queue Number");
+        System.out.println("0 | Back to main menu");
+        int input = scanner.nextInt();
+        switch (input) {
+            case 1:
+                branch.displayBranchInfo();
+                printMoreActions(account);
+                break;
+            case 2:
+                branch.displayQueue();
+                printMoreActions(account);
+                break;
+            case 3:
+                int counter = 0;
+                int choice = 0;
+                do {
+                    System.out.println("Do you want a Physical or Virtual Queue?");
+                    System.out.println("1 | Physical");
+                    System.out.println("2 | Virtual");
+                    System.out.println("0 | Back to Main Menu");
+                    choice = scanner.nextInt();
+                    switch (choice) {
+                        case 1:
+                            branch.generateQueueNumber(true, 1);
+                            printMoreActions(account);
+                            break;
+                        case 2:
+                            branch.generateQueueNumber(false, 1);
+                            printMoreActions(account);
+                            break;
+                        case 0:
+                            printCustomerMenu(account);
+                            break;
+                        default:
+                            System.out.println("Invalid option");
+                            counter++;
+                            break;
+
+                    }
+                } while (choice > 2 || choice < 0);
+
+                break;
+            case 0:
+                printCustomerMenu(account);
+                break;
+
+        }
+    }
+
+    public static void printInsuranceDetailsPage(Account account){
+        // Scanner scanner = new Scanner(System.in);
+        // System.out.println("Insurance");
+        // System.out.println("1 | Display Fund Information");
+        // System.out.println("2 | Display Insurance Information");
+        // System.out.println("3 | Display Available Policies");
+        // System.out.println("0 | Back to main menu");
+        // g02_BRA.generateInsuranceMenuOptions(scanner, )
+        printMoreActions(account);
+    }
+
     public static void main(String[] args) {
         accounts = new ArrayList<>();
         setBankname("DBS");
-        Customer customer = new Customer("S1234567A", "John Doe", new Date(2000, 11, 1), 12345678,"email");
-        Customer customer2 = new Customer("S1234567B", "Jane Doe", new Date(2000, 11, 1), 12345678,"email");
-        Account account = new Account(customer, 1, 1234, 1000.0, 0.0, 0.0, 0.0, 0.0);
-        Account account2 = new Account(customer, 2, 1234);
-        Account account3 = new Account(customer2, 3, 1234);
+        Customer customer = new Customer("S1234567A", "John Doe", new Date(2000, 11, 1), 12345678, "email");
+        Customer customer2 = new Customer("S1234567B", "Jane Doe", new Date(2000, 11, 1), 12345678, "email");
+        Account account = new Account(customer, 1, security.encrypt("123456"), 1000.0);
+        Account account2 = new Account(customer, 2, security.encrypt("123456"));
+        Account account3 = new Account(customer2, 3, security.encrypt("123456"));
         Bank.addAccount(account);
         Bank.addAccount(account2);
         Bank.addAccount(account3);
         printStartPage();
     }
- }
+}

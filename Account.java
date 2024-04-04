@@ -10,39 +10,28 @@ import java.util.HashMap;
  */
 public class Account{
     private int accountNumber;
-    private HashMap<Currency, Double> balance = new HashMap<>();
+    private Double balance;
     private Customer customer;
-    private int PIN;
+    private String PIN;
     private double withdrawLimit;
     private double transferLimit;
-    private double debt;
 
-    public Account(Customer customer, int accountNumber, int PIN){
+    public Account(Customer customer, int accountNumber, String PIN){
         this.accountNumber = accountNumber;
         this.customer = customer;
         this.PIN = PIN;
         this.withdrawLimit = 1000;
         this.transferLimit = 1000;
-        this.debt = 0;
-        this.balance.put(Currency.SGD, 0.0);
-        this.balance.put(Currency.EUR, 0.0);
-        this.balance.put(Currency.JPY, 0.0);
-        this.balance.put(Currency.MYR, 0.0);
-        this.balance.put(Currency.USD, 0.0);
+        this.balance = 0.0;
     }
 
-    public Account(Customer customer, int accountNumber, int PIN, double SGD, double EUR, double JPY, double MYR, double USD){
+    public Account(Customer customer, int accountNumber, String PIN, double SGD){
         this.accountNumber = accountNumber;
         this.customer = customer;
         this.PIN = PIN;
         this.withdrawLimit = 1000;
         this.transferLimit = 1000;
-        this.debt = 0;
-        this.balance.put(Currency.SGD, SGD);
-        this.balance.put(Currency.EUR, EUR);
-        this.balance.put(Currency.JPY, JPY);
-        this.balance.put(Currency.MYR, MYR);
-        this.balance.put(Currency.USD, USD);
+        this.balance = SGD;
     }
     /**
     * Gets the account number of the account.
@@ -73,23 +62,23 @@ public class Account{
     *
     * @return The current balance.
     */
-    public double getBalance(Currency currency){
-        return balance.get(currency);
+    public double getBalance(){
+        return balance;
     }
     /**
      * Sets the current balance of the account.
      *  
      * @param balance The current balance.
      */
-    public void setBalance(Currency currency, double balance) {
-        this.balance.put(currency, balance);
+    public void setBalance(double balance) {
+        this.balance = balance;
     }
     /**
      * Gets the PIN of the account.
      * 
      * @return The PIN.
      */
-    public int getPIN(){
+    public String getPIN(){
         return PIN;
     }
     /**
@@ -97,7 +86,7 @@ public class Account{
      * 
      * @param PIN The PIN.
      */
-    public void setPIN(int PIN){
+    public void setPIN(String PIN){
         this.PIN = PIN;
     } 
     /**
@@ -138,8 +127,8 @@ public class Account{
     * @param amount The amount to deposit.
     */
     public void deposit(double amount){
-        double temp = balance.get(Currency.SGD) + amount;
-        balance.put(Currency.SGD, temp);
+        double temp = balance + amount;
+        balance = temp;
     }
     /**
      * Withdraws the specified amount from the account.
@@ -147,7 +136,7 @@ public class Account{
      * @param amount The amount to withdraw.
      */
     public void withdraw(double amount){
-        double temp = balance.get(Currency.SGD);
+        double temp = balance;
 
         if (amount > withdrawLimit) {
             System.out.println("Withdraw limit exceeded");
@@ -155,7 +144,7 @@ public class Account{
             System.out.println("Insufficient funds");
         } else {
             temp -= amount;
-            balance.put(Currency.SGD, temp);
+            balance = temp;
         }
     }
     /**
@@ -217,7 +206,7 @@ public class Account{
      * Transfers the specified amount from the account to another account.
      */
     public boolean transfer(Account account, double amount) {
-        double balanceSGD = balance.get(Currency.SGD);
+        double balanceSGD = balance;
         if (amount > transferLimit) {
             System.out.println("Transfer limit exceeded");
             return false;
@@ -226,7 +215,7 @@ public class Account{
             return false;
         } else {
             balanceSGD -= amount;
-            this.balance.put(Currency.SGD, balanceSGD);
+            this.balance = balanceSGD ;
             account.deposit(amount);
             return true;
         }
