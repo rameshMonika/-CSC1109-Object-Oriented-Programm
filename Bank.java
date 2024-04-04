@@ -144,19 +144,33 @@ import java.util.Scanner;
         System.out.println("1 | Login");
         System.out.println("0 | Exit");
         int input = scanner.nextInt();
-        switch (input) {
-            case 1:
-                printCustomerLoginPage();
-                break;
-            case 0:
-                System.out.println("Thank you for using our service");
-                scanner.close();
-                break;
-            default:
-                System.out.println("Invalid input");
-                printStartPage();
-                break;
+        try{
+            switch (input) {
+                case 1:
+                    printCustomerLoginPage();
+                    break;
+                case 0:
+                    System.out.println("Thank you for using our service");
+                    scanner.close();
+                    break;
+                default:
+                    System.out.println("Invalid input");
+                    printStartPage();
+                    break;
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid input");
+            printStartPage();
         }
+    }
+    public static boolean accountExists(int accountId) {
+        // Assuming accounts is a List or Array of Account objects
+        for (Account account : accounts) {
+            if (account.getAccountNumber()== (accountId)) {
+                return true;
+            }
+        }
+        return false;
     }
      /*
       * Prints the login page for the customer
@@ -166,23 +180,29 @@ import java.util.Scanner;
         int counter = 0;
         System.out.println("Enter your account number: ");
         int accno = scanner.nextInt();
-        do {
+        if (accountExists(accno)){
             System.out.println("Enter your PIN: ");
             int pin = scanner.nextInt();
-            if (validatePIN(accno, pin)) {
-
-                System.out.println("Login successful");
-                printCustomerMenu(getAccount(accno));
-                counter = 0;
-                break;
-                } else {
-                     counter++;
-                     }
-                    if (counter == 3) {
-                         printLoginFailPage();
-                        break;
+            for (Account account : accounts) {
+                if (account.getAccountNumber() == accno) {
+                    if (validatePIN(accno, pin)) {
+                        printCustomerMenu(account);
+                    } else {
+                        counter++;
+                        if (counter < 3) {
+                            System.out.println("Invalid PIN, please try again");
+                            printCustomerLoginPage();
+                        } else {
+                            printLoginFailPage();
+                        }
                     }
-             } while (counter > 0);
+                }
+            }
+        } else {
+            System.out.println("Account not found");
+            printCustomerLoginPage();
+        
+        }
     }
     /*
      * Prints the login fail page for the customer
@@ -345,6 +365,10 @@ import java.util.Scanner;
      * Prints the account details page for the customer
      */
     public static void printAccountDetailsPage(Account account){
+        printAccountDetails(account);
+        printMoreActions(account);
+    }
+    public static void printAccountDetails(Account account){
         System.out.println("Account Number: " + account.getAccountNumber());
         System.out.println("Name: " + account.getCustomer().getName());
         System.out.println("NRIC: " + account.getCustomer().getNRIC());
@@ -356,7 +380,6 @@ import java.util.Scanner;
         System.out.println("EUR: " + account.getBalance(Currency.EUR));
         System.out.println("JPY: " + account.getBalance(Currency.JPY));
         System.out.println("MYR: " + account.getBalance(Currency.MYR));
-        printMoreActions(account);
     }
     /*
      * Prints the account settings page for the customer
@@ -364,7 +387,7 @@ import java.util.Scanner;
     public static void printAccountSettingsPage(Account account){
         Scanner scanner = new Scanner(System.in);
         System.out.println("Select actions:");
-        System.out.println("1 | Change PIN \t\t\t| $" + account.getPIN());
+        System.out.println("1 | Change PIN \t\t\t| " + account.getPIN());
         System.out.println("2 | Change Withdraw Limit \t| " + account.getWithdrawLimit());
         System.out.println("3 | Change Transfer Limit \t| " + account.getTransferLimit());
         System.out.println("4 | Change Email \t\t| " + account.getCustomer().getEmail());
