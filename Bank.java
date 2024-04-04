@@ -392,6 +392,7 @@ import java.util.Scanner;
         System.out.println("3 | Change Transfer Limit \t| " + account.getTransferLimit());
         System.out.println("4 | Change Email \t\t| " + account.getCustomer().getEmail());
         System.out.println("5 | Change Contact Number \t| " + account.getCustomer().getContactNo());
+        System.out.println("6 | Close Account");
         System.out.println("0 | Back to main menu");
         int input = scanner.nextInt();
         switch (input){
@@ -410,6 +411,8 @@ import java.util.Scanner;
             case 5:
                 printChangeContactNumberPage(account);
                 break;
+            case 6:
+                printCloseAccountPage(account);
             case 0:
                 printCustomerMenu(account);
                 break;
@@ -473,6 +476,47 @@ import java.util.Scanner;
         account.getCustomer().setContactNo(newContactNumber);
         System.out.println("Contact Number changed successfully");
         printMoreActions(account);
+    }
+    /*
+     * Prints the close account page for the customer
+     */
+    public static void printCloseAccountPage(Account account){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Are you sure you want to close your account? (Y/N)");
+        String input = scanner.nextLine();
+        switch(input){
+            case "Y":
+                closeAccountVerification(account);
+                break;
+            case "N":
+                printAccountSettingsPage(account);
+                break;
+            default:
+                System.out.println("Invalid input");
+                printCloseAccountPage(account);
+                break;
+        }
+    }
+    public static boolean checkNRIC(String nric){
+        for (Account account : accounts) {
+            if (account.getCustomer().getNRIC().substring(5).equals(nric)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    public static void closeAccountVerification(Account account){
+        System.out.println("Please enter your last four digits of your NRIC to verify your identity: ");
+        Scanner scanner = new Scanner(System.in);
+        String input = scanner.nextLine();
+        if (checkNRIC(input)){
+            accounts.remove(account);
+            System.out.println("Account closed successfully");
+            printStartPage();
+        } else {
+            System.out.println("Verification failed");
+            printCloseAccountPage(account);
+        }
     }
     /*
      * Checks if customer still wants to do more actions
