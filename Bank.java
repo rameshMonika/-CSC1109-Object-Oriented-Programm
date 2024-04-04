@@ -262,7 +262,6 @@ import java.util.Scanner;
                 availableAccounts.add(acc);
             }
         }
-
         if (availableAccounts.size() < 1) {
             System.out.println("There are no accounts linked.");
             printMoreActions(account);
@@ -270,17 +269,24 @@ import java.util.Scanner;
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter account number to transfer to: ");
         int accno = scanner.nextInt();
+        if (accno == account.getAccountNumber()) {
+            System.out.println("Cannot transfer to the same account");
+            printTransferPage(account);
+        }
         Account receiving = getAccount(accno);
+        if(receiving.getCustomerIC() != account.getCustomerIC()){
+            System.out.println("Cannot transfer to a third party account");
+            printTransferPage(account);
+        }
         if (receiving == null) {
             System.out.println("Account not found");
-
             printTransferPage(account);
         }
         for (Account acc : availableAccounts) {
             if (acc.getAccountNumber() == accno) {
                 System.out.println("Enter amount to transfer: ");
                 double amount = scanner.nextDouble();
-                if (account.interAccountTransfer(getAccount(accno), amount)) {
+                if (account.transfer(getAccount(accno), amount)) {
 
                     System.out.println("Transfer successful");
                 } else {
@@ -299,7 +305,7 @@ import java.util.Scanner;
         if (receivingAcc == null) {
             printUserNotFoundPage(account);
         }
-        if (receivingAcc.thirdPartyTransfer(account, amount2)) {
+        if (receivingAcc.transfer(account, amount2)) {
 
             System.out.println("Transfer successful");
         } else {

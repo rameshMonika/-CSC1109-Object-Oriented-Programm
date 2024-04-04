@@ -164,7 +164,7 @@ public class Account{
      * @param account The account to transfer to.
      */
 
-     public boolean interAccountTransfer(Account account, double amount) {
+/*      public boolean interAccountTransfer(Account account, double amount) {
         if (account.getCustomerIC().equals(customer.getNRIC())) {
             double balanceSGD = balance.get(Currency.SGD);
             if (amount > transferLimit) {
@@ -180,7 +180,7 @@ public class Account{
         } else {
             return false;
         }
-    }
+    } */
 /*     public void interAccountTransfer(Account account, double amount){
         if(amount > transferLimit){
             System.out.println("Transfer limit exceeded");
@@ -198,7 +198,25 @@ public class Account{
      * 
      * @param account The account to transfer to.
      */
-    public boolean thirdPartyTransfer(Account account, double amount) {
+/*     public boolean thirdPartyTransfer(Account account, double amount) {
+        double balanceSGD = balance.get(Currency.SGD);
+        if (amount > transferLimit) {
+            System.out.println("Transfer limit exceeded");
+            return false;
+        } else if (amount > balanceSGD) {
+            System.out.println("Insufficient funds");
+            return false;
+        } else {
+            balanceSGD -= amount;
+            this.balance.put(Currency.SGD, balanceSGD);
+            account.deposit(amount);
+            return true;
+        }
+    } */
+    /*
+     * Transfers the specified amount from the account to another account.
+     */
+    public boolean transfer(Account account, double amount) {
         double balanceSGD = balance.get(Currency.SGD);
         if (amount > transferLimit) {
             System.out.println("Transfer limit exceeded");
