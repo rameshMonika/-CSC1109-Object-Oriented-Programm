@@ -1,3 +1,5 @@
+import java.util.HashMap;
+
 /**
  * Author: Darren, Min xuan, Monika, Teren, Jana, Amanda, Kirby
  * E-mail: -
@@ -8,20 +10,39 @@
  */
 public class Account{
     private int accountNumber;
-    private double balance;
+    private HashMap<Currency, Double> balance = new HashMap<>();
     private Customer customer;
     private int PIN;
     private double withdrawLimit;
     private double transferLimit;
     private double debt;
+
     public Account(Customer customer, int accountNumber, int PIN){
         this.accountNumber = accountNumber;
-        this.balance = 0;
         this.customer = customer;
         this.PIN = PIN;
         this.withdrawLimit = 1000;
         this.transferLimit = 1000;
         this.debt = 0;
+        this.balance.put(Currency.SGD, 0.0);
+        this.balance.put(Currency.EUR, 0.0);
+        this.balance.put(Currency.JPY, 0.0);
+        this.balance.put(Currency.MYR, 0.0);
+        this.balance.put(Currency.USD, 0.0);
+    }
+
+    public Account(Customer customer, int accountNumber, int PIN, double SGD, double EUR, double JPY, double MYR, double USD){
+        this.accountNumber = accountNumber;
+        this.customer = customer;
+        this.PIN = PIN;
+        this.withdrawLimit = 1000;
+        this.transferLimit = 1000;
+        this.debt = 0;
+        this.balance.put(Currency.SGD, SGD);
+        this.balance.put(Currency.EUR, EUR);
+        this.balance.put(Currency.JPY, JPY);
+        this.balance.put(Currency.MYR, MYR);
+        this.balance.put(Currency.USD, USD);
     }
     /**
     * Gets the account number of the account.
@@ -39,21 +60,29 @@ public class Account{
     public void setAccountNumber(int accountNumber){
         this.accountNumber = accountNumber;
     }
+    public Customer getCustomer(){
+        return customer;
+    }
+
+    public String getCustomerIC(){
+        return customer.getNRIC();
+    }
+
     /**
     * Gets the current balance of the account.
     *
     * @return The current balance.
     */
-    public double getBalance(){
-        return balance;
+    public double getBalance(Currency currency){
+        return balance.get(currency);
     }
     /**
      * Sets the current balance of the account.
      *  
      * @param balance The current balance.
      */
-    public void setBalance(double balance){
-        this.balance = balance;
+    public void setBalance(Currency currency, double balance) {
+        this.balance.put(currency, balance);
     }
     /**
      * Gets the PIN of the account.
@@ -109,7 +138,8 @@ public class Account{
     * @param amount The amount to deposit.
     */
     public void deposit(double amount){
-        balance += amount;
+        double temp = balance.get(Currency.SGD) + amount;
+        balance.put(Currency.SGD, temp);
     }
     /**
      * Withdraws the specified amount from the account.
@@ -117,14 +147,15 @@ public class Account{
      * @param amount The amount to withdraw.
      */
     public void withdraw(double amount){
-        if(amount > withdrawLimit){
+        double temp = balance.get(Currency.SGD);
+
+        if (amount > withdrawLimit) {
             System.out.println("Withdraw limit exceeded");
-        }
-        else if(amount > balance){
+        } else if (amount > temp) {
             System.out.println("Insufficient funds");
-        }
-        else{
-            balance -= amount;
+        } else {
+            temp -= amount;
+            balance.put(Currency.SGD, temp);
         }
     }
     /**
@@ -132,7 +163,25 @@ public class Account{
      * 
      * @param account The account to transfer to.
      */
-    public void interAccountTransfer(Account account, double amount){
+
+     public boolean interAccountTransfer(Account account, double amount) {
+        if (account.getCustomerIC().equals(customer.getNRIC())) {
+            double balanceSGD = balance.get(Currency.SGD);
+            if (amount > transferLimit) {
+                return false;
+            } else if (amount > balanceSGD) {
+                return false;
+            } else {
+                balanceSGD -= amount;
+                this.balance.put(Currency.SGD, balanceSGD);
+                account.deposit(amount);
+                return true;
+            }
+        } else {
+            return false;
+        }
+    }
+/*     public void interAccountTransfer(Account account, double amount){
         if(amount > transferLimit){
             System.out.println("Transfer limit exceeded");
         }
@@ -143,22 +192,25 @@ public class Account{
             balance -= amount;
             account.deposit(amount);
         }
-    }
+    } */
     /**
      * Transfers the specified amount from the account to a third party account.
      * 
      * @param account The account to transfer to.
      */
-    public void thirdPartyTransfer(Account account, double amount){
-        if(amount > transferLimit){
+    public boolean thirdPartyTransfer(Account account, double amount) {
+        double balanceSGD = balance.get(Currency.SGD);
+        if (amount > transferLimit) {
             System.out.println("Transfer limit exceeded");
-        }
-        else if(amount > balance){
+            return false;
+        } else if (amount > balanceSGD) {
             System.out.println("Insufficient funds");
-        }
-        else{
-            balance -= amount;
+            return false;
+        } else {
+            balanceSGD -= amount;
+            this.balance.put(Currency.SGD, balanceSGD);
             account.deposit(amount);
+            return true;
         }
     }
 }
