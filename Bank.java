@@ -127,7 +127,7 @@ public class Bank {
                     break;
                 case 0:
                     System.out.println("Thank you for using our service");
-                    scanner.close();
+                    System.exit(0);
                     break;
                 default:
                     System.out.println("Invalid input");
