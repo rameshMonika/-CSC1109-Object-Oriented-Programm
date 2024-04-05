@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Scanner;
 
 /**
- * Author: Darren, Min Xuan, Monika, Teren, Jana, Amanda, Kirby
+ * Author: Darren, Monika, Teren, Jana, Amanda, Kirby
  * E-mail: -
  * Date: 20240219
  *
@@ -26,7 +26,6 @@ public class Bank {
     private static String bankName;
     private static g02_BRA branch = new g02_BRA("1", false, "Singapore", "DBS", "Ang Mo Kio", 65504302, 5);
     private static Security security = new Security();
-    // private static Exchange exchange;
 
     /**
      * Gets the name of the bank.
@@ -36,7 +35,6 @@ public class Bank {
     public static String getBankname() {
         return bankName;
     }
-
     /**
      * Sets the name of the bank.
      * 
@@ -45,7 +43,6 @@ public class Bank {
     public static void setBankname(String name) {
         bankName = name;
     }
-
     /**
      * Adds an account to the bank.
      * 
@@ -54,7 +51,6 @@ public class Bank {
     public static void addAccount(Account account) {
         accounts.add(account);
     }
-
     /**
      * Remove an account from the bank.
      * 
@@ -63,7 +59,6 @@ public class Bank {
     public static void removeAccount(Account account) {
         accounts.remove(account);
     }
-
     /**
      * Gets account number from the account class and print the all accountNumbers
      */
@@ -72,7 +67,6 @@ public class Bank {
             System.out.println(account.getAccountNumber());
         }
     }
-
     /**
      * returns a account number from the account class
      * 
@@ -85,7 +79,6 @@ public class Bank {
         }
         return null;
     }
-
     /**
      * Validates the PIN with the following accountNumber's pin and print the
      * outcome.
@@ -104,7 +97,6 @@ public class Bank {
         }
         return false;
     }
-
     /**
      * Gets the account balance and prints the following accountNumber's balance.
      * 
@@ -119,43 +111,16 @@ public class Bank {
         }
         return 0.0;
     }
-
     /**
-     * Converts the given amount from the given currency to SGD.
-     * 
-     * @param accountNumber The account number to convert the currency.
-     * @param currency      The currency of the amount to be converted.
-     * @param amount        The amount to be converted.
-     */
-    /*
-     * public void convertCurrency(int accountNumber, String currency, double
-     * amount){
-     * for (Account account : accounts) {
-     * if (account.getAccountNumber() == accountNumber) {
-     * if (account.getBalance("SGD") < amount) {
-     * System.out.println("Insufficient balance");
-     * return;
-     * }
-     * System.out.println("Converted amount is " +
-     * exchange.convertCurrency(currency, amount));
-     * account.setBalance("SGD", account.getBalance("SGD") - amount);
-     * account.addBalance(currency, exchange.convertCurrency(currency, amount));
-     * 
-     * }
-     * }
-     * }
-     */
-
-    /*
      * Prints the start page for the customer
      */
     public static void printStartPage() {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Welcome to " + bankName);
-        System.out.println("1 | Login");
-        System.out.println("0 | Exit");
-        int input = scanner.nextInt();
-        try {
+        try{
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Welcome to " + bankName);
+            System.out.println("1 | Login");
+            System.out.println("0 | Exit");
+            int input = scanner.nextInt();
             switch (input) {
                 case 1:
                     printCustomerLoginPage();
@@ -174,7 +139,11 @@ public class Bank {
             printStartPage();
         }
     }
-
+    /**
+     * Checks if the account exists
+     * @param accountId The account number to check
+     * @return True if the account exists, false otherwise
+     */
     public static boolean accountExists(int accountId) {
         // Assuming accounts is a List or Array of Account objects
         for (Account account : accounts) {
@@ -184,8 +153,7 @@ public class Bank {
         }
         return false;
     }
-
-    /*
+    /**
      * Prints the login page for the customer
      */
     public static void printCustomerLoginPage() {
@@ -215,8 +183,7 @@ public class Bank {
 
         }
     }
-
-    /*
+    /**
      * Prints the login fail page for the customer
      */
     public static void printLoginFailPage() {
@@ -224,11 +191,13 @@ public class Bank {
         printStartPage();
     }
 
-    /*
+    /**
      * prints the Customer menu page
+     * @param account The account to print the menu for
      */
     public static void printCustomerMenu(Account account) {
-        Scanner scanner = new Scanner(System.in);
+        try {
+            Scanner scanner = new Scanner(System.in);
         System.out.println("Welcome " + account.getCustomer().getName());
         System.out.println("Select actions:");
         System.out.println("1 | Check balance");
@@ -266,18 +235,24 @@ public class Bank {
                 printCustomerMenu(account);
                 break;
         }
+        } catch (Exception e) {
+            System.out.println("Invalid input");
+            printCustomerMenu(account);
+        }
+        
     }
-
-    /*
+    /**
      * Prints the balance page for the customer
+     * @param account The account to print balance page for
      */
     public static void printBalancePage(Account account) {
         System.out.println("Current Account Balance: $" + account.getBalance());
         printMoreActions(account);
     }
 
-    /*
+    /**
      * Prints the transfer page for the customer
+     * @param account The account to print transfer page for
      */
     public static void printTransferPage(Account account) {
         Scanner scanner = new Scanner(System.in);
@@ -295,26 +270,21 @@ public class Bank {
                 break;
             case 3:
                 printCustomerMenu(account);
-            case 0:
-                printLogoutPage();
+                break;
+            default:
+                System.out.println("Invalid input");
+                printTransferPage(account);
                 break;
         }
         printMoreActions(account);
     }
-
-    /*
+    /**
      * Prints the inter account transfer page for the customer
+     * @param account The account to print inter account transfer page for
      */
     public static void printInterTransferPage(Account account) {
         System.out.println("Accounts available for transfer: ");
-        ArrayList<Account> availableAccounts = new ArrayList<>();
-        for (Account acc : accounts) {
-            if (acc.getCustomerIC().equals(account.getCustomerIC())
-                    && acc.getAccountNumber() != account.getAccountNumber()) {
-                System.out.println(acc.getAccountNumber());
-                availableAccounts.add(acc);
-            }
-        }
+        ArrayList<Account> availableAccounts = showAvailableAccounts(account);
         if (availableAccounts.size() < 1) {
             System.out.println("There are no accounts linked.");
             printMoreActions(account);
@@ -327,7 +297,11 @@ public class Bank {
             printTransferPage(account);
         }
         Account receiving = getAccount(accno);
-        if (receiving.getCustomerIC() != account.getCustomerIC()) {
+        if (receiving == null){
+            System.out.println("Account does not exist");
+            printTransferPage(account);
+        }
+        else if (receiving.getCustomerIC() != account.getCustomerIC()) {
             System.out.println("Cannot transfer to a third party account");
             printTransferPage(account);
         }
@@ -344,9 +318,26 @@ public class Bank {
             }
         }
     }
-
-    /*
+    /**
+     * Returns the available accounts for transfer
+     * @param account
+     * @return The available accounts for transfer
+     */
+    public static ArrayList<Account> showAvailableAccounts(Account account) {
+        System.out.println("Accounts available for transfer: ");
+        ArrayList<Account> availableAccounts = new ArrayList<>();
+        for (Account acc : accounts) {
+            if (acc.getCustomerIC().equals(account.getCustomerIC())
+                    && acc.getAccountNumber() != account.getAccountNumber()) {
+                System.out.println(acc.getAccountNumber());
+                availableAccounts.add(acc);
+            }
+        }
+        return availableAccounts;
+    }
+    /**
      * Prints the third party transfer page for the customer
+     * @param account The account to print third party transfer page for
      */
     public static void printThirdPartyTransferPage(Account account) {
         Scanner scanner = new Scanner(System.in);
@@ -358,7 +349,7 @@ public class Bank {
         if (receivingAcc == null) {
             printUserNotFoundPage(account);
         }
-        if (account.transfer(receivingAcc, amount2)) {
+        else if (account.transfer(receivingAcc, amount2)) {
 
             System.out.println("Transfer successful");
         } else {
@@ -366,17 +357,18 @@ public class Bank {
             printTransactionFailPage(account);
         }
     }
-
-    /*
+    /**
      * Prints the user not found page for the customer
+     * @param account The account to print user not found page for
      */
     public static void printUserNotFoundPage(Account account) {
         System.out.println("User not found");
         printMoreActions(account);
     }
 
-    /*
+    /**
      * Prints the transaction fail page for the customer
+     * @param account The account to print transaction fail page for
      */
     public static void printTransactionFailPage(Account account) {
         System.out.println(
@@ -384,14 +376,18 @@ public class Bank {
         printMoreActions(account);
     }
 
-    /*
+    /**
      * Prints the account details page for the customer
+     * @param account The account to print account details for
      */
     public static void printAccountDetailsPage(Account account) {
         printAccountDetails(account);
         printMoreActions(account);
     }
-
+    /**
+     * Prints the account details for the customer
+     * @param account The account to print account details for
+     */
     public static void printAccountDetails(Account account) {
         System.out.println("Account Number: " + account.getAccountNumber());
         System.out.println("Name: " + account.getCustomer().getName());
@@ -401,8 +397,9 @@ public class Bank {
         System.out.println("Account Balance: $" + account.getBalance());
     }
 
-    /*
+    /**
      * Prints the account settings page for the customer
+     * @param account The account to print account settings for
      */
     public static void printAccountSettingsPage(Account account) {
         Scanner scanner = new Scanner(System.in);
@@ -442,9 +439,9 @@ public class Bank {
                 break;
         }
     }
-
-    /*
+    /**
      * Prints the change PIN page for the customer
+     * @param account The account to change PIN for
      */
     public static void printChangePINPage(Account account) {
         Scanner scanner = new Scanner(System.in);
@@ -455,8 +452,9 @@ public class Bank {
         printMoreActions(account);
     }
 
-    /*
+    /**
      * Prints the change Withdraw Limit page for the customer
+     * @param account The account to change withdraw limit for
      */
     public static void printChangeWithdrawLimitPage(Account account) {
         Scanner scanner = new Scanner(System.in);
@@ -467,8 +465,9 @@ public class Bank {
         printMoreActions(account);
     }
 
-    /*
+    /**
      * Prints the change Transfer Limit page for the customer
+     * @param account The account to change transfer limit for
      */
     public static void printChangeTransferLimitPage(Account account) {
         Scanner scanner = new Scanner(System.in);
@@ -478,9 +477,9 @@ public class Bank {
         System.out.println("Transfer Limit changed successfully");
         printMoreActions(account);
     }
-
-    /*
+    /**
      * Prints the change Email page for the customer
+     * @param account The account to change email for
      */
     public static void printChangeEmailPage(Account account) {
         Scanner scanner = new Scanner(System.in);
@@ -490,9 +489,9 @@ public class Bank {
         System.out.println("Email changed successfully");
         printMoreActions(account);
     }
-
-    /*
+    /**
      * Prints the change Contact Number page for the customer
+     * @param account The account to change contact number for
      */
     public static void printChangeContactNumberPage(Account account) {
         Scanner scanner = new Scanner(System.in);
@@ -502,9 +501,9 @@ public class Bank {
         System.out.println("Contact Number changed successfully");
         printMoreActions(account);
     }
-
-    /*
+    /**
      * Prints the close account page for the customer
+     * @param account The account to close
      */
     public static void printCloseAccountPage(Account account) {
         Scanner scanner = new Scanner(System.in);
@@ -523,7 +522,11 @@ public class Bank {
                 break;
         }
     }
-
+    /**
+     * Checks if the NRIC is valid
+     * @param nric The NRIC to check
+     * @return True if the NRIC is valid, false otherwise
+     */
     public static boolean checkNRIC(String nric) {
         for (Account account : accounts) {
             if (account.getCustomer().getNRIC().substring(5).equals(nric)) {
@@ -531,8 +534,11 @@ public class Bank {
             }
         }
         return false;
-    }
-
+    }   
+    /**
+     * Closes the account after verification
+     * @param account The account to close
+     */
     public static void closeAccountVerification(Account account) {
         System.out.println("Please enter your last four digits of your NRIC to verify your identity: ");
         Scanner scanner = new Scanner(System.in);
@@ -547,29 +553,31 @@ public class Bank {
         }
     }
 
-    /*
+    /**
      * Checks if customer still wants to do more actions
+     * @param account The account to check if customer wants to do more actions
      */
     public static void printMoreActions(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Back to main menu? (Y/N)");
-        String input = scanner.nextLine();
-
-        switch (input) {
-            case "Y":
-                printCustomerMenu(account);
-                break;
-            case "N":
-                printLogoutPage();
-                break;
-            default:
-                System.out.println("Invalid input");
-                printMoreActions(account);
-                break;
+        String input;
+        while (scanner.hasNextLine()) {
+            input = scanner.nextLine();
+            switch (input) {
+                case "Y":
+                    printCustomerMenu(account);
+                    break;
+                case "N":
+                    printLogoutPage();
+                    break;
+                default:
+                    System.out.println("Invalid input");
+                    printMoreActions(account);
+                    break;
+            }
         }
     }
-
-    /*
+    /**
      * Prints the logout page for the customer
      */
     public static void printLogoutPage() {
@@ -577,7 +585,10 @@ public class Bank {
         System.out.println("You have been logged out");
         printStartPage();
     }
-
+    /**
+     * Prints the branch details page for the customer
+     * @param account The account to print branch details for
+     */
     public static void printBranchDetailsPage(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Branch:");
@@ -618,7 +629,6 @@ public class Bank {
                         default:
                             System.out.println("Invalid option");
                             break;
-
                     }
                 } while (choice > 2 || choice < 0);
 
@@ -629,7 +639,10 @@ public class Bank {
 
         }
     }
-
+    /**
+     * Prints the insurance details page for the customer
+     * @param account The account to print insurance details for
+     */
     public static void printInsuranceDetailsPage(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Insurance");
@@ -641,23 +654,7 @@ public class Bank {
         int choice = scanner.nextInt();
         switch (choice) {
             case 1:
-                if (account.getInsurance().isEmpty() || account.getInsurance().size() == 0){
-                    System.out.println("You do not own any insurance");
-                    break;
-                }
-                for (Insurance insurance : account.getInsurance()) {
-                    System.out.println("Information for Policy Number: " + insurance.getPolicyNumber());
-                    System.out.println("Policy Name: " + insurance.getPolicyName());
-                    System.out.println("Policy Type: " + insurance.getPolicyType());
-                    System.out.println("Policy Owner: " + insurance.getPolicyOwner());
-                    System.out.println("Policy Status: " + insurance.getPolicyStatus());
-                    System.out.println("Premium Amount " + insurance.getPremiumAmount());
-                    System.out.println("Payment Frequency " + insurance.getPremiumFrequency());
-                    System.out.println("Sum Assured: " + insurance.getSumAssured());
-                    System.out.println("Total Premium Paid: " + insurance.getTotalPremiumPaid());
-                    System.out.println("Start Date: " + insurance.getInception_date());
-                    System.out.println("End Date: " + insurance.getMaturity_date());
-                }
+                printOwnedPolicies(account);
                 break;
             case 2:
                 printPoliciesPage(account);
@@ -675,7 +672,35 @@ public class Bank {
         }
         printMoreActions(account);
     }
-
+    /**
+     * Prints the owned policies for the customer
+     * @param account The account to print owned policies for
+     */
+    public static void printOwnedPolicies(Account account){
+        if (account.getInsurance().isEmpty() || account.getInsurance().size() == 0){
+            System.out.println("You do not own any insurance");
+            return;
+        }
+        for (Insurance insurance : account.getInsurance()) {
+            System.out.println("------------------------------------------------------");
+            System.out.println("Information for Policy Number: " + insurance.getPolicyNumber());
+            System.out.println("Policy Name: " + insurance.getPolicyName());
+            System.out.println("Policy Type: " + insurance.getPolicyType());
+            System.out.println("Policy Owner: " + insurance.getPolicyOwner());
+            System.out.println("Policy Status: " + insurance.getPolicyStatus());
+            System.out.println("Premium Amount " + insurance.getPremiumAmount());
+            System.out.println("Payment Frequency " + insurance.getPremiumFrequency());
+            System.out.println("Sum Assured: " + insurance.getSumAssured());
+            System.out.println("Total Premium Paid: " + insurance.getTotalPremiumPaid());
+            System.out.println("Start Date: " + insurance.getInception_date());
+            System.out.println("End Date: " + insurance.getMaturity_date());
+        }
+        System.out.println("------------------------------------------------------");
+    }
+    /**
+     * Prints the policies page for the customer
+     * @param account The account to apply insurance to
+     */
     public static void printPoliciesPage(Account account) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Policies");
@@ -714,72 +739,80 @@ public class Bank {
                 break;
         }
     }
-
-    public static void printInsurancePaymentPage(Account account) {
+    public static ArrayList<Insurance> checkOwnedInsurance(Account account){
+        ArrayList<Insurance> ownedInsurance = new ArrayList<>();
         System.out.println("Insurance you owned: ");
         if (account.getInsurance().isEmpty() || account.getInsurance().size() == 0) {
             System.out.println("You do not own any insurance under us");
+            printInsuranceDetailsPage(account);
         } else {
             for (Insurance insurance : account.getInsurance()) {
                 System.out.println(insurance.getPolicyNumber());
+                ownedInsurance.add(insurance);
             }
+        }
+        return ownedInsurance;
+    }
+    /**
+     * Prints the insurance payment page for the customer
+     * @param account The account to make payment to
+     */
+    public static void printInsurancePaymentPage(Account account) {
+        ArrayList<Insurance> ownedInsurance = checkOwnedInsurance(account);
             Scanner scanner = new Scanner(System.in);
             System.out.println("Select the policy that you want to make payment to");
             int policyNo = scanner.nextInt();
-            for (Insurance insurance : account.getInsurance()) {
+            for (Insurance insurance : ownedInsurance) {
                 if (policyNo == insurance.getPolicyNumber())
-                    System.out.println("How much do you want to pay");
-                int amount = scanner.nextInt();
-                System.out.println("Confirm? \nEnter 1 for yes \n0 for no");
-                int input = scanner.nextInt();
-                switch (input) {
-                    case 1:
-                        if (account.getBalance() < amount) {
-                            System.out.println("Insufficient Funds");
+                {
+                    System.out.println("Enter the amount you want to pay");
+                    int amount = scanner.nextInt();
+                    System.out.println("Confirm? \n1 | Yes \n0 | No");
+                    int input = scanner.nextInt();
+                    switch (input) {
+                        case 1:
+                            insurance.makePayment(account, amount);
                             printMoreActions(account);
                             break;
-                        }
-                        Double balance = account.getBalance();
-                        balance -= amount;
-                        account.setBalance(balance);
-                        Double premiumPaid = insurance.getTotalPremiumPaid();
-                        insurance.setTotalPremiumPaid(premiumPaid + amount);
-                        printMoreActions(account);
-                        break;
-                    case 2:
-                        printMoreActions(account);
-                        break;
+                        case 0:
+                            printMoreActions(account);
+                            break;
+                        default:
+                            System.out.println("Invalid input");
+                            printMoreActions(account);
+                            break;
+                    }
+                }
+                else {
+                    System.out.println("Invalid Policy Number");
+                    printMoreActions(account);
                 }
             }
-        }
     }
-
+    /**
+     * Prints the remove insurance page for the customer
+     * @param account The account to remove insurance from
+     */
     public static void printRemoveInsurancePage(Account account){
-        System.out.println("Insurance you owned: ");
-        if (account.getInsurance().isEmpty() || account.getInsurance().size() == 0) {
-            System.out.println("You do not own any insurance under us");
-        } else {
-            for (Insurance insurance : account.getInsurance()) {
-                System.out.println(insurance.getPolicyNumber());
-            }
+        ArrayList<Insurance> ownedInsurance = checkOwnedInsurance(account);
             Scanner scanner = new Scanner(System.in);
             System.out.println("Select the policy that you want to remove");
             int policyNo = scanner.nextInt();
             int counter = 0;
             boolean found = false;
-            for (Insurance insurance : account.getInsurance()) {
+            for (Insurance insurance : ownedInsurance) {
                 counter++;
                 if (policyNo == insurance.getPolicyNumber())
                 {  
                     found = true;
-                    System.out.println("Confirm? \nEnter 1 for yes \n0 for no");
+                    System.out.println("Confirm? \n1 | Yes \n0 | No");
                     int input = scanner.nextInt();
                     switch (input) {
                         case 1:
                             account.getInsurance().remove(counter-1);
                             printMoreActions(account);
                             break;
-                        case 2:
+                        case 0:
                             printMoreActions(account);
                             break;
                     }
@@ -789,8 +822,8 @@ public class Bank {
                 System.out.println("Invalid Policy Number");
                 printMoreActions(account);
             }
-        }
     }
+    
 
     public static void main(String[] args) {
         accounts = new ArrayList<>();

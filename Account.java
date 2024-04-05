@@ -157,67 +157,18 @@ public class Account{
     public ArrayList<Insurance> getInsurance(){
         return insurance;
     }
-
     /**
      * Transfers the specified amount from the account to another account.
-     * 
      * @param account The account to transfer to.
-     */
-
-/*      public boolean interAccountTransfer(Account account, double amount) {
-        if (account.getCustomerIC().equals(customer.getNRIC())) {
-            double balanceSGD = balance.get(Currency.SGD);
-            if (amount > transferLimit) {
-                return false;
-            } else if (amount > balanceSGD) {
-                return false;
-            } else {
-                balanceSGD -= amount;
-                this.balance.put(Currency.SGD, balanceSGD);
-                account.deposit(amount);
-                return true;
-            }
-        } else {
-            return false;
-        }
-    } */
-/*     public void interAccountTransfer(Account account, double amount){
-        if(amount > transferLimit){
-            System.out.println("Transfer limit exceeded");
-        }
-        else if(amount > balance){
-            System.out.println("Insufficient funds");
-        }
-        else{
-            balance -= amount;
-            account.deposit(amount);
-        }
-    } */
-    /**
-     * Transfers the specified amount from the account to a third party account.
-     * 
-     * @param account The account to transfer to.
-     */
-/*     public boolean thirdPartyTransfer(Account account, double amount) {
-        double balanceSGD = balance.get(Currency.SGD);
-        if (amount > transferLimit) {
-            System.out.println("Transfer limit exceeded");
-            return false;
-        } else if (amount > balanceSGD) {
-            System.out.println("Insufficient funds");
-            return false;
-        } else {
-            balanceSGD -= amount;
-            this.balance.put(Currency.SGD, balanceSGD);
-            account.deposit(amount);
-            return true;
-        }
-    } */
-    /*
-     * Transfers the specified amount from the account to another account.
+     * @param amount The amount to transfer.
+     * @return True if the transfer is successful, false otherwise.
      */
     public boolean transfer(Account account, double amount) {
         double balanceSGD = balance;
+        if (amount < 0){
+            System.out.println("Invalid amount");
+            return false;
+        }
         if (amount > transferLimit) {
             System.out.println("Transfer limit exceeded");
             return false;
