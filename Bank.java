@@ -636,6 +636,7 @@ public class Bank {
         System.out.println("1 | Display Owned Policy Information");
         System.out.println("2 | Apply Policies");
         System.out.println("3 | Make Payment");
+        System.out.println("4 | Remove policy");
         System.out.println("0 | Back to main menu");
         int choice = scanner.nextInt();
         switch (choice) {
@@ -663,6 +664,8 @@ public class Bank {
                 break;
             case 3:
                 printInsurancePaymentPage(account);
+            case 4:
+                printRemoveInsurancePage(account);
             case 0:
                 printCustomerLoginPage();
             default:
@@ -749,7 +752,44 @@ public class Bank {
                 }
             }
         }
+    }
 
+    public static void printRemoveInsurancePage(Account account){
+        System.out.println("Insurance you owned: ");
+        if (account.getInsurance().isEmpty() || account.getInsurance().size() == 0) {
+            System.out.println("You do not own any insurance under us");
+        } else {
+            for (Insurance insurance : account.getInsurance()) {
+                System.out.println(insurance.getPolicyNumber());
+            }
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Select the policy that you want to remove");
+            int policyNo = scanner.nextInt();
+            int counter = 0;
+            boolean found = false;
+            for (Insurance insurance : account.getInsurance()) {
+                counter++;
+                if (policyNo == insurance.getPolicyNumber())
+                {  
+                    found = true;
+                    System.out.println("Confirm? \nEnter 1 for yes \n0 for no");
+                    int input = scanner.nextInt();
+                    switch (input) {
+                        case 1:
+                            account.getInsurance().remove(counter-1);
+                            printMoreActions(account);
+                            break;
+                        case 2:
+                            printMoreActions(account);
+                            break;
+                    }
+                }
+            }
+            if (!found){
+                System.out.println("Invalid Policy Number");
+                printMoreActions(account);
+            }
+        }
     }
 
     public static void main(String[] args) {

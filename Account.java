@@ -157,6 +157,7 @@ public class Account{
     public ArrayList<Insurance> getInsurance(){
         return insurance;
     }
+
     /**
      * Transfers the specified amount from the account to another account.
      * 
