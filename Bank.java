@@ -283,7 +283,6 @@ public class Bank {
      * @param account The account to print inter account transfer page for
      */
     public static void printInterTransferPage(Account account) {
-        System.out.println("Accounts available for transfer: ");
         ArrayList<Account> availableAccounts = showAvailableAccounts(account);
         if (availableAccounts.size() < 1) {
             System.out.println("There are no accounts linked.");
@@ -828,8 +827,8 @@ public class Bank {
     public static void main(String[] args) {
         accounts = new ArrayList<>();
         setBankname("DBS");
-        Customer customer = new Customer("S1234567A", "John Doe", new Date(2000, 11, 1), 12345678, "email");
-        Customer customer2 = new Customer("S1234567B", "Jane Doe", new Date(2000, 11, 1), 12345678, "email");
+        Customer customer = new Customer("S1234567A", "John Doe", new Date(2000, 11, 1), 12345678, "John@email.com");
+        Customer customer2 = new Customer("S1234567B", "Jane Doe", new Date(2000, 11, 1), 12345678, "Jane@email.com");
         Account account = new Account(customer, 1, security.encrypt("123456"), 1000.0);
         Account account2 = new Account(customer, 2, security.encrypt("123456"));
         Account account3 = new Account(customer2, 3, security.encrypt("123456"));
