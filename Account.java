@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -15,6 +16,7 @@ public class Account{
     private String PIN;
     private double withdrawLimit;
     private double transferLimit;
+    private ArrayList<Insurance> insurance = new ArrayList<>();
 
     public Account(Customer customer, int accountNumber, String PIN){
         this.accountNumber = accountNumber;
@@ -147,6 +149,15 @@ public class Account{
             balance = temp;
         }
     }
+
+    public void addInsurance(Insurance insurance){
+        this.insurance.add(insurance);
+    }
+
+    public ArrayList<Insurance> getInsurance(){
+        return insurance;
+    }
+
     /**
      * Transfers the specified amount from the account to another account.
      * 

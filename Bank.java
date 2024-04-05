@@ -596,7 +596,6 @@ public class Bank {
                 printMoreActions(account);
                 break;
             case 3:
-                int counter = 0;
                 int choice = 0;
                 do {
                     System.out.println("Do you want a Physical or Virtual Queue?");
@@ -618,7 +617,6 @@ public class Bank {
                             break;
                         default:
                             System.out.println("Invalid option");
-                            counter++;
                             break;
 
                     }
@@ -632,15 +630,166 @@ public class Bank {
         }
     }
 
-    public static void printInsuranceDetailsPage(Account account){
-        // Scanner scanner = new Scanner(System.in);
-        // System.out.println("Insurance");
-        // System.out.println("1 | Display Fund Information");
-        // System.out.println("2 | Display Insurance Information");
-        // System.out.println("3 | Display Available Policies");
-        // System.out.println("0 | Back to main menu");
-        // g02_BRA.generateInsuranceMenuOptions(scanner, )
+    public static void printInsuranceDetailsPage(Account account) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Insurance");
+        System.out.println("1 | Display Owned Policy Information");
+        System.out.println("2 | Apply Policies");
+        System.out.println("3 | Make Payment");
+        System.out.println("4 | Remove policy");
+        System.out.println("0 | Back to main menu");
+        int choice = scanner.nextInt();
+        switch (choice) {
+            case 1:
+                if (account.getInsurance().isEmpty() || account.getInsurance().size() == 0){
+                    System.out.println("You do not own any insurance");
+                    break;
+                }
+                for (Insurance insurance : account.getInsurance()) {
+                    System.out.println("Information for Policy Number: " + insurance.getPolicyNumber());
+                    System.out.println("Policy Name: " + insurance.getPolicyName());
+                    System.out.println("Policy Type: " + insurance.getPolicyType());
+                    System.out.println("Policy Owner: " + insurance.getPolicyOwner());
+                    System.out.println("Policy Status: " + insurance.getPolicyStatus());
+                    System.out.println("Premium Amount " + insurance.getPremiumAmount());
+                    System.out.println("Payment Frequency " + insurance.getPremiumFrequency());
+                    System.out.println("Sum Assured: " + insurance.getSumAssured());
+                    System.out.println("Total Premium Paid: " + insurance.getTotalPremiumPaid());
+                    System.out.println("Start Date: " + insurance.getInception_date());
+                    System.out.println("End Date: " + insurance.getMaturity_date());
+                }
+                break;
+            case 2:
+                printPoliciesPage(account);
+                break;
+            case 3:
+                printInsurancePaymentPage(account);
+            case 4:
+                printRemoveInsurancePage(account);
+            case 0:
+                printCustomerLoginPage();
+            default:
+                System.out.println("Invalid option");
+                break;
+
+        }
         printMoreActions(account);
+    }
+
+    public static void printPoliciesPage(Account account) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Policies");
+        System.out.println("1 | Savings");
+        System.out.println("2 | Health");
+        System.out.println("3 | Vehicle");
+        System.out.println("0 | Back to main menu");
+        int choice = scanner.nextInt();
+        Boolean foundInsurance = false;
+        switch (choice) {
+            case 1:
+                Insurance sinsurance = new Insurance("Savings", "Savings", account.getCustomer().getName(),
+                        "MONTHLY", account.getInsurance().isEmpty() ? 1 : account.getInsurance().size() + 1,
+                        LocalDate.now(), LocalDate.now().plusYears(10), 10000.0, 83.33, 0, 0);
+                account.addInsurance(sinsurance);
+                System.out.println("Successfully applied for Savings Insurance");
+                break;
+            case 2:
+                Insurance hinsurance = new Insurance("Health", "Healthcare", account.getCustomer().getName(),
+                        "MONTHLY", account.getInsurance().isEmpty() ? 1 : account.getInsurance().size() + 1,
+                        LocalDate.now(), LocalDate.now().plusYears(10), 10000.0, 83.33, 0, 0);
+                account.addInsurance(hinsurance);
+                System.out.println("Successfully applied for Health Insurance");
+                break;
+            case 3:
+                Insurance cinsurance = new Insurance("Vehicle", "Vehicle", account.getCustomer().getName(),
+                        "MONTHLY", account.getInsurance().isEmpty() ? 1 : account.getInsurance().size() + 1,
+                        LocalDate.now(), LocalDate.now().plusYears(10), 10000.0, 83.33, 0, 0);
+                account.addInsurance(cinsurance);
+                System.out.println("Successfully applied for Vehicle Insurance");
+                break;
+            case 0:
+                printCustomerLoginPage();
+            default:
+                System.out.println("Invalid option");
+                break;
+        }
+    }
+
+    public static void printInsurancePaymentPage(Account account) {
+        System.out.println("Insurance you owned: ");
+        if (account.getInsurance().isEmpty() || account.getInsurance().size() == 0) {
+            System.out.println("You do not own any insurance under us");
+        } else {
+            for (Insurance insurance : account.getInsurance()) {
+                System.out.println(insurance.getPolicyNumber());
+            }
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Select the policy that you want to make payment to");
+            int policyNo = scanner.nextInt();
+            for (Insurance insurance : account.getInsurance()) {
+                if (policyNo == insurance.getPolicyNumber())
+                    System.out.println("How much do you want to pay");
+                int amount = scanner.nextInt();
+                System.out.println("Confirm? \nEnter 1 for yes \n0 for no");
+                int input = scanner.nextInt();
+                switch (input) {
+                    case 1:
+                        if (account.getBalance() < amount) {
+                            System.out.println("Insufficient Funds");
+                            printMoreActions(account);
+                            break;
+                        }
+                        Double balance = account.getBalance();
+                        balance -= amount;
+                        account.setBalance(balance);
+                        Double premiumPaid = insurance.getTotalPremiumPaid();
+                        insurance.setTotalPremiumPaid(premiumPaid + amount);
+                        printMoreActions(account);
+                        break;
+                    case 2:
+                        printMoreActions(account);
+                        break;
+                }
+            }
+        }
+    }
+
+    public static void printRemoveInsurancePage(Account account){
+        System.out.println("Insurance you owned: ");
+        if (account.getInsurance().isEmpty() || account.getInsurance().size() == 0) {
+            System.out.println("You do not own any insurance under us");
+        } else {
+            for (Insurance insurance : account.getInsurance()) {
+                System.out.println(insurance.getPolicyNumber());
+            }
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Select the policy that you want to remove");
+            int policyNo = scanner.nextInt();
+            int counter = 0;
+            boolean found = false;
+            for (Insurance insurance : account.getInsurance()) {
+                counter++;
+                if (policyNo == insurance.getPolicyNumber())
+                {  
+                    found = true;
+                    System.out.println("Confirm? \nEnter 1 for yes \n0 for no");
+                    int input = scanner.nextInt();
+                    switch (input) {
+                        case 1:
+                            account.getInsurance().remove(counter-1);
+                            printMoreActions(account);
+                            break;
+                        case 2:
+                            printMoreActions(account);
+                            break;
+                    }
+                }
+            }
+            if (!found){
+                System.out.println("Invalid Policy Number");
+                printMoreActions(account);
+            }
+        }
     }
 
     public static void main(String[] args) {
