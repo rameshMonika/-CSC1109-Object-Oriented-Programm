@@ -38,7 +38,7 @@ public class Bank {
     /**
      * Sets the name of the bank.
      * 
-     * @params The name of the bank.
+     * @params The name of the bank
      */
     public static void setBankname(String name) {
         bankName = name;
@@ -70,7 +70,8 @@ public class Bank {
     /**
      * returns a account number from the account class
      * 
-     * @params the account number tied to the account
+     * @params accno the account number tied to the account
+     * @return the account
      */
     public static Account getAccount(int accno) {
         for (Account account : accounts) {
@@ -101,7 +102,7 @@ public class Bank {
      * Gets the account balance and prints the following accountNumber's balance.
      * 
      * @param accountNumber The following accountNumber to find the balance.
-     * @param currency      The currency of the balance to show
+     * @return The balance of the account.
      */
     public static Double getAccountBalance(int accountNumber) {
         for (Account account : accounts) {
@@ -319,7 +320,7 @@ public class Bank {
     }
     /**
      * Returns the available accounts for transfer
-     * @param account
+     * @param account The account to get available accounts for transfer
      * @return The available accounts for transfer
      */
     public static ArrayList<Account> showAvailableAccounts(Account account) {
